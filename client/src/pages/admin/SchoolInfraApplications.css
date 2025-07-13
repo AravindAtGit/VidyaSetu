@@ -1,0 +1,391 @@
+.applications-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.applications-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.applications-header h1 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.applications-header p {
+  color: #7f8c8d;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.back-button {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.back-button:hover {
+  background-color: #5a6268;
+}
+
+.request-summary {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  border: 1px solid #e9ecef;
+}
+
+.request-summary h2 {
+  margin-bottom: 15px;
+  color: #2c3e50;
+}
+
+.request-info p {
+  margin: 8px 0;
+  color: #555;
+  font-size: 14px;
+}
+
+.request-info strong {
+  color: #2c3e50;
+}
+
+.applications-section {
+  margin-top: 30px;
+}
+
+.applications-section h2 {
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: #7f8c8d;
+}
+
+.error-message {
+  text-align: center;
+  padding: 40px;
+  color: #721c24;
+}
+
+.error-message h2 {
+  margin-bottom: 15px;
+}
+
+.error-message button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+.error-message button:hover {
+  background-color: #2980b9;
+}
+
+.no-applications {
+  text-align: center;
+  padding: 40px;
+  color: #7f8c8d;
+}
+
+.no-applications h3 {
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+.applications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 20px;
+}
+
+.application-card {
+  background: white;
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.application-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.application-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.application-header h3 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 18px;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-badge.orange {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-badge.blue {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.status-badge.red {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.status-badge.gray {
+  background-color: #f8f9fa;
+  color: #6c757d;
+}
+
+.volunteer-info {
+  margin-bottom: 20px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 8px 0;
+  border-bottom: 1px solid #f8f9fa;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-row label {
+  font-weight: 600;
+  color: #2c3e50;
+  min-width: 120px;
+  flex-shrink: 0;
+}
+
+.info-row span {
+  color: #555;
+  text-align: right;
+  flex: 1;
+  margin-left: 15px;
+}
+
+.feedback-text {
+  font-style: italic;
+  color: #6c757d !important;
+}
+
+.application-actions {
+  text-align: center;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.approve-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.approve-button:hover:not(:disabled) {
+  background-color: #218838;
+}
+
+.approve-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.feedback-button {
+  background-color: #17a2b8;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.feedback-button:hover {
+  background-color: #138496;
+}
+
+.feedback-submitted,
+.rejected-notice {
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.feedback-submitted {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.rejected-notice {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.feedback-submitted p {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.feedback-modal {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 90%;
+}
+
+.feedback-modal h3 {
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.feedback-modal textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  resize: vertical;
+  margin-bottom: 20px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+}
+
+.submit-feedback-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.submit-feedback-button:hover {
+  background-color: #218838;
+}
+
+.cancel-button {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.cancel-button:hover {
+  background-color: #5a6268;
+}
+
+@media (max-width: 768px) {
+  .applications-container {
+    padding: 15px;
+  }
+  
+  .info-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .info-row label {
+    min-width: auto;
+  }
+  
+  .info-row span {
+    margin-left: 0;
+    text-align: left;
+  }
+  
+  .applications-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .application-card {
+    margin-bottom: 15px;
+  }
+  
+  .modal-actions {
+    flex-direction: column;
+  }
+  
+  .submit-feedback-button,
+  .cancel-button {
+    width: 100%;
+  }
+} 

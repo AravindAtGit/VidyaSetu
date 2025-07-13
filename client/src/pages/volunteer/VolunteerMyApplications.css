@@ -1,0 +1,282 @@
+.applications-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.applications-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.applications-header h1 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.applications-header p {
+  color: #7f8c8d;
+  font-size: 16px;
+}
+
+.error-alert {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  border: 1px solid #f5c6cb;
+}
+
+.applications-section {
+  margin-top: 30px;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: #7f8c8d;
+}
+
+.no-applications {
+  text-align: center;
+  padding: 40px;
+  color: #7f8c8d;
+}
+
+.no-applications h3 {
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+.browse-button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 15px;
+  transition: background-color 0.2s ease;
+}
+
+.browse-button:hover {
+  background-color: #2980b9;
+}
+
+.applications-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 20px;
+}
+
+.application-card {
+  background: white;
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.application-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.application-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.application-header h3 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 18px;
+  flex: 1;
+}
+
+.status-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  align-items: flex-end;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.status-badge.orange {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-badge.blue {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.status-badge.red {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.status-badge.green {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-badge.purple {
+  background-color: #e2d9f3;
+  color: #6f42c1;
+}
+
+.status-badge.gray {
+  background-color: #f8f9fa;
+  color: #6c757d;
+}
+
+.application-details {
+  margin-bottom: 20px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 8px 0;
+  border-bottom: 1px solid #f8f9fa;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-row label {
+  font-weight: 600;
+  color: #2c3e50;
+  min-width: 100px;
+  flex-shrink: 0;
+}
+
+.detail-row span {
+  color: #555;
+  text-align: right;
+  flex: 1;
+  margin-left: 15px;
+}
+
+.feedback-text {
+  font-style: italic;
+  color: #6c757d !important;
+}
+
+.application-actions {
+  text-align: center;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.fulfill-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.fulfill-button:hover:not(:disabled) {
+  background-color: #218838;
+}
+
+.fulfill-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.pending-notice,
+.rejected-notice,
+.fulfilled-notice {
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.pending-notice {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeaa7;
+}
+
+.rejected-notice {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.fulfilled-notice {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.fulfilled-notice p {
+  margin: 0;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .applications-container {
+    padding: 15px;
+  }
+  
+  .application-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .status-badges {
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .detail-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .detail-row label {
+    min-width: auto;
+  }
+  
+  .detail-row span {
+    margin-left: 0;
+    text-align: left;
+  }
+  
+  .applications-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .application-card {
+    margin-bottom: 15px;
+  }
+} 

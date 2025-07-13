@@ -1,0 +1,78 @@
+.student-footer {
+  background: #2c3e50;
+  color: white;
+  padding: 2rem 0 1rem 0;
+  margin-top: auto;
+}
+
+.student-footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.student-footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.student-footer-section h3 {
+  color: #3498db;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.student-footer-section h4 {
+  color: #3498db;
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+}
+
+.student-footer-section p {
+  color: #bdc3c7;
+  line-height: 1.6;
+}
+
+.student-footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.student-footer-section ul li {
+  margin-bottom: 0.5rem;
+}
+
+.student-footer-section ul li a {
+  color: #bdc3c7;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.student-footer-section ul li a:hover {
+  color: #3498db;
+}
+
+.student-footer-bottom {
+  border-top: 1px solid #34495e;
+  padding-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #95a5a6;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .student-footer-content {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .student-footer-bottom {
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+} 

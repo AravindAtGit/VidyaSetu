@@ -1,0 +1,257 @@
+.apply-form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.apply-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.apply-header h1 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.apply-header p {
+  color: #7f8c8d;
+  font-size: 16px;
+}
+
+.request-details-card {
+  background: white;
+  border: 1px solid #e1e8ed;
+  border-radius: 8px;
+  padding: 25px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-bottom: 30px;
+}
+
+.request-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #eee;
+}
+
+.request-header h2 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 24px;
+}
+
+.status-badge {
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-badge.green {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-badge.blue {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+
+.status-badge.orange {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-badge.purple {
+  background-color: #e2d9f3;
+  color: #6f42c1;
+}
+
+.status-badge.gray {
+  background-color: #f8f9fa;
+  color: #6c757d;
+}
+
+.request-info {
+  display: grid;
+  gap: 15px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #f8f9fa;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-row label {
+  font-weight: 600;
+  color: #2c3e50;
+  min-width: 150px;
+}
+
+.info-row span {
+  color: #555;
+  text-align: right;
+  flex: 1;
+  margin-left: 20px;
+}
+
+.quantity-input {
+  width: 80px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.quantity-input:focus {
+  outline: none;
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.error-alert {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  border: 1px solid #f5c6cb;
+}
+
+.apply-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.apply-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.apply-button:hover:not(:disabled) {
+  background-color: #218838;
+}
+
+.apply-button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.cancel-button {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.cancel-button:hover:not(:disabled) {
+  background-color: #5a6268;
+}
+
+.cancel-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.status-notice {
+  background-color: #fff3cd;
+  color: #856404;
+  padding: 15px;
+  border-radius: 4px;
+  text-align: center;
+  border: 1px solid #ffeaa7;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: #7f8c8d;
+}
+
+.error-message {
+  text-align: center;
+  padding: 40px;
+  color: #721c24;
+}
+
+.error-message h2 {
+  margin-bottom: 15px;
+}
+
+.error-message button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+.error-message button:hover {
+  background-color: #2980b9;
+}
+
+@media (max-width: 768px) {
+  .apply-form-container {
+    padding: 15px;
+  }
+  
+  .request-header {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+  
+  .info-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+  
+  .info-row label {
+    min-width: auto;
+  }
+  
+  .info-row span {
+    margin-left: 0;
+    text-align: left;
+  }
+  
+  .apply-actions {
+    flex-direction: column;
+  }
+  
+  .apply-button,
+  .cancel-button {
+    width: 100%;
+  }
+} 
