@@ -2,200 +2,144 @@ const express = require('express');
 const router = express.Router();
 const InfrastructureApplication = require('../models/InfrastructureApplication');
 const InfrastructureRequest = require('../models/InfrastructureRequest');
+const School = require('../models/School');
+const Volunteer = require('../models/Volunteer');
 const authSession = require('../middleware/authSession');
 const roleCheck = require('../middleware/roleCheck');
 
-// POST /api/volunteer/infra/apply/:requestId - Create application (Volunteer only)
-router.post('/volunteer/infra/apply/:requestId', authSession, roleCheck('volunteer'), async (req, res) => {
+// Volunteer applies for a request
+router.post('/volunteer/apply/:requestId', authSession, roleCheck('volunteer'), async (req, res) => {
   try {
     const { requestId } = req.params;
-    const { quantity = 1 } = req.body;
-    
-    // Check if request exists and is open
+    const { quantity } = req.body;
+    const volunteerId = req.session.user.id;
+
     const request = await InfrastructureRequest.findById(requestId);
-    if (!request) {
-      return res.status(404).json({ message: 'Request not found' });
+    if (!request || request.status === 'fulfilled') {
+      return res.status(404).json({ message: 'Request not found or already fulfilled' });
     }
-    if (request.status !== 'open') {
-      return res.status(400).json({ message: 'Request is not open for applications' });
-    }
-
-    // Validate quantity
     if (quantity < 1 || quantity > request.remainingQuantity) {
-      return res.status(400).json({ 
-        message: `Quantity must be between 1 and ${request.remainingQuantity}` 
-      });
+      return res.status(400).json({ message: 'Invalid quantity' });
     }
-
-    // Check if volunteer already applied
-    const existingApplication = await InfrastructureApplication.findOne({
+    // Prevent duplicate application
+    const existing = await InfrastructureApplication.findOne({ request: requestId, volunteer: volunteerId });
+    if (existing) {
+      return res.status(400).json({ message: 'Already applied for this request' });
+    }
+    const application = new InfrastructureApplication({
       request: requestId,
-      volunteer: req.session.user.id
+      volunteer: volunteerId,
+      school: request.school,
+      quantity,
+      status: 'pending',
     });
-    if (existingApplication) {
-      return res.status(400).json({ message: 'You have already applied for this request' });
-    }
-
-    const newApplication = new InfrastructureApplication({
-      request: requestId,
-      volunteer: req.session.user.id,
-      quantity
-    });
-
-    const savedApplication = await newApplication.save();
-    res.status(201).json(savedApplication);
-  } catch (error) {
-    console.error('Error creating infrastructure application:', error);
-    res.status(500).json({ message: 'Failed to create application' });
+    await application.save();
+    // Add to volunteer and request
+    await Volunteer.findByIdAndUpdate(volunteerId, { $push: { applications: application._id } });
+    await InfrastructureRequest.findByIdAndUpdate(requestId, { $push: { applications: application._id } });
+    res.status(201).json(application);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to apply' });
   }
 });
 
-// GET /api/volunteer/infra/applications - List volunteer's applications
-router.get('/volunteer/infra/applications', authSession, roleCheck('volunteer'), async (req, res) => {
-  try {
-    const applications = await InfrastructureApplication.find({ volunteer: req.session.user.id })
-      .populate('request', 'category subcategory description status school requiredQuantity remainingQuantity')
-      .populate('request.school', 'schoolName location')
-      .sort({ appliedAt: -1 });
-    
-    res.json(applications);
-  } catch (error) {
-    console.error('Error fetching volunteer applications:', error);
-    res.status(500).json({ message: 'Failed to fetch applications' });
-  }
-});
-
-// GET /api/school/infra/applications/:requestId - List applications for a request (School only)
-router.get('/school/infra/applications/:requestId', authSession, roleCheck('school'), async (req, res) => {
-  try {
-    const { requestId } = req.params;
-    
-    // Verify the request belongs to this school
-    const request = await InfrastructureRequest.findOne({
-      _id: requestId,
-      school: req.session.user.id
-    });
-    if (!request) {
-      return res.status(404).json({ message: 'Request not found' });
-    }
-
-    const applications = await InfrastructureApplication.find({ request: requestId })
-      .populate('volunteer', 'name email contact')
-      .sort({ appliedAt: -1 });
-    
-    res.json(applications);
-  } catch (error) {
-    console.error('Error fetching school applications:', error);
-    res.status(500).json({ message: 'Failed to fetch applications' });
-  }
-});
-
-// POST /api/school/infra/applications/:appId/approve - Approve an application (School only)
-router.post('/school/infra/applications/:appId/approve', authSession, roleCheck('school'), async (req, res) => {
+// School approves an application
+router.post('/school/applications/:appId/approve', authSession, roleCheck('school'), async (req, res) => {
   try {
     const { appId } = req.params;
-    
-    const application = await InfrastructureApplication.findById(appId)
-      .populate('request');
-    
-    if (!application) {
-      return res.status(404).json({ message: 'Application not found' });
-    }
-
-    // Verify the request belongs to this school
-    if (application.request.school.toString() !== req.session.user.id.toString()) {
-      return res.status(403).json({ message: 'Access denied' });
-    }
-
-    // Update application status
+    const schoolId = req.session.user.id;
+    const application = await InfrastructureApplication.findById(appId).populate('request');
+    if (!application) return res.status(404).json({ message: 'Application not found' });
+    if (application.school.toString() !== schoolId) return res.status(403).json({ message: 'Not authorized' });
+    if (application.status !== 'pending') return res.status(400).json({ message: 'Only pending applications can be approved' });
     application.status = 'approved';
     await application.save();
-
-    // Update request status
-    application.request.status = 'approved';
-    await application.request.save();
-
-    res.json({ message: 'Application approved successfully' });
-  } catch (error) {
-    console.error('Error approving application:', error);
+    res.json({ message: 'Application approved' });
+  } catch (err) {
+    console.error(err);
     res.status(500).json({ message: 'Failed to approve application' });
   }
 });
 
-// POST /api/school/infra/applications/:appId/feedback - Save feedback and mark as fulfilled (School only)
-router.post('/school/infra/applications/:appId/feedback', authSession, roleCheck('school'), async (req, res) => {
+// School fulfills an application (with feedback)
+router.post('/school/applications/:appId/fulfill', authSession, roleCheck('school'), async (req, res) => {
   try {
     const { appId } = req.params;
     const { feedback } = req.body;
-    
-    if (!feedback) {
-      return res.status(400).json({ message: 'Feedback is required' });
-    }
-
-    const application = await InfrastructureApplication.findById(appId)
-      .populate('request');
-    
-    if (!application) {
-      return res.status(404).json({ message: 'Application not found' });
-    }
-
-    // Verify the request belongs to this school
-    if (application.request.school.toString() !== req.session.user.id.toString()) {
-      return res.status(403).json({ message: 'Access denied' });
-    }
-
-    // Check if application is approved
-    if (application.status !== 'approved') {
-      return res.status(400).json({ message: 'Application must be approved before providing feedback' });
-    }
-
-    // Update application with feedback and mark as fulfilled
+    const schoolId = req.session.user.id;
+    const application = await InfrastructureApplication.findById(appId).populate('request');
+    if (!application) return res.status(404).json({ message: 'Application not found' });
+    if (application.school.toString() !== schoolId) return res.status(403).json({ message: 'Not authorized' });
+    if (application.status !== 'approved') return res.status(400).json({ message: 'Only approved applications can be fulfilled' });
+    application.status = 'fulfilled';
     application.feedback = feedback;
     application.fulfilledAt = new Date();
-    application.status = 'fulfilled';
     await application.save();
-
-    // Update request remaining quantity based on application quantity
+    // Update request remaining quantity and status
     const request = application.request;
-    request.remainingQuantity = Math.max(0, request.remainingQuantity - application.quantity);
-    
-    // If all items fulfilled, mark as fulfilled, otherwise keep as approved
-    if (request.remainingQuantity === 0) {
+    request.remainingQuantity -= application.quantity;
+    if (request.remainingQuantity <= 0) {
       request.status = 'fulfilled';
+      request.remainingQuantity = 0;
+    } else {
+      request.status = 'partially_fulfilled';
     }
-    
     await request.save();
-
-    res.json({ message: 'Feedback saved and fulfillment confirmed successfully' });
-  } catch (error) {
-    console.error('Error saving feedback:', error);
-    res.status(500).json({ message: 'Failed to save feedback' });
+    res.json({ message: 'Application fulfilled and feedback saved' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to fulfill application' });
   }
 });
 
-// GET /api/volunteer/infra/applications/:appId - Get specific application details (Volunteer only)
-router.get('/volunteer/infra/applications/:appId', authSession, roleCheck('volunteer'), async (req, res) => {
+// Volunteer: Get all my applications (not fulfilled)
+router.get('/volunteer/applications', authSession, roleCheck('volunteer'), async (req, res) => {
   try {
-    const { appId } = req.params;
-    
-    const application = await InfrastructureApplication.findById(appId)
-      .populate('request', 'category subcategory description status school requiredQuantity remainingQuantity')
-      .populate('request.school', 'schoolName location')
-      .populate('volunteer', 'name email contact');
-    
-    if (!application) {
-      return res.status(404).json({ message: 'Application not found' });
-    }
+    const volunteerId = req.session.user.id;
+    const applications = await InfrastructureApplication.find({ volunteer: volunteerId, status: { $ne: 'fulfilled' } })
+      .populate({ path: 'request', populate: { path: 'school', select: 'schoolName location' } })
+      .populate('school', 'schoolName location');
+    res.json(applications);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to fetch applications' });
+  }
+});
 
-    // Verify the application belongs to this volunteer
-    if (application.volunteer._id.toString() !== req.session.user.id.toString()) {
-      return res.status(403).json({ message: 'Access denied' });
+// Volunteer: Get my fulfilled applications (history)
+router.get('/volunteer/applications/history', authSession, roleCheck('volunteer'), async (req, res) => {
+  try {
+    const volunteerId = req.session.user.id;
+    const applications = await InfrastructureApplication.find({ volunteer: volunteerId, status: 'fulfilled' })
+      .populate({
+        path: 'request',
+        populate: { path: 'school', select: 'schoolName location' }
+      })
+      .populate('school', 'schoolName location');
+    res.json(applications);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to fetch history' });
+  }
+});
+
+// School: Get all applications for a request
+router.get('/school/applications/:requestId', authSession, roleCheck('school'), async (req, res) => {
+  try {
+    const { requestId } = req.params;
+    const schoolId = req.session.user.id;
+    const request = await InfrastructureRequest.findById(requestId);
+    if (!request || request.school.toString() !== schoolId) {
+      return res.status(404).json({ message: 'Request not found or not authorized' });
     }
-    
-    res.json(application);
-  } catch (error) {
-    console.error('Error fetching application details:', error);
-    res.status(500).json({ message: 'Failed to fetch application details' });
+    const applications = await InfrastructureApplication.find({ request: requestId })
+      .populate('volunteer', 'name email contact')
+      .populate('request');
+    res.json(applications);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to fetch applications' });
   }
 });
 

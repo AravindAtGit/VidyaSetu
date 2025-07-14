@@ -15,7 +15,7 @@ const VolunteerMyApplications = () => {
   const fetchApplications = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/volunteer/infra/applications', {
+      const response = await fetch('/api/volunteer/applications', {
         credentials: 'include'
       });
       
@@ -43,16 +43,6 @@ const VolunteerMyApplications = () => {
     }
   };
 
-  const getRequestStatusColor = (status) => {
-    switch (status) {
-      case 'open': return 'green';
-      case 'approved': return 'blue';
-      case 'fulfilled': return 'orange';
-      case 'completed': return 'purple';
-      default: return 'gray';
-    }
-  };
-
   if (loading) {
     return (
       <div className="applications-container">
@@ -64,7 +54,7 @@ const VolunteerMyApplications = () => {
   return (
     <div className="applications-container">
       <div className="applications-header">
-        <h1>My Infrastructure Applications</h1>
+        <h1>My Applications</h1>
         <p>Track the status of your infrastructure contribution applications</p>
       </div>
 
@@ -77,11 +67,11 @@ const VolunteerMyApplications = () => {
       <div className="applications-section">
         {applications.length === 0 ? (
           <div className="no-applications">
-            <h3>No Applications Found</h3>
-            <p>You haven't applied for any infrastructure requests yet.</p>
+            <h3>No Applications</h3>
+            <p>You don't have any infrastructure applications yet.</p>
             <button 
               className="browse-button"
-              onClick={() => navigate('/volunteer/infra/requests')}
+              onClick={() => navigate('/contribute')}
             >
               Browse Requests
             </button>
@@ -96,7 +86,7 @@ const VolunteerMyApplications = () => {
                     <span className={`status-badge ${getStatusColor(application.status)}`}>
                       {application.status}
                     </span>
-                    <span className={`status-badge ${getRequestStatusColor(application.request?.status)}`}>
+                    <span className={`status-badge ${getStatusColor(application.request?.status)}`}>
                       {application.request?.status}
                     </span>
                   </div>
@@ -139,17 +129,15 @@ const VolunteerMyApplications = () => {
                     <label>Applied:</label>
                     <span>{new Date(application.appliedAt).toLocaleDateString()}</span>
                   </div>
-                  
-                  {application.fulfilledAt && (
+                  {application.status === 'fulfilled' && application.fulfilledAt && (
                     <div className="detail-row">
                       <label>Fulfilled:</label>
                       <span>{new Date(application.fulfilledAt).toLocaleDateString()}</span>
                     </div>
                   )}
-                  
                   {application.feedback && (
                     <div className="detail-row">
-                      <label>Feedback:</label>
+                      <label>School Feedback:</label>
                       <span>{application.feedback}</span>
                     </div>
                   )}
@@ -158,25 +146,22 @@ const VolunteerMyApplications = () => {
                 <div className="application-actions">
                   {application.status === 'pending' && (
                     <div className="pending-notice">
-                      <p>Your application is under review by the school.</p>
+                      <p>Your application is under review by the school. You will be notified once a decision is made.</p>
                     </div>
                   )}
-                  
-                  {application.status === 'approved' && !application.fulfilledAt && (
+                  {application.status === 'approved' && (
                     <div className="approved-notice">
-                      <p>✓ Your application has been approved! Please deliver the requested items.</p>
+                      <p>Your application has been approved! Please coordinate with the school for delivery.</p>
                     </div>
                   )}
-                  
                   {application.status === 'rejected' && (
                     <div className="rejected-notice">
-                      <p>Your application was not approved.</p>
+                      <p>Your application was rejected by the school.</p>
                     </div>
                   )}
-                  
                   {application.status === 'fulfilled' && (
                     <div className="fulfilled-notice">
-                      <p>✓ Successfully fulfilled and feedback received</p>
+                      <p>Congratulations! Your contribution has been fulfilled and feedback received.</p>
                     </div>
                   )}
                 </div>

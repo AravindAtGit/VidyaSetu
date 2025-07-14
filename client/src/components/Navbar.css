@@ -45,10 +45,22 @@
   padding: 0.5rem 1rem;
   border-radius: 5px;
   transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .navbar-link:hover {
   background-color: rgba(255, 255, 255, 0.1);
+}
+
+.home-icon {
+  font-size: 1.1rem;
+  transition: transform 0.3s ease;
+}
+
+.navbar-link:hover .home-icon {
+  transform: scale(1.1);
 }
 
 .navbar-auth {

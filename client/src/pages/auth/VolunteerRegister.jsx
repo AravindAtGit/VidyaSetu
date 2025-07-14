@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { saveUser } from '../../utils/auth';
 import './AuthForms.css';
 
@@ -14,6 +14,11 @@ const VolunteerRegister = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Get redirect URL from query parameters
+  const searchParams = new URLSearchParams(location.search);
+  const redirectUrl = searchParams.get('redirect');
 
   const handleChange = (e) => {
     setFormData({
@@ -52,7 +57,12 @@ const VolunteerRegister = () => {
 
       if (response.ok) {
         saveUser(data.user);
-        navigate('/'); // Volunteers stay on landing page
+        // Redirect to the specified URL or default to volunteer applications
+        if (redirectUrl) {
+          navigate(redirectUrl);
+        } else {
+          navigate('/volunteer/applications'); // Default to volunteer applications
+        }
       } else {
         setError(data.message || 'Registration failed');
       }
@@ -68,6 +78,12 @@ const VolunteerRegister = () => {
       <div className="auth-card">
         <h2>Register as Volunteer</h2>
         <p className="auth-subtitle">Join our community of volunteers</p>
+        
+        {redirectUrl && (
+          <div className="redirect-notice">
+            <p>Please register to continue to your requested page.</p>
+          </div>
+        )}
         
         {error && <div className="error-message">{error}</div>}
         

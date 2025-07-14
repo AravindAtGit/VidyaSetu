@@ -1,8 +1,8 @@
- import React from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { clearUser } from '../../utils/auth';
 
-const Home = () => {
+const PublicHome = () => {
   const handleClearSession = () => {
     clearUser();
     window.location.reload();
@@ -37,4 +37,4 @@ const Home = () => {
   );
 };
 
-export default Home; 
+export default PublicHome; 

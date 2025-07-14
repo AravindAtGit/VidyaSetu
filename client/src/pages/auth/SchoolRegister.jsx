@@ -56,7 +56,7 @@ const SchoolRegister = () => {
 
       if (response.ok) {
         saveUser(data.user);
-        navigate('/admin/dashboard');
+        navigate('/school/dashboard');
       } else {
         setError(data.message || 'Registration failed');
       }

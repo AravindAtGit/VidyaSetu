@@ -1,94 +1,82 @@
 const express = require('express');
 const router = express.Router();
 const InfrastructureRequest = require('../models/InfrastructureRequest');
+const InfrastructureApplication = require('../models/InfrastructureApplication');
+const School = require('../models/School');
 const authSession = require('../middleware/authSession');
 const roleCheck = require('../middleware/roleCheck');
 
-// POST /api/school/infra/requests - Create new infrastructure request (School only)
-router.post('/school/infra/requests', authSession, roleCheck('school'), async (req, res) => {
+// Public: List all open requests
+router.get('/requests/open', async (req, res) => {
+  try {
+    const requests = await InfrastructureRequest.find({ status: 'open', remainingQuantity: { $gt: 0 } })
+      .populate('school', 'schoolName location');
+    res.json(requests);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to fetch open requests' });
+  }
+});
+
+// School: Create a new request
+router.post('/school/requests', authSession, roleCheck('school'), async (req, res) => {
   try {
     const { category, subcategory, description, requiredQuantity } = req.body;
-    
-    if (!category || !subcategory) {
-      return res.status(400).json({ message: 'Category and subcategory are required' });
+    const schoolId = req.session.user.id;
+    if (!category || !subcategory || !requiredQuantity || requiredQuantity < 1) {
+      return res.status(400).json({ message: 'Invalid request data' });
     }
-
-    const newRequest = new InfrastructureRequest({
-      school: req.session.user.id,
+    const request = new InfrastructureRequest({
+      school: schoolId,
       category,
       subcategory,
       description,
-      requiredQuantity: requiredQuantity || 1
+      requiredQuantity,
+      remainingQuantity: requiredQuantity,
+      status: 'open',
+      applications: []
     });
-
-    const savedRequest = await newRequest.save();
-    res.status(201).json(savedRequest);
-  } catch (error) {
-    console.error('Error creating infrastructure request:', error);
+    await request.save();
+    await School.findByIdAndUpdate(schoolId, { $push: { requests: request._id } });
+    res.status(201).json(request);
+  } catch (err) {
+    console.error(err);
     res.status(500).json({ message: 'Failed to create request' });
   }
 });
 
-// GET /api/school/infra/requests - List requests by this school
-router.get('/school/infra/requests', authSession, roleCheck('school'), async (req, res) => {
+// School: List all requests for this school (only non-fulfilled)
+router.get('/school/requests', authSession, roleCheck('school'), async (req, res) => {
   try {
-    const requests = await InfrastructureRequest.find({ school: req.session.user.id })
-      .sort({ createdAt: -1 });
-    res.json(requests);
-  } catch (error) {
-    console.error('Error fetching school infrastructure requests:', error);
-    res.status(500).json({ message: 'Failed to fetch requests' });
-  }
-});
-
-// GET /api/volunteer/infra/requests - List all open requests (Volunteer only)
-router.get('/volunteer/infra/requests', authSession, roleCheck('volunteer'), async (req, res) => {
-  try {
-    const { category, subcategory, search } = req.query;
-    let query = { status: 'open' };
-
-    // Add filters if provided
-    if (category) {
-      query.category = category;
-    }
-    if (subcategory) {
-      query.subcategory = subcategory;
-    }
-    if (search) {
-      query.$or = [
-        { description: { $regex: search, $options: 'i' } },
-        { category: { $regex: search, $options: 'i' } },
-        { subcategory: { $regex: search, $options: 'i' } }
-      ];
-    }
-
-    const requests = await InfrastructureRequest.find(query)
-      .populate('school', 'schoolName location')
-      .sort({ createdAt: -1 });
-    
-    res.json(requests);
-  } catch (error) {
-    console.error('Error fetching volunteer infrastructure requests:', error);
-    res.status(500).json({ message: 'Failed to fetch requests' });
-  }
-});
-
-// GET /api/volunteer/infra/requests/:requestId - Get specific request by ID (Volunteer only)
-router.get('/volunteer/infra/requests/:requestId', authSession, roleCheck('volunteer'), async (req, res) => {
-  try {
-    const { requestId } = req.params;
-    
-    const request = await InfrastructureRequest.findById(requestId)
+    const schoolId = req.session.user.id;
+    const requests = await InfrastructureRequest.find({ school: schoolId, status: { $ne: 'fulfilled' } })
+      .populate('applications')
       .populate('school', 'schoolName location');
-    
-    if (!request) {
-      return res.status(404).json({ message: 'Request not found' });
-    }
-    
-    res.json(request);
-  } catch (error) {
-    console.error('Error fetching specific infrastructure request:', error);
-    res.status(500).json({ message: 'Failed to fetch request' });
+    res.json(requests);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to fetch school requests' });
+  }
+});
+
+// School: Get fulfilled requests (history) with all fulfilled applications
+router.get('/school/requests/history', authSession, roleCheck('school'), async (req, res) => {
+  try {
+    const schoolId = req.session.user.id;
+    const requests = await InfrastructureRequest.find({ school: schoolId, status: 'fulfilled' })
+      .populate({
+        path: 'applications',
+        match: { status: 'fulfilled' },
+        populate: [
+          { path: 'volunteer', select: 'name email contact' },
+          { path: 'request', select: 'category subcategory description requiredQuantity remainingQuantity' }
+        ]
+      })
+      .populate('school', 'schoolName location');
+    res.json(requests);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to fetch request history' });
   }
 });
 

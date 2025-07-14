@@ -2,7 +2,6 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import AboutVidyaSetu from './pages/public/AboutVidyaSetu';
 import HowToParticipate from './pages/public/HowToParticipate';
-import Contribute from './pages/public/Contribute';
 import ContributePage from './pages/public/ContributePage';
 import Home from './pages/public/Home';
 import TestPage from './pages/public/TestPage';
@@ -16,13 +15,9 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import StudentLayout from './layouts/StudentLayout/StudentLayout';
 import AdminLayout from './layouts/AdminLayout/AdminLayout';
-import VolunteerLayout from './components/VolunteerLayout';
 import PublicLayout from './components/PublicLayout';
 
 // Volunteer Pages
-import VolunteerDashboard from './pages/volunteer/VolunteerDashboard';
-import BrowseRequests from './pages/volunteer/BrowseRequests';
-import MyApplications from './pages/volunteer/MyApplications';
 import History from './pages/volunteer/History';
 import ApplyInfraForm from './pages/volunteer/ApplyInfraForm';
 import VolunteerMyApplications from './pages/volunteer/VolunteerMyApplications';
@@ -38,7 +33,7 @@ import Applications from './pages/admin/Applications';
 import Students from './pages/admin/Students';
 import Reports from './pages/admin/Reports';
 import SchoolInfraRequests from './pages/admin/SchoolInfraRequests';
-import SchoolInfraApplications from './pages/admin/SchoolInfraApplications';
+import SchoolHistory from './pages/admin/SchoolHistory';
 
 function App() {
   return (
@@ -48,9 +43,43 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<AboutVidyaSetu />} />
         <Route path="/how-to-participate" element={<HowToParticipate />} />
-        <Route path="/contribute" element={<Contribute />} />
+        <Route path="/contribute" element={<ContributePage />} />
         <Route path="/infra-requests" element={<ContributePage />} />
         <Route path="/test" element={<TestPage />} />
+        
+        {/* Volunteer pages accessible from public layout */}
+        <Route 
+          path="/volunteer/applications" 
+          element={
+            <ProtectedRoute role="volunteer">
+              <VolunteerMyApplications />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/volunteer/history" 
+          element={
+            <ProtectedRoute role="volunteer">
+              <History />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/volunteer/infra/apply/:id" 
+          element={
+            <ProtectedRoute role="volunteer">
+              <ApplyInfraForm />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/volunteer/apply/:requestId" 
+          element={
+            <ProtectedRoute role="volunteer">
+              <ApplyInfraForm />
+            </ProtectedRoute>
+          } 
+        />
       </Route>
 
       {/* Auth routes (no layout wrapper) */}
@@ -75,9 +104,9 @@ function App() {
         <Route path="progress" element={<Progress />} />
       </Route>
 
-      {/* Admin routes with AdminLayout */}
+      {/* School Admin routes with AdminLayout */}
       <Route 
-        path="/admin" 
+        path="/school" 
         element={
           <ProtectedRoute role="school">
             <AdminLayout />
@@ -85,30 +114,11 @@ function App() {
         }
       >
         <Route path="dashboard" element={<AdminDashboard />} />
-        <Route path="requests" element={<Requests />} />
+        <Route path="requests" element={<SchoolInfraRequests />} />
+        <Route path="history" element={<SchoolHistory />} />
         <Route path="applications" element={<Applications />} />
         <Route path="students" element={<Students />} />
         <Route path="reports" element={<Reports />} />
-        <Route path="infra/requests" element={<SchoolInfraRequests />} />
-        <Route path="infra/apps/:requestId" element={<SchoolInfraApplications />} />
-      </Route>
-
-      {/* Volunteer routes with VolunteerLayout */}
-      <Route 
-        path="/volunteer" 
-        element={
-          <ProtectedRoute role="volunteer">
-            <VolunteerLayout />
-          </ProtectedRoute>
-        }
-      >
-        <Route path="dashboard" element={<VolunteerDashboard />} />
-        <Route path="browse-requests" element={<BrowseRequests />} />
-        <Route path="my-applications" element={<MyApplications />} />
-        <Route path="history" element={<History />} />
-        <Route path="infra/requests" element={<ContributePage />} />
-        <Route path="infra/apply/:id" element={<ApplyInfraForm />} />
-        <Route path="infra/my-applications" element={<VolunteerMyApplications />} />
       </Route>
     </Routes>
   );

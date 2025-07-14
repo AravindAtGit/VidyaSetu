@@ -14,30 +14,28 @@ const infrastructureRequestSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  description: {
-    type: String
-  },
+  description: String,
   requiredQuantity: {
     type: Number,
-    default: 1
+    required: true
   },
   remainingQuantity: {
     type: Number,
-    default: function() {
-      return this.requiredQuantity;
-    }
+    required: true
   },
   status: {
     type: String,
-    enum: ['open', 'approved', 'fulfilled', 'completed'],
+    enum: ['open', 'partially_fulfilled', 'fulfilled'],
     default: 'open'
   },
+  applications: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'InfrastructureApplication'
+  }],
   createdAt: {
     type: Date,
     default: Date.now
   }
-}, {
-  timestamps: true
 });
 
 module.exports = mongoose.model('InfrastructureRequest', infrastructureRequestSchema); 

@@ -1,86 +1,50 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { getUser } from '../../utils/auth';
 import './ContributePage.css';
 
 const ContributePage = () => {
-  const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedSubcategory, setSelectedSubcategory] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [userRole, setUserRole] = useState(null);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
+  const user = getUser();
 
   useEffect(() => {
-    // Check user role from session/localStorage
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    setUserRole(user.role);
-    
-    fetchCategories();
     fetchRequests();
   }, []);
-
-  const fetchCategories = async () => {
-    try {
-      const response = await fetch('/api/infra/categories');
-      if (response.ok) {
-        const data = await response.json();
-        setCategories(data);
-      }
-    } catch (error) {
-      console.error('Error fetching categories:', error);
-    }
-  };
 
   const fetchRequests = async () => {
     try {
       setLoading(true);
-      let url = '/api/volunteer/infra/requests?';
-      const params = new URLSearchParams();
-      
-      if (selectedCategory) params.append('category', selectedCategory);
-      if (selectedSubcategory) params.append('subcategory', selectedSubcategory);
-      if (searchTerm) params.append('search', searchTerm);
-      
-      url += params.toString();
-      
-      const response = await fetch(url, {
+      const response = await fetch('/api/requests/open', {
         credentials: 'include'
       });
       
       if (response.ok) {
         const data = await response.json();
         setRequests(data);
-      } else if (response.status === 401) {
-        // User not logged in, show empty state
-        setRequests([]);
+      } else {
+        setError('Failed to fetch requests');
       }
     } catch (error) {
       console.error('Error fetching requests:', error);
-      setRequests([]);
+      setError('Failed to fetch requests');
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    fetchRequests();
-  }, [selectedCategory, selectedSubcategory, searchTerm]);
-
-  const handleCategoryChange = (e) => {
-    setSelectedCategory(e.target.value);
-    setSelectedSubcategory(''); // Reset subcategory when category changes
-  };
-
-  const handleViewRequest = (requestId) => {
-    if (userRole === 'volunteer') {
-      navigate(`/volunteer/infra/apply/${requestId}`);
-    } else if (userRole === 'school') {
-      navigate(`/school/infra/apps/${requestId}`);
+  const handleApply = (requestId) => {
+    if (!user) {
+      // Redirect to login with return URL to contribute page
+      navigate(`/login/volunteer?redirect=/contribute`);
+    } else if (user.role === 'volunteer') {
+      // Navigate to apply form
+      navigate(`/volunteer/apply/${requestId}`);
     } else {
-      // For non-logged in users, redirect to login
-      navigate('/login/volunteer');
+      // Show message for non-volunteer users
+      alert('Only volunteers can apply for infrastructure requests. Please login as a volunteer.');
     }
   };
 
@@ -94,107 +58,128 @@ const ContributePage = () => {
     }
   };
 
-  const selectedCategoryData = categories.find(cat => cat.name === selectedCategory);
+  if (loading) {
+    return (
+      <div className="contribute-page">
+        <div className="loading">Loading infrastructure requests...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="contribute-page">
-      <div className="contribute-header">
+      <div className="page-header">
         <h1>Infrastructure Requests</h1>
-        <p>Browse and contribute to infrastructure needs of schools</p>
+        <p>Help schools by contributing to their infrastructure needs</p>
       </div>
 
-      <div className="filters-section">
-        <div className="filter-row">
-          <div className="filter-group">
-            <label htmlFor="category">Category:</label>
-            <select
-              id="category"
-              value={selectedCategory}
-              onChange={handleCategoryChange}
-            >
-              <option value="">All Categories</option>
-              {categories.map((category) => (
-                <option key={category.name} value={category.name}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="filter-group">
-            <label htmlFor="subcategory">Subcategory:</label>
-            <select
-              id="subcategory"
-              value={selectedSubcategory}
-              onChange={(e) => setSelectedSubcategory(e.target.value)}
-              disabled={!selectedCategory}
-            >
-              <option value="">All Subcategories</option>
-              {selectedCategoryData?.subcategories.map((subcategory) => (
-                <option key={subcategory} value={subcategory}>
-                  {subcategory}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="filter-group">
-            <label htmlFor="search">Search:</label>
-            <input
-              type="text"
-              id="search"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search requests..."
-            />
-          </div>
+      {error && (
+        <div className="error-alert">
+          <p>{error}</p>
         </div>
-      </div>
+      )}
 
       <div className="requests-section">
-        {loading ? (
-          <div className="loading">Loading requests...</div>
+        {requests.length === 0 ? (
+          <div className="no-requests">
+            <h3>No Requests Available</h3>
+            <p>There are currently no infrastructure requests available.</p>
+            <p>Check back later for new opportunities to help schools.</p>
+          </div>
         ) : (
           <div className="requests-grid">
-            {requests.length === 0 ? (
-              <div className="no-requests">
-                <p>No infrastructure requests found matching your criteria.</p>
-              </div>
-            ) : (
-              requests.map((request) => (
-                <div key={request._id} className="request-card">
-                  <div className="request-header">
-                    <h3>{request.category}</h3>
-                    <span className={`status-badge ${getStatusColor(request.status)}`}>
-                      {request.status}
-                    </span>
+            {requests.map((request) => (
+              <div key={request._id} className="request-card">
+                <div className="request-header">
+                  <h3>{request.category}</h3>
+                  <span className={`status-badge ${getStatusColor(request.status)}`}>
+                    {request.status}
+                  </span>
+                </div>
+                
+                <div className="request-details">
+                  <div className="detail-row">
+                    <label>Subcategory:</label>
+                    <span>{request.subcategory}</span>
                   </div>
                   
-                  <div className="request-details">
-                    <p><strong>Subcategory:</strong> {request.subcategory}</p>
-                    {request.description && (
-                      <p><strong>Description:</strong> {request.description}</p>
-                    )}
-                    <p><strong>Quantity:</strong> {request.remainingQuantity}/{request.requiredQuantity}</p>
-                    <p><strong>School:</strong> {request.school?.schoolName || 'N/A'}</p>
-                    <p><strong>Location:</strong> {request.school?.location || 'N/A'}</p>
-                    <p><strong>Request ID:</strong> #{request._id.slice(-6)}</p>
+                  {request.description && (
+                    <div className="detail-row">
+                      <label>Description:</label>
+                      <span>{request.description}</span>
+                    </div>
+                  )}
+                  
+                  <div className="detail-row">
+                    <label>Quantity Needed:</label>
+                    <span>{request.requiredQuantity}</span>
                   </div>
                   
-                  <div className="request-actions">
-                    <button
-                      className="view-button"
-                      onClick={() => handleViewRequest(request._id)}
-                    >
-                      {userRole === 'volunteer' ? 'Apply Now' : 
-                       userRole === 'school' ? 'View & Update' : 'View Details'}
-                    </button>
+                  <div className="detail-row">
+                    <label>Remaining:</label>
+                    <span>{request.remainingQuantity}</span>
+                  </div>
+                  
+                  <div className="detail-row">
+                    <label>School:</label>
+                    <span>{request.school?.schoolName || 'N/A'}</span>
+                  </div>
+                  
+                  <div className="detail-row">
+                    <label>Location:</label>
+                    <span>{request.school?.location || 'N/A'}</span>
+                  </div>
+                  
+                  <div className="detail-row">
+                    <label>Posted:</label>
+                    <span>{new Date(request.createdAt).toLocaleDateString()}</span>
                   </div>
                 </div>
-              ))
-            )}
+                
+                <div className="request-actions">
+                  {request.status === 'open' && request.remainingQuantity > 0 ? (
+                    <button 
+                      className="apply-btn"
+                      onClick={() => handleApply(request._id)}
+                    >
+                      Apply to Contribute
+                    </button>
+                  ) : (
+                    <div className="request-closed">
+                      <p>This request is no longer accepting applications</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
           </div>
         )}
+      </div>
+
+      <div className="contribute-info">
+        <h2>How to Contribute</h2>
+        <div className="info-cards">
+          <div className="info-card">
+            <div className="info-icon">👤</div>
+            <h3>Register as Volunteer</h3>
+            <p>Create a volunteer account to start contributing to infrastructure requests.</p>
+            <Link to="/register/volunteer" className="info-link">Register Now</Link>
+          </div>
+          
+          <div className="info-card">
+            <div className="info-icon">🔍</div>
+            <h3>Browse Requests</h3>
+            <p>View available infrastructure requests from schools in need.</p>
+            <p>Find opportunities that match your ability to contribute.</p>
+          </div>
+          
+          <div className="info-card">
+            <div className="info-icon">✅</div>
+            <h3>Apply & Contribute</h3>
+            <p>Submit your application and deliver the requested items to schools.</p>
+            <p>Track your contributions and receive feedback.</p>
+          </div>
+        </div>
       </div>
     </div>
   );

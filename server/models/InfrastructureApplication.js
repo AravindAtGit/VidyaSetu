@@ -11,28 +11,26 @@ const infrastructureApplicationSchema = new mongoose.Schema({
     ref: 'Volunteer',
     required: true
   },
+  school: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'School',
+    required: true
+  },
   quantity: {
     type: Number,
-    default: 1,
-    min: 1
+    required: true
   },
   status: {
     type: String,
     enum: ['pending', 'approved', 'rejected', 'fulfilled'],
     default: 'pending'
   },
+  feedback: String,
+  fulfilledAt: Date,
   appliedAt: {
     type: Date,
     default: Date.now
-  },
-  fulfilledAt: {
-    type: Date
-  },
-  feedback: {
-    type: String
   }
-}, {
-  timestamps: true
 });
 
 module.exports = mongoose.model('InfrastructureApplication', infrastructureApplicationSchema); 

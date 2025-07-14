@@ -6,14 +6,7 @@ const schoolSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    trim: true,
-    validate: {
-      validator: function(v) {
-        // UDISE number is typically 11 digits
-        return /^\d{11}$/.test(v);
-      },
-      message: 'UDISE number must be exactly 11 digits'
-    }
+    trim: true
   },
   passwordHash: {
     type: String,
@@ -39,18 +32,11 @@ const schoolSchema = new mongoose.Schema({
   mobileNumber: {
     type: String,
     required: true,
-    trim: true,
-    validate: {
-      validator: function(v) {
-        // Indian mobile number validation (10 digits)
-        return /^[6-9]\d{9}$/.test(v);
-      },
-      message: 'Mobile number must be a valid 10-digit Indian number'
-    }
+    trim: true
   },
-  students: [{
+  requests: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Student'
+    ref: 'InfrastructureRequest'
   }],
   createdAt: {
     type: Date,
@@ -58,15 +44,12 @@ const schoolSchema = new mongoose.Schema({
   }
 });
 
-// Method to compare password
 schoolSchema.methods.comparePassword = async function(candidatePassword) {
   return bcrypt.compare(candidatePassword, this.passwordHash);
 };
 
-// Pre-save middleware to hash password
 schoolSchema.pre('save', async function(next) {
   if (!this.isModified('passwordHash')) return next();
-  
   try {
     const salt = await bcrypt.genSalt(10);
     this.passwordHash = await bcrypt.hash(this.passwordHash, salt);

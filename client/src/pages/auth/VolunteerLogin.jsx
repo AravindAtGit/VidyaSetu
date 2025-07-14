@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { saveUser } from '../../utils/auth';
 import './AuthForms.css';
 
@@ -11,6 +11,11 @@ const VolunteerLogin = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Get redirect URL from query parameters
+  const searchParams = new URLSearchParams(location.search);
+  const redirectUrl = searchParams.get('redirect');
 
   const handleChange = (e) => {
     setFormData({
@@ -25,7 +30,7 @@ const VolunteerLogin = () => {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch('http://localhost:5000/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -41,7 +46,12 @@ const VolunteerLogin = () => {
 
       if (response.ok) {
         saveUser(data.user);
-        navigate('/'); // Volunteers stay on landing page
+        // Redirect to the specified URL or default to volunteer dashboard
+        if (redirectUrl) {
+          navigate(redirectUrl);
+        } else {
+          navigate('/volunteer/applications'); // Default to volunteer applications
+        }
       } else {
         setError(data.message || 'Login failed');
       }
@@ -57,6 +67,12 @@ const VolunteerLogin = () => {
       <div className="auth-card">
         <h2>Volunteer Login</h2>
         <p className="auth-subtitle">Access volunteer resources and opportunities</p>
+        
+        {redirectUrl && (
+          <div className="redirect-notice">
+            <p>Please login to continue to your requested page.</p>
+          </div>
+        )}
         
         {error && <div className="error-message">{error}</div>}
         

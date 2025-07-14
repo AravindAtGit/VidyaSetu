@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { getUser, logoutUser } from '../utils/auth';
+import { getUser, logoutUser, getRole } from '../utils/auth';
 import './Navbar.css';
 
 const Navbar = () => {
   const navigate = useNavigate();
   const user = getUser();
+  const userRole = getRole();
   const [showAuthDropdown, setShowAuthDropdown] = useState(false);
 
   const handleLogout = async () => {
@@ -27,11 +28,42 @@ const Navbar = () => {
         </div>
         
         <div className="navbar-menu">
-          <Link to="/" className="navbar-link">Home</Link>
+          <Link to="/" className="navbar-link">
+            <span className="home-icon">🏠</span>
+            Home
+          </Link>
           <Link to="/about" className="navbar-link">About</Link>
           <Link to="/how-to-participate" className="navbar-link">How to Participate</Link>
           <Link to="/contribute" className="navbar-link">Contribute</Link>
           <Link to="/infra-requests" className="navbar-link">Infrastructure</Link>
+          
+          {/* Show volunteer-specific links only for logged-in volunteers */}
+          {user && userRole === 'volunteer' && (
+            <>
+              <Link to="/volunteer/applications" className="navbar-link">
+                <span className="nav-icon">📋</span>
+                My Applications
+              </Link>
+              <Link to="/volunteer/history" className="navbar-link">
+                <span className="nav-icon">📚</span>
+                History
+              </Link>
+            </>
+          )}
+
+          {/* Add school-specific links */}
+          {user && userRole === 'school' && (
+            <>
+              <Link to="/school/requests" className="navbar-link">
+                <span className="nav-icon">📋</span>
+                Requests
+              </Link>
+              <Link to="/school/history" className="navbar-link">
+                <span className="nav-icon">📚</span>
+                History
+              </Link>
+            </>
+          )}
         </div>
 
         <div className="navbar-auth">

@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { adminLinks } from '../../components/DashboardLinks';
-import { logoutUser } from '../../utils/auth';
+import { adminLinks } from './DashboardLinks';
+import { getUser, logoutUser } from '../utils/auth';
 import './AdminNavbar.css';
 
 const AdminNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const user = JSON.parse(localStorage.getItem('user'));
+  const user = getUser();
 
   const handleLogout = async () => {
     await logoutUser();
@@ -23,7 +23,7 @@ const AdminNavbar = () => {
     <nav className="admin-navbar">
       <div className="admin-navbar-container">
         <div className="admin-navbar-brand">
-          <Link to="/admin/dashboard" className="admin-navbar-logo">
+          <Link to="/school/dashboard" className="admin-navbar-logo">
             <span className="brand-icon">🎓</span>
             <span className="brand-text">VidyaSetu Admin</span>
           </Link>

@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './SchoolInfraRequests.css';
+import './AdminPages.css';
 
 const SchoolInfraRequests = () => {
   const [requests, setRequests] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [showCreateForm, setShowCreateForm] = useState(false);
-  const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedSubcategory, setSelectedSubcategory] = useState('');
-  const [description, setDescription] = useState('');
-  const [requiredQuantity, setRequiredQuantity] = useState(1);
-  const [creating, setCreating] = useState(false);
+  const [formData, setFormData] = useState({
+    requestType: 'infrastructure',
+    category: '',
+    subcategory: '',
+    description: '',
+    requiredQuantity: 1
+  });
+  const [history, setHistory] = useState([]);
+  const [historyError, setHistoryError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,10 +24,14 @@ const SchoolInfraRequests = () => {
     fetchCategories();
   }, []);
 
+  useEffect(() => {
+    fetchHistory();
+  }, []);
+
   const fetchRequests = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/school/infra/requests', {
+      const response = await fetch('/api/school/requests', {
         credentials: 'include'
       });
       
@@ -43,67 +51,87 @@ const SchoolInfraRequests = () => {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch('/api/infra/categories');
+      const response = await fetch('/api/infra/categories', {
+        credentials: 'include'
+      });
+      
       if (response.ok) {
         const data = await response.json();
         setCategories(data);
+      } else {
+        console.error('Failed to fetch categories');
       }
     } catch (error) {
       console.error('Error fetching categories:', error);
     }
   };
 
+  const fetchHistory = async () => {
+    try {
+      const response = await fetch('/api/school/requests/history', {
+        credentials: 'include'
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setHistory(data);
+      } else {
+        setHistoryError('Unable to fetch history');
+      }
+    } catch (error) {
+      setHistoryError('Unable to fetch history');
+    }
+  };
+
   const handleCreateRequest = async (e) => {
     e.preventDefault();
     
-    if (!selectedCategory || !selectedSubcategory) {
-      alert('Please select both category and subcategory');
-      return;
-    }
-
     try {
-      setCreating(true);
-      const response = await fetch('/api/school/infra/requests', {
+      const response = await fetch('/api/school/requests', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify({
-          category: selectedCategory,
-          subcategory: selectedSubcategory,
-          description,
-          requiredQuantity: parseInt(requiredQuantity)
-        })
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        alert('Request created successfully!');
         setShowCreateForm(false);
-        resetForm();
+        setFormData({
+          requestType: 'infrastructure',
+          category: '',
+          subcategory: '',
+          description: '',
+          requiredQuantity: 1
+        });
         fetchRequests();
       } else {
         const data = await response.json();
-        alert(data.message || 'Failed to create request');
+        setError(data.message || 'Failed to create request');
       }
     } catch (error) {
       console.error('Error creating request:', error);
-      alert('Failed to create request');
-    } finally {
-      setCreating(false);
+      setError('Failed to create request');
     }
   };
 
-  const resetForm = () => {
-    setSelectedCategory('');
-    setSelectedSubcategory('');
-    setDescription('');
-    setRequiredQuantity(1);
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+
+    // Reset subcategory when category changes
+    if (name === 'category') {
+      setFormData(prev => ({
+        ...prev,
+        category: value,
+        subcategory: ''
+      }));
+    }
   };
 
-  const handleCategoryChange = (e) => {
-    setSelectedCategory(e.target.value);
-    setSelectedSubcategory('');
+  const handleViewApplications = (requestId) => {
+    navigate(`/school/infra/apps/${requestId}`);
   };
 
   const getStatusColor = (status) => {
@@ -116,27 +144,25 @@ const SchoolInfraRequests = () => {
     }
   };
 
-  const selectedCategoryData = categories.find(cat => cat.name === selectedCategory);
+  // Get subcategories for selected category
+  const getSubcategories = () => {
+    const selectedCategory = categories.find(cat => cat.name === formData.category);
+    return selectedCategory ? selectedCategory.subcategories : [];
+  };
 
   if (loading) {
     return (
-      <div className="school-requests-container">
-        <div className="loading">Loading your requests...</div>
+      <div className="admin-page">
+        <div className="loading">Loading requests...</div>
       </div>
     );
   }
 
   return (
-    <div className="school-requests-container">
-      <div className="requests-header">
-        <h1>Infrastructure Requests</h1>
-        <p>Manage your school's infrastructure needs</p>
-        <button 
-          className="create-button"
-          onClick={() => setShowCreateForm(!showCreateForm)}
-        >
-          {showCreateForm ? 'Cancel' : 'Create New Request'}
-        </button>
+    <div className="admin-page">
+      <div className="page-header">
+        <h1>Pending Requests</h1>
+        <p>Manage your active infrastructure and virtual class requests</p>
       </div>
 
       {error && (
@@ -145,99 +171,27 @@ const SchoolInfraRequests = () => {
         </div>
       )}
 
-      {showCreateForm && (
-        <div className="create-form-section">
-          <h2>Create New Infrastructure Request</h2>
-          <form onSubmit={handleCreateRequest} className="create-form">
-            <div className="form-row">
-              <div className="form-group">
-                <label htmlFor="category">Category *</label>
-                <select
-                  id="category"
-                  value={selectedCategory}
-                  onChange={handleCategoryChange}
-                  required
-                >
-                  <option value="">Select Category</option>
-                  {categories.map((category) => (
-                    <option key={category.name} value={category.name}>
-                      {category.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="subcategory">Subcategory *</label>
-                <select
-                  id="subcategory"
-                  value={selectedSubcategory}
-                  onChange={(e) => setSelectedSubcategory(e.target.value)}
-                  disabled={!selectedCategory}
-                  required
-                >
-                  <option value="">Select Subcategory</option>
-                  {selectedCategoryData?.subcategories.map((subcategory) => (
-                    <option key={subcategory} value={subcategory}>
-                      {subcategory}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="description">Description</label>
-              <textarea
-                id="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="Provide additional details about your request..."
-                rows="3"
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="quantity">Required Quantity</label>
-              <input
-                type="number"
-                id="quantity"
-                value={requiredQuantity}
-                onChange={(e) => setRequiredQuantity(e.target.value)}
-                min="1"
-                required
-              />
-            </div>
-
-            <div className="form-actions">
-              <button
-                type="submit"
-                className="submit-button"
-                disabled={creating}
-              >
-                {creating ? 'Creating...' : 'Create Request'}
-              </button>
-              <button
-                type="button"
-                className="cancel-button"
-                onClick={() => {
-                  setShowCreateForm(false);
-                  resetForm();
-                }}
-                disabled={creating}
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
-
       <div className="requests-section">
+        <div className="section-header">
+          <h2>Pending Requests</h2>
+          <button 
+            className="create-request-btn"
+            onClick={() => setShowCreateForm(true)}
+          >
+            + Create New Request
+          </button>
+        </div>
+
         {requests.length === 0 ? (
           <div className="no-requests">
-            <h3>No Requests Found</h3>
-            <p>You haven't created any infrastructure requests yet.</p>
+            <h3>No Pending Requests</h3>
+            <p>You don't have any pending requests at the moment.</p>
+            <button 
+              className="create-first-btn"
+              onClick={() => setShowCreateForm(true)}
+            >
+              Create Your First Request
+            </button>
           </div>
         ) : (
           <div className="requests-grid">
@@ -251,19 +205,43 @@ const SchoolInfraRequests = () => {
                 </div>
                 
                 <div className="request-details">
-                  <p><strong>Subcategory:</strong> {request.subcategory}</p>
+                  <div className="detail-row">
+                    <label>Type:</label>
+                    <span>Infrastructure</span>
+                  </div>
+                  
+                  <div className="detail-row">
+                    <label>Subcategory:</label>
+                    <span>{request.subcategory}</span>
+                  </div>
+                  
                   {request.description && (
-                    <p><strong>Description:</strong> {request.description}</p>
+                    <div className="detail-row">
+                      <label>Description:</label>
+                      <span>{request.description}</span>
+                    </div>
                   )}
-                  <p><strong>Quantity:</strong> {request.remainingQuantity}/{request.requiredQuantity}</p>
-                  <p><strong>Created:</strong> {new Date(request.createdAt).toLocaleDateString()}</p>
-                  <p><strong>Request ID:</strong> #{request._id.slice(-6)}</p>
+                  
+                  <div className="detail-row">
+                    <label>Quantity:</label>
+                    <span>{request.requiredQuantity}</span>
+                  </div>
+                  
+                  <div className="detail-row">
+                    <label>Remaining:</label>
+                    <span>{request.remainingQuantity}</span>
+                  </div>
+                  
+                  <div className="detail-row">
+                    <label>Created:</label>
+                    <span>{new Date(request.createdAt).toLocaleDateString()}</span>
+                  </div>
                 </div>
                 
                 <div className="request-actions">
-                  <button
-                    className="view-applications-button"
-                    onClick={() => navigate(`/admin/infra/apps/${request._id}`)}
+                  <button 
+                    className="view-applications-btn"
+                    onClick={() => handleViewApplications(request._id)}
                   >
                     View Applications
                   </button>
@@ -273,6 +251,110 @@ const SchoolInfraRequests = () => {
           </div>
         )}
       </div>
+
+      {/* Create Request Modal */}
+      {showCreateForm && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h2>Create New Request</h2>
+              <button 
+                className="close-btn"
+                onClick={() => setShowCreateForm(false)}
+              >
+                ×
+              </button>
+            </div>
+            
+            <form onSubmit={handleCreateRequest}>
+              <div className="form-group">
+                <label htmlFor="requestType">Request Type</label>
+                <select
+                  id="requestType"
+                  name="requestType"
+                  value={formData.requestType}
+                  onChange={handleFormChange}
+                  required
+                >
+                  <option value="infrastructure">Infrastructure</option>
+                  <option value="virtual-class">Virtual Class</option>
+                </select>
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="category">Category</label>
+                <select
+                  id="category"
+                  name="category"
+                  value={formData.category}
+                  onChange={handleFormChange}
+                  required
+                >
+                  <option value="">Select a category</option>
+                  {categories.map((category) => (
+                    <option key={category._id} value={category.name}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="subcategory">Subcategory</label>
+                <select
+                  id="subcategory"
+                  name="subcategory"
+                  value={formData.subcategory}
+                  onChange={handleFormChange}
+                  required
+                  disabled={!formData.category}
+                >
+                  <option value="">Select a subcategory</option>
+                  {getSubcategories().map((subcategory) => (
+                    <option key={subcategory} value={subcategory}>
+                      {subcategory}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="description">Description</label>
+                <textarea
+                  id="description"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleFormChange}
+                  rows="3"
+                  placeholder="Describe what you need..."
+                />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="requiredQuantity">Quantity</label>
+                <input
+                  type="number"
+                  id="requiredQuantity"
+                  name="requiredQuantity"
+                  value={formData.requiredQuantity}
+                  onChange={handleFormChange}
+                  min="1"
+                  required
+                />
+              </div>
+              
+              <div className="form-actions">
+                <button type="button" className="cancel-btn" onClick={() => setShowCreateForm(false)}>
+                  Cancel
+                </button>
+                <button type="submit" className="submit-btn">
+                  Create Request
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

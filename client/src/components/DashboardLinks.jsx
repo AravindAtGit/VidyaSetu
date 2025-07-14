@@ -2,11 +2,6 @@
 
 export const volunteerLinks = [
   {
-    path: '/volunteer/dashboard',
-    label: 'Home',
-    icon: '🏠'
-  },
-  {
     path: '/volunteer/browse-requests',
     label: 'Browse Requests',
     icon: '🔍'
@@ -58,34 +53,29 @@ export const studentLinks = [
 
 export const adminLinks = [
   {
-    path: '/admin/dashboard',
+    path: '/school/dashboard',
     label: 'Home',
     icon: '🏠'
   },
   {
-    path: '/admin/requests',
-    label: 'Requests',
+    path: '/school/requests',
+    label: 'Requests', // Renamed from 'Pending Requests'
     icon: '📋'
   },
   {
-    path: '/admin/applications',
-    label: 'Applications',
-    icon: '📝'
+    path: '/school/history',
+    label: 'History',
+    icon: '📚'
   },
   {
-    path: '/admin/students',
+    path: '/school/students',
     label: 'Students',
     icon: '👥'
   },
   {
-    path: '/admin/reports',
+    path: '/school/reports',
     label: 'Reports',
     icon: '📊'
-  },
-  {
-    path: '/admin/infra/requests',
-    label: 'Infrastructure',
-    icon: '🏗️'
   }
 ];
 
