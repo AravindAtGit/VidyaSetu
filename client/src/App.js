@@ -26,14 +26,19 @@ import VolunteerMyApplications from './pages/volunteer/VolunteerMyApplications';
 import MyClasses from './pages/student/MyClasses';
 import Resources from './pages/student/Resources';
 import Progress from './pages/student/Progress';
+import StudentQuizzes from './pages/student/Quizzes';
 
 // Admin Pages
-import Requests from './pages/admin/Requests';
 import Applications from './pages/admin/Applications';
 import Students from './pages/admin/Students';
+import StudentDetail from './pages/admin/StudentDetail';
 import Reports from './pages/admin/Reports';
 import SchoolInfraRequests from './pages/admin/SchoolInfraRequests';
 import SchoolHistory from './pages/admin/SchoolHistory';
+import UploadContent from './pages/admin/UploadContent';
+import AdminQuizzes from './pages/admin/Quizzes';
+import QuizResults from './pages/admin/QuizResults';
+import VirtualClasses from './pages/admin/VirtualClasses';
 
 function App() {
   return (
@@ -102,6 +107,7 @@ function App() {
         <Route path="my-classes" element={<MyClasses />} />
         <Route path="resources" element={<Resources />} />
         <Route path="progress" element={<Progress />} />
+        <Route path="quizzes" element={<StudentQuizzes />} />
       </Route>
 
       {/* School Admin routes with AdminLayout */}
@@ -114,10 +120,19 @@ function App() {
         }
       >
         <Route path="dashboard" element={<AdminDashboard />} />
+        {/* Infrastructure Management */}
         <Route path="requests" element={<SchoolInfraRequests />} />
         <Route path="history" element={<SchoolHistory />} />
         <Route path="applications" element={<Applications />} />
+        {/* Student Management */}
         <Route path="students" element={<Students />} />
+        <Route path="students/:studentId" element={<StudentDetail />} />
+        {/* Educational Content Management */}
+        <Route path="upload" element={<UploadContent />} />
+        <Route path="quizzes" element={<AdminQuizzes />} />
+        <Route path="quiz-results" element={<QuizResults />} />
+        <Route path="virtual-classes" element={<VirtualClasses />} />
+        {/* Reports and Analytics */}
         <Route path="reports" element={<Reports />} />
       </Route>
     </Routes>

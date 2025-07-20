@@ -54,28 +54,57 @@ export const studentLinks = [
 export const adminLinks = [
   {
     path: '/school/dashboard',
-    label: 'Home',
+    label: 'Dashboard',
     icon: '🏠'
   },
+  // Infrastructure Management
   {
     path: '/school/requests',
-    label: 'Requests', // Renamed from 'Pending Requests'
+    label: 'Infra Requests',
     icon: '📋'
+  },
+  {
+    path: '/school/applications',
+    label: 'Applications',
+    icon: '📝'
   },
   {
     path: '/school/history',
     label: 'History',
     icon: '📚'
   },
+  // Student Management
   {
     path: '/school/students',
     label: 'Students',
     icon: '👥'
   },
+  // Educational Content
+  {
+    path: '/school/upload',
+    label: 'Upload Content',
+    icon: '📤'
+  },
+  {
+    path: '/school/quizzes',
+    label: 'Quizzes',
+    icon: '❓'
+  },
+  {
+    path: '/school/quiz-results',
+    label: 'Quiz Results',
+    icon: '📊'
+  },
+  {
+    path: '/school/virtual-classes',
+    label: 'Virtual Classes',
+    icon: '💻'
+  },
+  // Reports
   {
     path: '/school/reports',
     label: 'Reports',
-    icon: '📊'
+    icon: '📈'
   }
 ];
 

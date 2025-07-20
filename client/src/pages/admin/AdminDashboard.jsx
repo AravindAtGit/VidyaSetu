@@ -23,7 +23,7 @@ const AdminDashboard = () => {
       }
 
       // Fetch request count
-      const requestResponse = await fetch('/api/school/infra/requests', {
+      const requestResponse = await fetch('/api/infra/requests/school', {
         credentials: 'include',
       });
       if (requestResponse.ok) {
@@ -32,7 +32,7 @@ const AdminDashboard = () => {
       }
 
       // Fetch application count
-      const applicationResponse = await fetch('/api/school/infra/applications', {
+      const applicationResponse = await fetch('/api/infra/school/applications', {
         credentials: 'include',
       });
       if (applicationResponse.ok) {

@@ -31,7 +31,7 @@ const SchoolInfraRequests = () => {
   const fetchRequests = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/school/requests', {
+      const response = await fetch('/api/infra/requests/school', {
         credentials: 'include'
       });
       
@@ -68,7 +68,7 @@ const SchoolInfraRequests = () => {
 
   const fetchHistory = async () => {
     try {
-      const response = await fetch('/api/school/requests/history', {
+      const response = await fetch('/api/infra/requests/history', {
         credentials: 'include'
       });
       if (response.ok) {
@@ -86,7 +86,7 @@ const SchoolInfraRequests = () => {
     e.preventDefault();
     
     try {
-      const response = await fetch('/api/school/requests', {
+      const response = await fetch('/api/infra/requests', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

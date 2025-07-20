@@ -32,6 +32,14 @@ const studentSchema = new mongoose.Schema({
     lowercase: true,
     trim: true
   },
+  phone: {
+    type: String,
+    trim: true
+  },
+  grade: {
+    type: String,
+    trim: true
+  },
   createdAt: {
     type: Date,
     default: Date.now

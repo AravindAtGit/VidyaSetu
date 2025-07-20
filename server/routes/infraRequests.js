@@ -19,7 +19,7 @@ router.get('/requests/open', async (req, res) => {
 });
 
 // School: Create a new request
-router.post('/school/requests', authSession, roleCheck('school'), async (req, res) => {
+router.post('/requests', authSession, roleCheck('school'), async (req, res) => {
   try {
     const { category, subcategory, description, requiredQuantity } = req.body;
     const schoolId = req.session.user.id;
@@ -46,7 +46,7 @@ router.post('/school/requests', authSession, roleCheck('school'), async (req, re
 });
 
 // School: List all requests for this school (only non-fulfilled)
-router.get('/school/requests', authSession, roleCheck('school'), async (req, res) => {
+router.get('/requests/school', authSession, roleCheck('school'), async (req, res) => {
   try {
     const schoolId = req.session.user.id;
     const requests = await InfrastructureRequest.find({ school: schoolId, status: { $ne: 'fulfilled' } })
@@ -60,7 +60,7 @@ router.get('/school/requests', authSession, roleCheck('school'), async (req, res
 });
 
 // School: Get fulfilled requests (history) with all fulfilled applications
-router.get('/school/requests/history', authSession, roleCheck('school'), async (req, res) => {
+router.get('/requests/history', authSession, roleCheck('school'), async (req, res) => {
   try {
     const schoolId = req.session.user.id;
     const requests = await InfrastructureRequest.find({ school: schoolId, status: 'fulfilled' })

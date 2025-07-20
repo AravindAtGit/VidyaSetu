@@ -124,6 +124,21 @@ router.get('/volunteer/applications/history', authSession, roleCheck('volunteer'
   }
 });
 
+// School: Get all applications for this school
+router.get('/school/applications', authSession, roleCheck('school'), async (req, res) => {
+  try {
+    const schoolId = req.session.user.id;
+    const applications = await InfrastructureApplication.find({ school: schoolId })
+      .populate('volunteer', 'name email contact')
+      .populate('request', 'category subcategory description requiredQuantity remainingQuantity createdAt')
+      .sort({ createdAt: -1 });
+    res.json(applications);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to fetch school applications' });
+  }
+});
+
 // School: Get all applications for a request
 router.get('/school/applications/:requestId', authSession, roleCheck('school'), async (req, res) => {
   try {

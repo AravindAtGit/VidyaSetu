@@ -18,7 +18,7 @@ const ApplyInfraForm = () => {
   const fetchRequest = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`/api/requests/open`);
+      const response = await fetch(`/api/infra/requests/open`);
       if (response.ok) {
         const data = await response.json();
         const found = data.find(r => r._id === requestId);
@@ -46,7 +46,7 @@ const ApplyInfraForm = () => {
       return;
     }
     try {
-      const response = await fetch(`/api/volunteer/apply/${requestId}`, {
+      const response = await fetch(`/api/infra/volunteer/apply/${requestId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
@@ -54,7 +54,7 @@ const ApplyInfraForm = () => {
       });
       if (response.ok) {
         setSuccess('Application submitted successfully!');
-        setTimeout(() => navigate('/applications'), 1500);
+        setTimeout(() => navigate('/volunteer/applications'), 1500);
       } else {
         const data = await response.json();
         setError(data.message || 'Failed to submit application.');

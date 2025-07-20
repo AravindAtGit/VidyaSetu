@@ -12,11 +12,12 @@ const SchoolHistory = () => {
 
   const fetchHistory = async () => {
     try {
-      const response = await fetch('/api/school/requests/history', {
+      const response = await fetch('/api/infra/requests/history', {
         credentials: 'include'
       });
       if (response.ok) {
         const data = await response.json();
+        // Backend returns requests array directly, not wrapped in an object
         setHistory(data);
       } else {
         setHistoryError('Unable to fetch history');
@@ -39,19 +40,20 @@ const SchoolHistory = () => {
       ) : (
         <div className="history-grid">
           {history.map(request => (
-            <div key={request._id} className="history-card">
-              <h3>{request.category} - {request.subcategory}</h3>
-              <p><strong>Description:</strong> {request.description}</p>
-              <p><strong>Quantity:</strong> {request.requiredQuantity}</p>
-              <p><strong>Fulfilled:</strong> {new Date(request.createdAt).toLocaleDateString()}</p>
+            <div key={request._id || request.id} className="history-card">
+              <h3>{request.category || 'Unknown'} - {request.subcategory || 'Unknown'}</h3>
+              <p><strong>Description:</strong> {request.description || 'No description available'}</p>
+              <p><strong>Quantity:</strong> {request.requiredQuantity || 0}</p>
+              <p><strong>Fulfilled:</strong> {request.createdAt ? new Date(request.createdAt).toLocaleDateString() : 'Unknown date'}</p>
               <div className="fulfilled-applications">
                 <h4>Fulfilled By:</h4>
                 {request.applications && request.applications.length > 0 ? (
-                  request.applications.map(app => (
-                    <div key={app._id} className="fulfilled-app">
-                      <p><strong>Volunteer:</strong> {app.volunteer?.name} ({app.volunteer?.email}, {app.volunteer?.contact})</p>
-                      <p><strong>Quantity Provided:</strong> {app.quantity}</p>
-                      <p><strong>Feedback:</strong> {app.feedback}</p>
+                  request.applications.map((app, index) => (
+                    <div key={app._id || app.id || `app-${index}`} className="fulfilled-app">
+                      <p><strong>Volunteer:</strong> {app.volunteer?.name || 'Unknown'} 
+                        ({app.volunteer?.email || 'No email'}, {app.volunteer?.contact || 'No contact'})</p>
+                      <p><strong>Quantity Provided:</strong> {app.quantity || 0}</p>
+                      <p><strong>Feedback:</strong> {app.feedback || 'No feedback provided'}</p>
                       <p><strong>Fulfilled At:</strong> {app.fulfilledAt ? new Date(app.fulfilledAt).toLocaleDateString() : 'N/A'}</p>
                     </div>
                   ))
