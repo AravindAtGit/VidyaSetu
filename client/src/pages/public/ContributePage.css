@@ -1,73 +1,80 @@
+
 .contribute-page {
-  max-width: 1200px;
+  max-width: 13var(--space-2xl);
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2.1rem 0;
+  font-family: 'Inter', sans-serif;
+  background: var(--clr-bg-light);
 }
 
 .page-header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 3.1rem;
 }
 
 .page-header h1 {
-  font-size: 2.5rem;
-  color: #2c3e50;
-  margin-bottom: 1rem;
+  font-size: 2.1rem;
+  color: var(--clr-primary);
+  margin-bottom: 0.75rem;
+  font-weight: 700;
 }
 
 .page-header p {
-  font-size: 1.1rem;
-  color: #7f8c8d;
+  font-size: 1.121rem;
+  color: var(--clr-secondary);
 }
 
 .error-alert {
-  background-color: #fee;
-  border: 1px solid #fcc;
-  color: #c33;
+  background-color: var(--clr-error-bg);
+  border: 1px solid var(--clr-error);
+  color: var(--clr-error);
   padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 2rem;
+  border-radius: var(--radius-lg);
+  margin-bottom: 1rem;
+  font-size: 1.121rem;
 }
 
 .requests-section {
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 }
 
 .no-requests {
   text-align: center;
-  padding: 3rem;
-  background-color: #f8f9fa;
-  border-radius: 12px;
+  padding: 1rem;
+  background-color: var(--clr-bg-light);
+  border-radius: var(--radius-lg);
+  font-size: 1.121rem;
 }
 
 .no-requests h3 {
-  color: #6c757d;
+  color: var(--clr-secondary);
   margin-bottom: 1rem;
+  font-size: 1.121rem;
 }
 
 .no-requests p {
-  color: #6c757d;
-  margin-bottom: 0.5rem;
+  color: var(--clr-secondary);
+  margin-bottom: 1px;
 }
 
-.requests-grid {
+.contribute-page .requests-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(3var(--space-3xl), 1fr));
+  gap: 1rem;
 }
 
 .request-card {
-  background: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e9ecef;
+  background: var(--clr-bg);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  box-shadow: 0 0.25rem var(--radius-lg) rgba(0,0,0,0.10);
+  border: 1px solid var(--clr-border);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .request-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+  transform: translateY(-0.25rem);
+  box-shadow: 0 var(--radius-lg) 1var(--space-xs) rgba(0, 0, 0, 0.15);
 }
 
 .request-header {
@@ -76,20 +83,21 @@
   align-items: center;
   margin-bottom: 1rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid #e9ecef;
+  border-bottom: 1px solid var(--clr-border);
 }
 
 .request-header h3 {
-  color: #2c3e50;
+  color: var(--clr-primary);
   margin: 0;
-  font-size: 1.3rem;
+  font-size: 1.121rem;
+  font-weight: 700;
 }
 
 .status-badge {
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
+  padding: 0.21rem 0.71rem;
+  border-radius: var(--fs-400);
+  font-size: 1rem;
+  font-weight: 700;
   text-transform: uppercase;
 }
 
@@ -114,20 +122,20 @@
 }
 
 .status-badge.gray {
-  background-color: #f8f9fa;
-  color: #6c757d;
+  background-color: var(--clr-bg-light);
+  color: var(--clr-secondary);
 }
 
 .request-details {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.1rem;
 }
 
 .detail-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.75rem;
-  padding: 0.5rem 0;
+  margin-bottom: 0.71rem;
+  padding: 1px 0;
   border-bottom: 1px solid #f8f9fa;
 }
 
@@ -138,7 +146,7 @@
 .detail-row label {
   font-weight: 600;
   color: #495057;
-  min-width: 120px;
+  min-width: 1var(--fs-400);
 }
 
 .detail-row span {
@@ -153,10 +161,10 @@
 
 .apply-btn {
   background-color: #007bff;
-  color: white;
+  color: var(--clr-bg);
   border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  padding: 0.71rem 1.1rem;
+  border-radius: var(--radius-lg);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -171,7 +179,7 @@
 .request-closed {
   background-color: #f8f9fa;
   padding: 1rem;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   text-align: center;
 }
 
@@ -183,33 +191,33 @@
 
 .contribute-info {
   background-color: #f8f9fa;
-  padding: 2rem;
-  border-radius: 12px;
-  margin-top: 3rem;
+  padding: 1rem;
+  border-radius: 10.25rem;
+  margin-top: 1rem;
 }
 
 .contribute-info h2 {
   text-align: center;
   color: #2c3e50;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
-.info-cards {
+.contribute-page .info-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(2var(--space-3xl), 1fr));
+  gap: 1rem;
 }
 
 .info-card {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
+  background: var(--clr-bg);
+  padding: 1.1rem;
+  border-radius: var(--radius-lg);
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.25rem var(--radius-sm) rgba(0, 0, 0, 0.1);
 }
 
 .info-icon {
-  font-size: 2.5rem;
+  font-size: 2.1rem;
   margin-bottom: 1rem;
 }
 
@@ -227,9 +235,9 @@
 .info-link {
   display: inline-block;
   background-color: #28a745;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
+  color: var(--clr-bg);
+  padding: 1px 1rem;
+  border-radius: var(--radius-md);
   text-decoration: none;
   font-weight: 600;
   transition: background-color 0.2s;
@@ -238,30 +246,31 @@
 .info-link:hover {
   background-color: #218838;
   text-decoration: none;
-  color: white;
+  color: var(--clr-bg);
 }
 
 .loading {
   text-align: center;
-  padding: 3rem;
+  padding: 1rem;
   color: #6c757d;
-  font-size: 1.1rem;
+  font-size: 1.121rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 56.25rem) {
   .contribute-page {
-    padding: 1rem;
+    padding: 1rem 0;
   }
-  
-  .requests-grid {
-    grid-template-columns: 1fr;
+  .page-header {
+    margin-bottom: 1rem;
   }
-  
-  .info-cards {
-    grid-template-columns: 1fr;
-  }
-  
   .page-header h1 {
-    font-size: 2rem;
+    font-size: 1rem;
+  }
+  .contribute-page .requests-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .request-card {
+    padding: 1rem;
   }
 } 

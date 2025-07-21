@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../../styles/form.css';
 import './AdminPages.css';
 
 const SchoolInfraRequests = () => {
@@ -166,14 +167,22 @@ const SchoolInfraRequests = () => {
       </div>
 
       {error && (
-        <div className="error-alert">
-          <p>{error}</p>
+        <div className="form-message error">
+          {error}
         </div>
       )}
 
       <div className="requests-section">
         <div className="section-header">
           <h2>Pending Requests</h2>
+          <div className="request-management-dropdown">
+            <button className="dropdown-btn">Request Management ▼</button>
+            <div className="dropdown-menu">
+              <button className="dropdown-item" onClick={() => navigate('/school/applications')}>
+                View All Applications
+              </button>
+            </div>
+          </div>
           <button 
             className="create-request-btn"
             onClick={() => setShowCreateForm(true)}
@@ -182,7 +191,7 @@ const SchoolInfraRequests = () => {
           </button>
         </div>
 
-        {requests.length === 0 ? (
+        {requests.filter(r => r.status !== 'fulfilled' && r.status !== 'completed').length === 0 ? (
           <div className="no-requests">
             <h3>No Pending Requests</h3>
             <p>You don't have any pending requests at the moment.</p>
@@ -195,7 +204,7 @@ const SchoolInfraRequests = () => {
           </div>
         ) : (
           <div className="requests-grid">
-            {requests.map((request) => (
+            {requests.filter(r => r.status !== 'fulfilled' && r.status !== 'completed').map((request) => (
               <div key={request._id} className="request-card">
                 <div className="request-header">
                   <h3>{request.category}</h3>
@@ -344,10 +353,10 @@ const SchoolInfraRequests = () => {
               </div>
               
               <div className="form-actions">
-                <button type="button" className="cancel-btn" onClick={() => setShowCreateForm(false)}>
+                <button type="button" className="btn-secondary" onClick={() => setShowCreateForm(false)}>
                   Cancel
                 </button>
-                <button type="submit" className="submit-btn">
+                <button type="submit" className="btn-primary">
                   Create Request
                 </button>
               </div>

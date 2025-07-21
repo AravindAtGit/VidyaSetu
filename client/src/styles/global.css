@@ -1,3 +1,2 @@
-body {
-  font-family: 'Poppins', sans-serif;
-}
+/* Global utility styles - avoiding duplication with index.css and App.css */
+/* This file can be used for additional global styles if needed */

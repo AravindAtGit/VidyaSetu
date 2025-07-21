@@ -1,0 +1,131 @@
+/* Global Design System - CSS Custom Properties */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* CSS Reset for consistent cross-browser behavior */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Font Size System - Using consistent rem units */
+  --font-base: 16px;    /* Browser default base */
+  --fs-100: 0.875rem;   /* 14px */
+  --fs-200: 1rem;       /* 16px - base */
+  --fs-300: 1.125rem;   /* 18px - body text */
+  --fs-400: 1.25rem;    /* 20px - h4 */
+  --fs-500: 1.5rem;     /* 24px - h3 */
+  --fs-600: 1.875rem;   /* 30px - h2 */
+  --fs-700: 2.25rem;    /* 36px - h1 */
+  --fs-800: 2.75rem;    /* 44px - large h1 */
+  --fs-900: 3.5rem;     /* 56px - hero text */
+  
+  /* Font Weights */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  
+  /* Color System */
+  --clr-primary: #1c1d1f;
+  --clr-secondary: #6a6f73;
+  --clr-bg: #ffffff;
+  --clr-bg-light: #f7f9fa;
+  --clr-bg-muted: #e9ecef;
+  --clr-border: #d1d7dc;
+  --clr-border-light: rgba(255, 255, 255, 0.25);
+  --clr-accent: #5624d0;
+  --clr-error: #d13438;
+  --clr-error-bg: #fde7e9;
+  --clr-gradient-start: #667eea;
+  --clr-gradient-end: #764ba2;
+  
+  /* Spacing System */
+  --space-xxs: 0.25rem; /* 4px */
+  --space-xs: 0.5rem;   /* 8px */
+  --space-sm: 0.75rem;  /* 12px */
+  --space-md: 1rem;     /* 16px */
+  --space-lg: 1.5rem;   /* 24px */
+  --space-xl: 3rem;     /* 48px */
+  --space-2xl: 4rem;  /* 64px */
+  --space-3xl: 5rem;  /* 80px */
+  --space-4xl: 4rem;    /* 64px */
+  --space-5xl: 5rem;    /* 80px */
+  --space-6xl: 6rem;    /* 96px */
+  
+  /* Border Radius */
+  --radius-sm: 0.375rem; /* 6px */
+  --radius-md: 0.5rem;   /* 8px */
+  --radius-lg: 0.75rem;  /* 12px */
+  --radius-xl: 1rem;     /* 16px */
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 6px 24px rgba(0, 0, 0, 0.13);
+  
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-medium: 0.3s ease;
+}
+
+/* Base HTML and Body Styles */
+html {
+  font-size: 16px; /* Force 16px base for consistency across browsers */
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: var(--fs-200); /* Use 16px base, not 18px */
+  font-weight: var(--fw-regular);
+  color: var(--clr-primary);
+  background-color: var(--clr-bg);
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeSpeed;
+}
+
+/* Typography Scale */
+h1 {
+  font-size: var(--fs-700);
+  font-weight: var(--fw-bold);
+  color: var(--clr-primary);
+}
+
+h2 {
+  font-size: var(--fs-600);
+  font-weight: var(--fw-bold);
+  color: var(--clr-primary);
+}
+
+h3 {
+  font-size: var(--fs-500);
+  font-weight: var(--fw-semibold);
+  color: var(--clr-primary);
+}
+
+h4 {
+  font-size: var(--fs-400);
+  font-weight: var(--fw-semibold);
+  color: var(--clr-primary);
+}
+
+p {
+  font-size: var(--fs-300);
+  color: var(--clr-secondary);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}

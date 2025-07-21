@@ -1,0 +1,41 @@
+
+.test-page {
+  min-height: 100vh;
+  background: var(--clr-bg-light);
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.test-card {
+  background: var(--clr-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 0.25rem var(--radius-lg) rgba(0,0,0,0.10);
+  padding: 1rem 1rem;
+  max-width: 50rem;
+  width: 100%;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.test-card h1 {
+  color: var(--clr-primary);
+  font-size: 2.1rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.test-card p {
+  color: var(--clr-secondary);
+  font-size: 1.121rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 60rem) {
+  .test-card {
+    padding: 1rem 0.75rem;
+    margin-top: 1rem;
+  }
+} 

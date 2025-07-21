@@ -131,7 +131,7 @@ const Students = () => {
                 ) : (
                   students.map(student => (
                     <tr key={student._id}>
-                      <td title={student.updatedAt ? `Last updated: ${new Date(student.updatedAt).toLocaleString()}` : 'Never updated'}>{student._id}</td>
+                      <td title={student.updatedAt ? `Last updated: ${new Date(student.updatedAt).toLocaleString()}` : 'Never updated'}>{student.studentId}</td>
                       <td>{student.name}</td>
                       <td>{student.email}</td>
                       <td>{student.phone}</td>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import '../../styles/form.css';
 import './ApplyInfraForm.css';
 
 const ApplyInfraForm = () => {
@@ -65,7 +66,7 @@ const ApplyInfraForm = () => {
   };
 
   if (loading) return <div className="apply-form-container"><div className="loading">Loading...</div></div>;
-  if (error) return <div className="apply-form-container"><div className="error-message">{error}</div></div>;
+  if (error) return <div className="apply-form-container"><div className="form-message error">{error}</div></div>;
   if (!request) return null;
 
   return (
@@ -98,25 +99,25 @@ const ApplyInfraForm = () => {
         </div>
       </div>
       <form onSubmit={handleSubmit} className="apply-form">
-        <div className="info-row">
-          <label>Quantity to Contribute:</label>
+        <div className="form-group">
+          <label htmlFor="quantity">Quantity to Contribute:</label>
           <input
             type="number"
+            id="quantity"
             min="1"
             max={request.remainingQuantity}
             value={quantity}
             onChange={e => setQuantity(Number(e.target.value))}
             required
-            className="quantity-input"
           />
         </div>
-        <div className="apply-actions">
-          <button type="submit" className="apply-button">Submit Application</button>
-          <button type="button" className="cancel-button" onClick={() => navigate('/contribute')}>Back to Requests</button>
+        <div className="form-actions">
+          <button type="submit" className="btn-primary">Submit Application</button>
+          <button type="button" className="btn-secondary" onClick={() => navigate('/contribute')}>Back to Requests</button>
         </div>
       </form>
-      {success && <div className="success">{success}</div>}
-      {error && <div className="error-alert">{error}</div>}
+      {success && <div className="form-message success">{success}</div>}
+      {error && <div className="form-message error">{error}</div>}
     </div>
   );
 };

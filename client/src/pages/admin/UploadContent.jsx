@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ProtectedRoute from '../../components/ProtectedRoute';
 import { load, save } from '../../utils/storage';
+import '../../styles/form.css';
 import './AdminPages.css';
 
 // Get API base URL from environment variable or fallback to current domain
@@ -12,6 +13,7 @@ const UploadContent = () => {
   const [subject, setSubject] = useState('');
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState(''); // 'error' or 'success'
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploads, setUploads] = useState([]);
@@ -66,17 +68,20 @@ const UploadContent = () => {
     
     if (!file) {
       setMessage('Please select a file to upload.');
+      setMessageType('error');
       return;
     }
 
     if (!title || !classLevel || !subject) {
       setMessage('Please fill in all required fields.');
+      setMessageType('error');
       return;
     }
 
     setUploading(true);
     setUploadProgress(0);
     setMessage('');
+    setMessageType('');
 
     try {
       const formData = new FormData();
@@ -144,6 +149,7 @@ const UploadContent = () => {
       setFile(null);
       setUploadProgress(0);
       setMessage('File successfully uploaded.');
+      setMessageType('success');
       
       // Refresh uploads list
       loadUploads();
@@ -151,6 +157,7 @@ const UploadContent = () => {
     } catch (error) {
       console.error('Upload error:', error);
       setMessage('Upload failed. Please try again.');
+      setMessageType('error');
     } finally {
       setUploading(false);
       setUploadProgress(0);
@@ -178,9 +185,11 @@ const UploadContent = () => {
         
         loadUploads();
         setMessage('Content deleted successfully.');
+        setMessageType('success');
       } catch (error) {
         console.error('Delete error:', error);
         setMessage('Failed to delete content. Please try again.');
+        setMessageType('error');
       }
     }
   };
@@ -265,7 +274,7 @@ const UploadContent = () => {
             />
           </div>
 
-          <button type="submit" className="upload-btn" disabled={uploading}>
+          <button type="submit" className="btn-primary" disabled={uploading}>
             {uploading ? 'Uploading...' : 'Upload'}
           </button>
 
@@ -295,7 +304,7 @@ const UploadContent = () => {
             </div>
           )}
 
-          {message && <p className="upload-message">{message}</p>}
+          {message && <div className={`form-message ${messageType}`}>{message}</div>}
         </form>
 
         {/* Filter and Search */}

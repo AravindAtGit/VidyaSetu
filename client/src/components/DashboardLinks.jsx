@@ -2,109 +2,86 @@
 
 export const volunteerLinks = [
   {
-    path: '/volunteer/browse-requests',
-    label: 'Browse Requests',
-    icon: '🔍'
-  },
-  {
-    path: '/volunteer/my-applications',
-    label: 'My Applications',
-    icon: '📝'
+    path: '/volunteer/applications',
+    label: 'My Applications'
   },
   {
     path: '/volunteer/history',
-    label: 'History',
-    icon: '📚'
+    label: 'History'
   },
   {
     path: '/volunteer/infra/requests',
-    label: 'Infrastructure',
-    icon: '🏗️'
+    label: 'Infrastructure'
   },
   {
     path: '/volunteer/infra/my-applications',
-    label: 'My Infra Apps',
-    icon: '📋'
+    label: 'My Infra Apps'
   }
 ];
 
 export const studentLinks = [
   {
     path: '/student/dashboard',
-    label: 'Home',
-    icon: '🏠'
+    label: 'Home'
   },
   {
     path: '/student/my-classes',
-    label: 'My Classes',
-    icon: '📚'
+    label: 'My Classes'
   },
   {
     path: '/student/resources',
-    label: 'Resources',
-    icon: '📖'
+    label: 'Resources'
   },
   {
     path: '/student/progress',
-    label: 'Progress',
-    icon: '📊'
+    label: 'Progress'
   }
 ];
 
 export const adminLinks = [
   {
     path: '/school/dashboard',
-    label: 'Dashboard',
-    icon: '🏠'
+    label: 'Dashboard'
   },
   // Infrastructure Management
   {
     path: '/school/requests',
-    label: 'Infra Requests',
-    icon: '📋'
+    label: 'Infra Requests'
   },
   {
     path: '/school/applications',
-    label: 'Applications',
-    icon: '📝'
+    label: 'Applications'
   },
   {
     path: '/school/history',
-    label: 'History',
-    icon: '📚'
+    label: 'History'
   },
   // Student Management
   {
     path: '/school/students',
-    label: 'Students',
-    icon: '👥'
+    label: 'Students'
   },
   // Educational Content
   {
     path: '/school/upload',
-    label: 'Upload Content',
-    icon: '📤'
+    label: 'Upload Content'
   },
   {
     path: '/school/quizzes',
-    label: 'Quizzes',
-    icon: '❓'
+    label: 'Quizzes'
   },
   {
     path: '/school/quiz-results',
-    label: 'Quiz Results',
-    icon: '📊'
+    label: 'Quiz Results'
   },
   {
     path: '/school/virtual-classes',
-    label: 'Virtual Classes',
-    icon: '💻'
+    label: 'Virtual Classes'
   },
   // Reports
   {
     path: '/school/reports',
-    label: 'Reports',
-    icon: '📈'
+    label: 'Reports'
   }
 ];
 

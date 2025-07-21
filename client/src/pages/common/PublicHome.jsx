@@ -30,7 +30,7 @@ const PublicHome = () => {
             background: '#ff6b6b', 
             color: 'white', 
             border: 'none', 
-            borderRadius: '4px',
+            borderRadius: '0.4rem',
             cursor: 'pointer'
           }}
         >
@@ -73,10 +73,8 @@ const PublicHome = () => {
             <h1>Student Dashboard</h1>
             <p>Welcome to your learning center</p>
           </div>
-          
           <div className="page-content">
             <div className="placeholder-content">
-              <div className="placeholder-icon">📚</div>
               <h2>Student Dashboard</h2>
               <p>Your personalized learning hub.</p>
               <div className="feature-list">
@@ -100,10 +98,8 @@ const PublicHome = () => {
             <h1>School Dashboard</h1>
             <p>Welcome to your school management center</p>
           </div>
-          
           <div className="page-content">
             <div className="placeholder-content">
-              <div className="placeholder-icon">🏫</div>
               <h2>School Dashboard</h2>
               <p>Manage your school's volunteer programs.</p>
               <div className="feature-list">
@@ -127,10 +123,8 @@ const PublicHome = () => {
             <h1>Admin Dashboard</h1>
             <p>Welcome to the administration center</p>
           </div>
-          
           <div className="page-content">
             <div className="placeholder-content">
-              <div className="placeholder-icon">⚙️</div>
               <h2>Admin Dashboard</h2>
               <p>System administration and oversight.</p>
               <div className="feature-list">

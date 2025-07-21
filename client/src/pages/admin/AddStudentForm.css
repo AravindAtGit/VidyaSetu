@@ -1,9 +1,9 @@
 .add-student-form {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 24px;
-  max-width: 500px;
+  background: var(--clr-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: var(--space-2xl);
+  max-width: 50rem;
   width: 100%;
   margin: 0 auto;
 }
@@ -12,124 +12,49 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #e1e5e9;
+  margin-bottom: var(--space-lg);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--clr-border);
 }
 
 .form-header h2 {
   margin: 0;
-  color: #2c3e50;
-  font-size: 1.5rem;
+  color: var(--clr-primary);
+  font-size: var(--fs-500);
+  font-weight: var(--fw-semibold);
 }
 
 .close-btn {
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: var(--fs-500);
   cursor: pointer;
-  color: #7f8c8d;
-  padding: 0;
-  width: 30px;
-  height: 30px;
+  color: var(--clr-secondary);
+  padding: var(--space-xs);
+  width: var(--space-2xl);
+  height: var(--space-2xl);
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  transition: background-color 0.2s;
+  transition: var(--transition-fast);
 }
 
 .close-btn:hover {
-  background-color: #f8f9fa;
-  color: #2c3e50;
+  background-color: var(--clr-bg-muted);
+  color: var(--clr-primary);
 }
 
 .error-message {
-  background-color: #fee;
-  color: #c53030;
-  padding: 12px;
-  border-radius: 4px;
-  margin-bottom: 16px;
-  border: 1px solid #fed7d7;
+  background-color: var(--clr-error-bg);
+  color: var(--clr-error);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-lg);
+  border: 1px solid var(--clr-error);
 }
 
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 500;
-  color: #2c3e50;
-  font-size: 0.9rem;
-}
-
-.form-group input,
-.form-group select {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-  font-size: 1rem;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  box-sizing: border-box;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-  outline: none;
-  border-color: #3498db;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-}
-
-.form-group input::placeholder {
-  color: #9ca3af;
-}
-
-.form-actions {
-  display: flex;
-  gap: 12px;
-  margin-top: 24px;
-}
-
-.submit-btn,
-.cancel-btn {
-  padding: 12px 24px;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
-  flex: 1;
-}
-
-.submit-btn {
-  background-color: #3498db;
-  color: white;
-}
-
-.submit-btn:hover:not(:disabled) {
-  background-color: #2980b9;
-  transform: translateY(-1px);
-}
-
-.submit-btn:disabled {
-  background-color: #bdc3c7;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.cancel-btn {
-  background-color: #e74c3c;
-  color: white;
-}
-
-.cancel-btn:hover {
-  background-color: #c0392b;
-  transform: translateY(-1px);
-}
+/* Form groups and buttons now inherit styles from form.css */
 
 /* Modal overlay styles */
 .modal-overlay {
@@ -143,22 +68,22 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  padding: 20px;
+  padding: var(--space-lg);
 }
 
 /* Responsive design */
-@media (max-width: 600px) {
+@media (max-width: 60rem) {
   .add-student-form {
-    padding: 16px;
-    margin: 10px;
+    padding: var(--space-lg);
+    margin: var(--space-sm);
   }
   
   .form-actions {
     flex-direction: column;
   }
   
-  .submit-btn,
-  .cancel-btn {
+  .btn-primary,
+  .btn-secondary {
     width: 100%;
   }
-} 
+}

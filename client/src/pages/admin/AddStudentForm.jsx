@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import '../../styles/form.css';
 import './AddStudentForm.css';
 
 const AddStudentForm = ({ student, onStudentAdded, onStudentUpdated, onCancel }) => {
   const [formData, setFormData] = useState({
+    studentId: student ? student.studentId : '',
     name: student ? student.name : '',
     email: student ? student.email : '',
     phone: student ? student.phone : '',
@@ -90,6 +92,20 @@ const AddStudentForm = ({ student, onStudentAdded, onStudentUpdated, onCancel })
       {error && <div className="error-message">{error}</div>}
       
       <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="studentId">Student ID *</label>
+          <input
+            type="text"
+            id="studentId"
+            name="studentId"
+            value={formData.studentId}
+            onChange={handleChange}
+            required
+            placeholder="Enter unique student ID"
+            disabled={!!student} // Prevent changing ID on edit
+          />
+        </div>
+
         <div className="form-group">
           <label htmlFor="name">Student Name *</label>
           <input
@@ -179,11 +195,11 @@ const AddStudentForm = ({ student, onStudentAdded, onStudentUpdated, onCancel })
         </div>
         
         <div className="form-actions">
-          <button type="submit" className="submit-btn" disabled={loading}>
+          <button type="submit" className="btn-primary" disabled={loading}>
             {loading ? (student ? 'Updating Student...' : 'Adding Student...') : (student ? 'Update Student' : 'Add Student')}
           </button>
           {onCancel && (
-            <button type="button" className="cancel-btn" onClick={onCancel}>
+            <button type="button" className="btn-secondary" onClick={onCancel}>
               Cancel
             </button>
           )}

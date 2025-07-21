@@ -5,9 +5,9 @@ import { Outlet } from 'react-router-dom';
 
 const AdminLayout = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="app-container">
       <AdminNavbar />
-      <main className="app-main" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <main className="app-main">
         <Outlet />
       </main>
       <AdminFooter />
