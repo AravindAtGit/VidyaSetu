@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import './AdminPages.css';
 
 const Applications = () => {
+  const { requestId } = useParams();
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -33,6 +35,14 @@ const Applications = () => {
       setLoading(false);
     }
   };
+
+  // Filter applications by requestId if present
+  let filteredApplications = requestId
+    ? applications.filter(app => app.request?._id === requestId)
+    : applications;
+
+  // Further filter to only show applications for requests that are not fulfilled or completed
+  filteredApplications = filteredApplications.filter(app => app.status !== 'fulfilled' && app.status !== 'completed');
 
   const handleApprove = async (appId) => {
     try {
@@ -124,17 +134,17 @@ const Applications = () => {
 
       <div className="applications-section">
         <div className="section-header">
-          <h2>All Applications ({applications.length})</h2>
+          <h2>Applications {requestId ? `(for selected request)` : `(${filteredApplications.length})`}</h2>
         </div>
 
-        {applications.length === 0 ? (
+        {filteredApplications.length === 0 ? (
           <div className="no-applications">
             <h3>No Applications Found</h3>
-            <p>No volunteers have applied for your infrastructure requests yet.</p>
+            <p>{requestId ? 'No volunteers have applied for this request yet.' : 'No volunteers have applied for your infrastructure requests yet.'}</p>
           </div>
         ) : (
           <div className="applications-grid">
-            {applications.map((application) => (
+            {filteredApplications.map((application) => (
               <div key={application._id} className="application-card">
                 <div className="application-header">
                   <h3>{application.request?.category} - {application.request?.subcategory}</h3>

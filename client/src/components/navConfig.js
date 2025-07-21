@@ -34,8 +34,7 @@ const navConfig = {
       type: 'dropdown',
       icon: '🔍',
       items: [
-        { path: '/volunteer/browse-requests', label: 'Browse Requests' },
-        { path: '/volunteer/my-applications', label: 'My Applications' },
+        { path: '/volunteer/applications', label: 'My Applications' },
         { path: '/volunteer/history', label: 'History' }
       ]
     },

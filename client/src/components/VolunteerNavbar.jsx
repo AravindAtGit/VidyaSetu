@@ -33,27 +33,14 @@ const VolunteerNavbar = () => {
         </div>
         
         <div className="navbar-menu">
-          <Link to="/" className="navbar-link">
-            <span className="home-icon">🏠</span>
-            Home
-          </Link>
+          <Link to="/" className="navbar-link">Home</Link>
           <Link to="/about" className="navbar-link">About</Link>
           <Link to="/how-to-participate" className="navbar-link">How to Participate</Link>
           <Link to="/contribute" className="navbar-link">Contribute</Link>
           
           {/* Volunteer-specific links */}
-          <Link to="/volunteer/browse-requests" className="navbar-link">
-            <span className="nav-icon">🔍</span>
-            Browse Requests
-          </Link>
-          <Link to="/volunteer/my-applications" className="navbar-link">
-            <span className="nav-icon">📝</span>
-            My Applications
-          </Link>
-          <Link to="/volunteer/history" className="navbar-link">
-            <span className="nav-icon">📚</span>
-            History
-          </Link>
+          <Link to="/volunteer/applications" className="navbar-link">My Applications</Link>
+          <Link to="/volunteer/history" className="navbar-link">History</Link>
         </div>
 
         <div className="navbar-auth">
@@ -68,19 +55,10 @@ const VolunteerNavbar = () => {
                 </button>
                 {showProfileDropdown && (
                   <div className="profile-dropdown-menu">
-                    <Link to="/volunteer/settings" className="profile-dropdown-link">
-                      <span className="nav-icon">⚙️</span>
-                      Settings
-                    </Link>
-                    <Link to="/volunteer/help" className="profile-dropdown-link">
-                      <span className="nav-icon">❓</span>
-                      Help & FAQ
-                    </Link>
+                    <Link to="/volunteer/settings" className="profile-dropdown-link">Settings</Link>
+                    <Link to="/volunteer/help" className="profile-dropdown-link">Help & FAQ</Link>
                     <div className="dropdown-divider"></div>
-                    <button onClick={handleLogout} className="profile-dropdown-link logout-link">
-                      <span className="nav-icon">🚪</span>
-                      Logout
-                    </button>
+                    <button onClick={handleLogout} className="profile-dropdown-link logout-link">Logout</button>
                   </div>
                 )}
               </div>

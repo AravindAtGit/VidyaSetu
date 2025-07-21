@@ -2,11 +2,7 @@
 
 export const volunteerLinks = [
   {
-    path: '/volunteer/browse-requests',
-    label: 'Browse Requests'
-  },
-  {
-    path: '/volunteer/my-applications',
+    path: '/volunteer/applications',
     label: 'My Applications'
   },
   {

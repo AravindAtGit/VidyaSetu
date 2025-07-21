@@ -21,7 +21,6 @@ import PublicLayout from './components/PublicLayout';
 import History from './pages/volunteer/History';
 import ApplyInfraForm from './pages/volunteer/ApplyInfraForm';
 import VolunteerMyApplications from './pages/volunteer/VolunteerMyApplications';
-import BrowseRequests from './pages/volunteer/BrowseRequests';
 import VolunteerInfraRequests from './pages/volunteer/VolunteerInfraRequests';
 import VolunteerInfraApplications from './pages/volunteer/VolunteerInfraApplications';
 
@@ -89,14 +88,6 @@ function App() {
           } 
         />
         <Route 
-          path="/volunteer/browse-requests" 
-          element={
-            <ProtectedRoute role="volunteer">
-              <BrowseRequests />
-            </ProtectedRoute>
-          } 
-        />
-        <Route 
           path="/volunteer/infra/requests" 
           element={
             <ProtectedRoute role="volunteer">
@@ -151,6 +142,7 @@ function App() {
         <Route path="requests" element={<SchoolInfraRequests />} />
         <Route path="history" element={<SchoolHistory />} />
         <Route path="applications" element={<Applications />} />
+        <Route path="infra/apps/:requestId" element={<Applications />} />
         {/* Student Management */}
         <Route path="students" element={<Students />} />
         <Route path="students/:studentId" element={<StudentDetail />} />
