@@ -15,7 +15,7 @@ const VolunteerMyApplications = () => {
   const fetchApplications = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/volunteer/applications', {
+      const response = await fetch('/api/infra/volunteer/applications', {
         credentials: 'include'
       });
       

@@ -1,84 +1,85 @@
+
 .student-list-container {
-  padding: 24px;
-  max-width: 1200px;
+  padding: 2.1rem 0;
+  max-width: 13var(--space-2xl);
   margin: 0 auto;
+  font-family: 'Inter', sans-serif;
 }
 
 .student-list-header {
-  margin-bottom: 32px;
+  margin-bottom: 3.1rem;
   text-align: center;
 }
 
 .student-list-header h2 {
-  color: #2c3e50;
-  margin-bottom: 8px;
-  font-size: 2rem;
+  color: var(--clr-primary);
+  margin-bottom: 0.75rem;
+  font-size: 1.8rem;
+  font-weight: 700;
 }
 
 .student-list-header p {
-  color: #7f8c8d;
-  font-size: 1.1rem;
+  color: var(--clr-secondary);
+  font-size: 1.121rem;
 }
 
 .student-stats {
   display: flex;
-  gap: 20px;
-  margin-bottom: 32px;
+  gap: 1rem;
+  margin-bottom: 3.1rem;
   justify-content: center;
 }
 
 .stat-card {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: var(--clr-bg);
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 0.25rem var(--radius-lg) rgba(0, 0, 0, 0.10);
   text-align: center;
-  min-width: 150px;
+  min-width: 1var(--space-3xl);
+  border: 1px solid var(--clr-border);
 }
 
 .stat-card h3 {
-  margin: 0 0 8px 0;
-  color: #7f8c8d;
-  font-size: 0.9rem;
-  font-weight: 500;
+  margin: 0 0 var(--radius-lg) 0;
+  color: var(--clr-secondary);
+  font-size: 1.121rem;
+  font-weight: 700;
 }
 
 .stat-number {
   margin: 0;
-  font-size: 2rem;
+  font-size: 1rem;
   font-weight: bold;
-  color: #3498db;
+  color: #a435f0;
 }
 
 .empty-state {
   text-align: center;
-  padding: 60px 20px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.empty-icon {
-  font-size: 4rem;
-  margin-bottom: 16px;
+  padding: var(--space-4xl) var(--fs-400);
+  background: var(--clr-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 0.25rem var(--radius-lg) rgba(0, 0, 0, 0.10);
 }
 
 .empty-state h3 {
-  color: #2c3e50;
-  margin-bottom: 8px;
-  font-size: 1.5rem;
+  color: var(--clr-primary);
+  margin-bottom: var(--radius-lg);
+  font-size: 1.1rem;
+  font-weight: 700;
 }
 
 .empty-state p {
-  color: #7f8c8d;
-  font-size: 1.1rem;
+  color: var(--clr-secondary);
+  font-size: 1.121rem;
 }
 
 .students-table-container {
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: var(--clr-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 0.25rem var(--radius-lg) rgba(0, 0, 0, 0.10);
   overflow: hidden;
+  border: 1px solid var(--clr-border);
 }
 
 .students-table {
@@ -88,39 +89,39 @@
 
 .students-table th,
 .students-table td {
-  padding: 16px;
+  padding: 1rem;
   text-align: left;
-  border-bottom: 1px solid #e1e5e9;
+  border-bottom: 1px solid var(--clr-border);
 }
 
 .students-table th {
-  background-color: #f8f9fa;
-  font-weight: 600;
-  color: #2c3e50;
-  font-size: 0.9rem;
+  background-color: var(--clr-bg-light);
+  font-weight: 700;
+  color: var(--clr-primary);
+  font-size: 1rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.var(--space-xs);
 }
 
 .students-table td {
-  color: #2c3e50;
-  font-size: 0.95rem;
+  color: var(--clr-primary);
+  font-size: 1rem;
 }
 
 .students-table tr:hover {
-  background-color: #f8f9fa;
+  background-color: var(--clr-bg-light);
 }
 
 .action-buttons {
   display: flex;
-  gap: 8px;
+  gap: 1rem;
 }
 
 .action-btn {
-  padding: 6px 12px;
+  padding: var(--radius-md) 10.25rem;
   border: none;
-  border-radius: 4px;
-  font-size: 0.8rem;
+  border-radius: var(--radius-sm);
+  font-size: 1px;
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s;
@@ -128,7 +129,7 @@
 
 .action-btn.edit {
   background-color: #f39c12;
-  color: white;
+  color: var(--clr-bg);
 }
 
 .action-btn.edit:hover {
@@ -137,7 +138,7 @@
 
 .action-btn.delete {
   background-color: #e74c3c;
-  color: white;
+  color: var(--clr-bg);
 }
 
 .action-btn.delete:hover {
@@ -146,27 +147,27 @@
 
 .loading {
   text-align: center;
-  padding: 40px;
+  padding: var(--space-2xl);
   color: #7f8c8d;
-  font-size: 1.1rem;
+  font-size: 1.121rem;
 }
 
 .error-message {
   background-color: #fee;
   color: #c53030;
-  padding: 16px;
-  border-radius: 4px;
-  margin-bottom: 16px;
+  padding: 1var(--radius-md);
+  border-radius: var(--radius-sm);
+  margin-bottom: 1var(--radius-md);
   border: 1px solid #fed7d7;
   text-align: center;
 }
 
 .retry-btn {
   background-color: #3498db;
-  color: white;
+  color: var(--clr-bg);
   border: none;
-  padding: 12px 24px;
-  border-radius: 4px;
+  padding: 10.25rem 2var(--radius-sm);
+  border-radius: var(--radius-sm);
   cursor: pointer;
   font-size: 1rem;
   transition: background-color 0.2s;
@@ -177,27 +178,35 @@
 }
 
 /* Responsive design */
-@media (max-width: 768px) {
+@media (max-width: 56.25rem) {
   .student-list-container {
-    padding: 16px;
+    padding: 1rem 0;
   }
-  
-  .students-table {
-    font-size: 0.8rem;
+  .student-list-header {
+    margin-bottom: 1rem;
   }
-  
+  .student-list-header h2 {
+    font-size: 1.1rem;
+  }
+  .student-stats {
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .stat-card {
+    padding: 1rem;
+  }
   .students-table th,
   .students-table td {
-    padding: 8px;
+    padding: 0.75rem;
   }
   
   .action-buttons {
     flex-direction: column;
-    gap: 4px;
+    gap: var(--radius-sm);
   }
   
   .action-btn {
-    padding: 4px 8px;
-    font-size: 0.7rem;
+    padding: var(--radius-sm) var(--radius-lg);
+    font-size: 0.75rem;
   }
 } 

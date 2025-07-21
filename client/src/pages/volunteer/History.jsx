@@ -15,7 +15,7 @@ const History = () => {
   const fetchApplications = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/volunteer/applications/history', {
+      const response = await fetch('/api/infra/volunteer/applications/history', {
         credentials: 'include'
       });
       

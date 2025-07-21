@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { clearUser } from '../../utils/auth';
+import './Home.css';
 
 const PublicHome = () => {
   const handleClearSession = () => {
@@ -9,7 +10,7 @@ const PublicHome = () => {
   };
 
   return (
-    <div className="home">
+    <div className="public-home">
       <div className="hero-section">
         <h1>Welcome to VidyaSetu</h1>
         <p>Connecting students with volunteer educators for better learning</p>
@@ -17,18 +18,9 @@ const PublicHome = () => {
           <Link to="/register/school" className="cta-btn primary">Register as School</Link>
           <Link to="/register/volunteer" className="cta-btn secondary">Become a Volunteer</Link>
         </div>
-        {/* Debug button - remove in production */}
         <button 
           onClick={handleClearSession} 
-          style={{ 
-            marginTop: '1rem', 
-            padding: '0.5rem 1rem', 
-            background: '#ff6b6b', 
-            color: 'white', 
-            border: 'none', 
-            borderRadius: '4px',
-            cursor: 'pointer'
-          }}
+          className="debug-btn"
         >
           Clear Session (Debug)
         </button>

@@ -17,7 +17,7 @@ const ContributePage = () => {
   const fetchRequests = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/requests/open', {
+      const response = await fetch('/api/infra/requests/open', {
         credentials: 'include'
       });
       

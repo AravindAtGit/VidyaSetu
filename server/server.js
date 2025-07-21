@@ -1,9 +1,11 @@
 const express = require('express');
 const session = require('express-session');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 const connectDB = require('./config/db');
+const upload = require('./middleware/upload');
 
 // Import routes
 const authRoutes = require('./routes/auth');
@@ -27,6 +29,9 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Static file serving for uploads
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // Session configuration
 app.use(session({
   secret: process.env.SESSION_SECRET || 'your-secret-key',
@@ -44,8 +49,18 @@ app.use('/api/auth', authRoutes);
 app.use('/api/school', schoolRoutes);
 app.use('/api/volunteer', volunteerRoutes);
 app.use('/api/infra', infraCategoriesRoutes);
-app.use('/api', infraRequestsRoutes);
-app.use('/api', infraAppsRoutes);
+app.use('/api/infra', infraRequestsRoutes);
+app.use('/api/infra', infraAppsRoutes);
+
+// File upload route
+app.post('/api/upload', upload.single('file'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No file uploaded' });
+  }
+  
+  const url = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+  res.json({ url });
+});
 
 // Health check route
 app.get('/api/health', (req, res) => {

@@ -38,6 +38,10 @@ const schoolSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'InfrastructureRequest'
   }],
+  students: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Student'
+  }],
   createdAt: {
     type: Date,
     default: Date.now

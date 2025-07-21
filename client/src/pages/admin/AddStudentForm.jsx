@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
+import '../../styles/form.css';
 import './AddStudentForm.css';
 
-const AddStudentForm = ({ onStudentAdded, onClose }) => {
+const AddStudentForm = ({ student, onStudentAdded, onStudentUpdated, onCancel }) => {
   const [formData, setFormData] = useState({
-    name: '',
-    studentId: '',
-    password: '',
-    class: '',
-    email: ''
+    name: student ? student.name : '',
+    email: student ? student.email : '',
+    phone: student ? student.phone : '',
+    class: student ? student.class : '',
+    grade: student ? student.grade : '',
+    password: ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -25,13 +27,16 @@ const AddStudentForm = ({ onStudentAdded, onClose }) => {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/school/create-student', {
-        method: 'POST',
+      const url = student ? `/api/school/students/${student._id}` : '/api/school/create-student';
+      const method = student ? 'PUT' : 'POST';
+
+      const response = await fetch(url, {
+        method: method,
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
         credentials: 'include',
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ student: formData })
       });
 
       const data = await response.json();
@@ -40,23 +45,27 @@ const AddStudentForm = ({ onStudentAdded, onClose }) => {
         // Reset form
         setFormData({
           name: '',
-          studentId: '',
-          password: '',
+          email: '',
+          phone: '',
           class: '',
-          email: ''
+          grade: '',
+          password: ''
         });
         
-        // Show success message
-        alert('Student added successfully!');
+// Show success message
+        const successMessage = student ? 'Student updated successfully!' : 'Student added successfully!';
+        alert(successMessage);
         
-        // Call parent callback to refresh student list
-        if (onStudentAdded) {
+        // Call parent callback
+        if (student && onStudentUpdated) {
+          onStudentUpdated(data.student);
+        } else if (onStudentAdded) {
           onStudentAdded(data.student);
         }
         
         // Close modal if provided
-        if (onClose) {
-          onClose();
+        if (onCancel) {
+          onCancel();
         }
       } else {
         setError(data.message || 'Failed to add student');
@@ -71,9 +80,9 @@ const AddStudentForm = ({ onStudentAdded, onClose }) => {
   return (
     <div className="add-student-form">
       <div className="form-header">
-        <h2>Add New Student</h2>
-        {onClose && (
-          <button className="close-btn" onClick={onClose}>
+        <h2>{student ? 'Edit Student' : 'Add New Student'}</h2>
+        {onCancel && (
+          <button className="close-btn" onClick={onCancel}>
             ×
           </button>
         )}
@@ -96,15 +105,26 @@ const AddStudentForm = ({ onStudentAdded, onClose }) => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="studentId">Student ID *</label>
+          <label htmlFor="email">Email (Optional)</label>
           <input
-            type="text"
-            id="studentId"
-            name="studentId"
-            value={formData.studentId}
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
             onChange={handleChange}
-            required
-            placeholder="Enter unique student ID"
+            placeholder="Enter student's email"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="phone">Phone (Optional)</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            placeholder="Enter student's phone number"
           />
         </div>
 
@@ -134,14 +154,14 @@ const AddStudentForm = ({ onStudentAdded, onClose }) => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="email">Email (Optional)</label>
+          <label htmlFor="grade">Grade (Optional)</label>
           <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
+            type="text"
+            id="grade"
+            name="grade"
+            value={formData.grade}
             onChange={handleChange}
-            placeholder="Enter student's email"
+            placeholder="Enter student's grade/performance"
           />
         </div>
 
@@ -160,11 +180,11 @@ const AddStudentForm = ({ onStudentAdded, onClose }) => {
         </div>
         
         <div className="form-actions">
-          <button type="submit" className="submit-btn" disabled={loading}>
-            {loading ? 'Adding Student...' : 'Add Student'}
+          <button type="submit" className="btn-primary" disabled={loading}>
+            {loading ? (student ? 'Updating Student...' : 'Adding Student...') : (student ? 'Update Student' : 'Add Student')}
           </button>
-          {onClose && (
-            <button type="button" className="cancel-btn" onClick={onClose}>
+          {onCancel && (
+            <button type="button" className="btn-secondary" onClick={onCancel}>
               Cancel
             </button>
           )}

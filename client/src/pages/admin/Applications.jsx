@@ -16,13 +16,13 @@ const Applications = () => {
   const fetchAllApplications = async () => {
     try {
       setLoading(true);
-      const response = await fetch('/api/school/infra/applications', {
+      const response = await fetch('/api/infra/school/applications', {
         credentials: 'include'
       });
       
       if (response.ok) {
-        const data = await response.json();
-        setApplications(data);
+        const apps = await response.json();
+        setApplications(apps);
       } else {
         setError('Failed to fetch applications');
       }
@@ -37,7 +37,7 @@ const Applications = () => {
   const handleApprove = async (appId) => {
     try {
       setApproving(appId);
-      const response = await fetch(`/api/school/infra/applications/${appId}/approve`, {
+      const response = await fetch(`/api/infra/school/applications/${appId}/approve`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ const Applications = () => {
     }
 
     try {
-      const response = await fetch(`/api/school/infra/applications/${appId}/feedback`, {
+      const response = await fetch(`/api/infra/school/applications/${appId}/fulfill`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
