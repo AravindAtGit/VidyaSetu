@@ -1,110 +1,100 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+@import '../../styles/form.css';
 
 .register-container {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 2rem;
-  font-family: 'Poppins', sans-serif;
+  background: var(--clr-bg-light);
+  padding: 2.1rem 0;
+  font-family: 'Inter', sans-serif;
 }
 
 .register-card {
-  background: white;
-  padding: 3rem;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  background: var(--clr-bg);
+  padding: clamp(var(--space-lg), 4vw, var(--space-2xl));
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
   width: 100%;
-  max-width: 450px;
+  max-width: 32rem;
+  border: 1px solid var(--clr-border);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
 }
 
 .register-card h2 {
   text-align: center;
-  color: #333;
-  margin-bottom: 2rem;
-  font-weight: 700;
-  font-size: 1.8rem;
+  color: var(--clr-primary);
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-600); /* 30px consistent */
+  font-family: 'Inter', sans-serif;
+  margin: 0;
 }
 
-.form-group {
-  margin-bottom: 1.5rem;
-}
+/* Form styles inherited from form.css */
 
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: #555;
-  font-weight: 600;
-}
-
-.form-group input,
-.form-group select {
-  width: 100%;
-  padding: 0.75rem;
-  border: 2px solid #e1e5e9;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-  box-sizing: border-box;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-  outline: none;
-  border-color: #667eea;
-}
-
+/* Register button - extends form.css button styles */
 .register-btn {
   width: 100%;
-  padding: 0.75rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  padding: var(--space-md);
+  background: var(--clr-primary);
+  color: var(--clr-bg);
   border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
+  border-radius: var(--radius-md);
+  font-size: var(--fs-200);
+  font-weight: var(--fw-semibold);
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: all var(--transition-fast);
+  font-family: 'Inter', sans-serif;
 }
 
 .register-btn:hover {
-  transform: translateY(-2px);
+  background: #2d2f31;
+  transform: translateY(-1px);
 }
 
 .register-footer {
   text-align: center;
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid #e1e5e9;
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--clr-border);
+  margin: 0;
 }
 
 .register-footer a {
-  color: #667eea;
+  color: var(--clr-primary);
   text-decoration: none;
-  font-weight: 600;
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-200); /* 16px consistent */
+  font-family: 'Inter', sans-serif;
 }
 
 .register-footer a:hover {
   text-decoration: underline;
 }
 
+/* Error message - uses the existing className from components */
 .error-message {
-  background: #fee;
-  color: #c33;
-  padding: 0.75rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
+  background: var(--clr-error-bg);
+  color: var(--clr-error);
+  padding: var(--space-sm);
+  border-radius: var(--radius-md);
   text-align: center;
-  border: 1px solid #fcc;
+  border: 1px solid var(--clr-error);
+  font-size: var(--fs-200);
+  font-family: 'Inter', sans-serif;
+  margin: 0;
 }
 
 @media (max-width: 480px) {
   .register-container {
-    padding: 1rem;
+    padding: var(--space-md) var(--space-sm);
   }
-  
   .register-card {
-    padding: 2rem;
+    padding: var(--space-lg);
+    gap: var(--space-md);
   }
-} 
+  .register-card h2 {
+    font-size: var(--fs-500); /* Smaller on mobile */
+  }
+}

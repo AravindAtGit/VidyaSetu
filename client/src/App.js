@@ -21,6 +21,9 @@ import PublicLayout from './components/PublicLayout';
 import History from './pages/volunteer/History';
 import ApplyInfraForm from './pages/volunteer/ApplyInfraForm';
 import VolunteerMyApplications from './pages/volunteer/VolunteerMyApplications';
+import BrowseRequests from './pages/volunteer/BrowseRequests';
+import VolunteerInfraRequests from './pages/volunteer/VolunteerInfraRequests';
+import VolunteerInfraApplications from './pages/volunteer/VolunteerInfraApplications';
 
 // Student Pages
 import MyClasses from './pages/student/MyClasses';
@@ -82,6 +85,30 @@ function App() {
           element={
             <ProtectedRoute role="volunteer">
               <ApplyInfraForm />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/volunteer/browse-requests" 
+          element={
+            <ProtectedRoute role="volunteer">
+              <BrowseRequests />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/volunteer/infra/requests" 
+          element={
+            <ProtectedRoute role="volunteer">
+              <VolunteerInfraRequests />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/volunteer/infra/my-applications" 
+          element={
+            <ProtectedRoute role="volunteer">
+              <VolunteerInfraApplications />
             </ProtectedRoute>
           } 
         />

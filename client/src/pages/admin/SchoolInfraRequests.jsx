@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../../styles/form.css';
 import './AdminPages.css';
 
 const SchoolInfraRequests = () => {
@@ -166,8 +167,8 @@ const SchoolInfraRequests = () => {
       </div>
 
       {error && (
-        <div className="error-alert">
-          <p>{error}</p>
+        <div className="form-message error">
+          {error}
         </div>
       )}
 
@@ -344,10 +345,10 @@ const SchoolInfraRequests = () => {
               </div>
               
               <div className="form-actions">
-                <button type="button" className="cancel-btn" onClick={() => setShowCreateForm(false)}>
+                <button type="button" className="btn-secondary" onClick={() => setShowCreateForm(false)}>
                   Cancel
                 </button>
-                <button type="submit" className="submit-btn">
+                <button type="submit" className="btn-primary">
                   Create Request
                 </button>
               </div>

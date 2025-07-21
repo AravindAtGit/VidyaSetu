@@ -1,14 +1,14 @@
 .history-section {
-  max-width: 1200px;
+  max-width: 120rem;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
 }
 
 .history-section h2 {
   text-align: center;
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   color: #2c3e50;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .error-alert {
@@ -16,72 +16,72 @@
   border: 1px solid #fcc;
   color: #c33;
   padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 2rem;
+  border-radius: var(--radius-lg);
+  margin-bottom: 1rem;
   text-align: center;
 }
 
 .no-history {
   text-align: center;
-  padding: 3rem;
+  padding: 1rem;
   background-color: #f8f9fa;
-  border-radius: 12px;
+  border-radius: 10.25rem;
   color: #6c757d;
 }
 
 .history-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fill, minmax(40rem, 1fr));
+  gap: 1rem;
 }
 
 .history-card {
-  background: white;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e9ecef;
+  background: var(--clr-bg);
+  border-radius: 10.25rem;
+  padding: 1.1rem;
+  box-shadow: 0 var(--radius-sm) var(--radius-md) rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--clr-bg-muted);
   transition: transform 0.2s, box-shadow 0.2s;
   position: relative;
   overflow: hidden;
 }
 
 .history-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.13);
+  transform: translateY(-0.25rem);
+  box-shadow: 0 var(--radius-lg) 1var(--space-xs) rgba(0, 0, 0, 0.13);
 }
 
 .history-card h3 {
   color: #2c3e50;
-  margin-bottom: 0.5rem;
-  font-size: 1.3rem;
+  margin-bottom: 1px;
+  font-size: 1.121rem;
 }
 
 .history-card p {
-  margin: 0.3rem 0;
+  margin: 1px 0;
   color: #495057;
 }
 
 .fulfilled-applications {
-  margin-top: 1.2rem;
+  margin-top: 1rem;
   background: #f8f9fa;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   padding: 1rem;
 }
 
 .fulfilled-applications h4 {
-  margin: 0 0 0.7rem 0;
+  margin: 0 0 0.75rem 0;
   color: #2c3e50;
-  font-size: 1.1rem;
+  font-size: 1.121rem;
 }
 
 .fulfilled-app {
-  background: white;
-  border-radius: 6px;
-  padding: 0.75rem 1rem;
+  background: var(--clr-bg);
+  border-radius: var(--radius-md);
+  padding: 0.71rem 1rem;
   margin-bottom: 1rem;
-  border-left: 4px solid #007bff;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  border-left: var(--radius-sm) solid #007bff;
+  box-shadow: 0 1px 0.25rem rgba(0,0,0,0.03);
 }
 
 .fulfilled-app:last-child {
@@ -89,12 +89,12 @@
 }
 
 .fulfilled-app p {
-  margin: 0.2rem 0;
+  margin: 1px 0;
   color: #495057;
-  font-size: 0.98rem;
+  font-size: 0.91rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 76var(--radius-lg)) {
   .history-section {
     padding: 1rem;
   }

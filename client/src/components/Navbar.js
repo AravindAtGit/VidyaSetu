@@ -29,7 +29,6 @@ const Navbar = () => {
         
         <div className="navbar-menu">
           <Link to="/" className="navbar-link">
-            <span className="home-icon">🏠</span>
             Home
           </Link>
           <Link to="/about" className="navbar-link">About</Link>
@@ -41,11 +40,9 @@ const Navbar = () => {
           {user && userRole === 'volunteer' && (
             <>
               <Link to="/volunteer/applications" className="navbar-link">
-                <span className="nav-icon">📋</span>
                 My Applications
               </Link>
               <Link to="/volunteer/history" className="navbar-link">
-                <span className="nav-icon">📚</span>
                 History
               </Link>
             </>

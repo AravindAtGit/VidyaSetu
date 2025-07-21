@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../../styles/form.css';
 import './AddStudentForm.css';
 
 const AddStudentForm = ({ student, onStudentAdded, onStudentUpdated, onCancel }) => {
@@ -179,11 +180,11 @@ const AddStudentForm = ({ student, onStudentAdded, onStudentUpdated, onCancel })
         </div>
         
         <div className="form-actions">
-          <button type="submit" className="submit-btn" disabled={loading}>
+          <button type="submit" className="btn-primary" disabled={loading}>
             {loading ? (student ? 'Updating Student...' : 'Adding Student...') : (student ? 'Update Student' : 'Add Student')}
           </button>
           {onCancel && (
-            <button type="button" className="cancel-btn" onClick={onCancel}>
+            <button type="button" className="btn-secondary" onClick={onCancel}>
               Cancel
             </button>
           )}

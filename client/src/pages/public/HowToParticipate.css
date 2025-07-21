@@ -1,19 +1,65 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-.participate-container {
-  background: #fff;
-  max-width: 800px;
-  margin: 2.5rem auto 2rem auto;
-  padding: 2.5rem 2rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
-  font-family: 'Poppins', sans-serif;
-  text-align: center;
+.participate-page {
+  min-height: 100vh;
+  background: var(--clr-bg-light);
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.participate-content h1 {
-  color: #a435f0;
-  font-size: 2.2rem;
+.participate-card {
+  background: var(--clr-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 0.25rem var(--radius-lg) rgba(0,0,0,0.10);
+  padding: 1rem 1rem;
+  max-width: 70rem;
+  width: 100%;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.participate-card h1 {
+  color: var(--clr-primary);
+  font-size: 2.1rem;
   font-weight: 700;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.participate-card p {
+  color: var(--clr-secondary);
+  font-size: 1.121rem;
+  margin-bottom: 1rem;
+}
+
+.participate-section {
+  margin-bottom: 2.1rem;
+  text-align: left;
+}
+
+.participate-section h2 {
+  color: var(--clr-primary);
+  font-size: 1.121rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.participate-section ul {
+  list-style: disc inside;
+  color: var(--clr-secondary);
+  font-size: 1rem;
+  margin-left: 1.1rem;
+  margin-bottom: 0;
+}
+
+.participate-section li {
+  margin-bottom: 0.75rem;
+}
+
+@media (max-width: 70rem) {
+  .participate-card {
+    padding: 1rem 0.75rem;
+    margin-top: 1rem;
+  }
 } 

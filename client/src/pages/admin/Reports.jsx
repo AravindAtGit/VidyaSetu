@@ -14,7 +14,6 @@ const Reports = () => {
         
         <div className="page-content">
           <div className="placeholder-content">
-            <div className="placeholder-icon">📊</div>
             <h2>Reports & Analytics</h2>
             <p>This page will provide comprehensive reporting and analytics for your school.</p>
             <div className="feature-list">
