@@ -43,6 +43,10 @@ const AdminNavbar = () => {
     });
   };
 
+  const closeProfile = () => {
+    setDropdownStates(prev => ({ ...prev, profile: false }));
+  };
+
   const handleDropdownKeyDown = (event, dropdown) => {
     switch (event.key) {
       case 'Enter':
@@ -211,10 +215,10 @@ const AdminNavbar = () => {
               Profile
             </button>
             <div className={`dropdown-menu ${dropdownStates.profile ? 'open' : ''}`} role="menu" aria-label="Profile options">
-              <Link to="/school/settings" className="dropdown-link" role="menuitem" tabIndex={dropdownStates.profile ? 0 : -1} onClick={() => handleLinkClick('profile')}>Settings</Link>
-              <Link to="/school/help" className="dropdown-link" role="menuitem" tabIndex={dropdownStates.profile ? 0 : -1} onClick={() => handleLinkClick('profile')}>Help & Support</Link>
+              <Link to="/school/settings" className="dropdown-link" role="menuitem" tabIndex={dropdownStates.profile ? 0 : -1} onClick={() => { handleLinkClick('profile'); closeProfile(); }}>Settings</Link>
+              <Link to="/school/help" className="dropdown-link" role="menuitem" tabIndex={dropdownStates.profile ? 0 : -1} onClick={() => { handleLinkClick('profile'); closeProfile(); }}>Help & Support</Link>
               <div className="dropdown-divider"></div>
-              <button onClick={handleLogout} className="dropdown-link logout-link" role="menuitem" tabIndex={dropdownStates.profile ? 0 : -1}>
+              <button onClick={() => { handleLogout(); closeProfile(); }} className="dropdown-link logout-link" role="menuitem" tabIndex={dropdownStates.profile ? 0 : -1}>
                 Logout
               </button>
             </div>

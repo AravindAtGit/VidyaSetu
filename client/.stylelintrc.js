@@ -33,6 +33,21 @@ module.exports = {
       'font-size': ['px'],
       '/^margin/': ['px'],
       '/^padding/': ['px']
+    },
+    
+    // Prevent fixed border-radius values except for specific allowed cases
+    'declaration-property-value-disallowed-list': {
+      'border-radius': [
+        // Disallow all fixed values except:
+        // - 0 (no radius)
+        // - 50% (for circles)
+        // - CSS custom properties starting with --radius-
+        '/^(?!0$|50%$|var\(--radius-).+/'
+      ],
+      '/border.*radius/': [
+        // Apply same rule to border-top-left-radius, border-top-right-radius, etc.
+        '/^(?!0$|50%$|var\(--radius-).+/'
+      ]
     }
   }
 };

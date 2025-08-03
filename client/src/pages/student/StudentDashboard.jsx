@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FiBook, FiVideo, FiTrendingUp, FiClipboard } from 'react-icons/fi';
 import { load } from '../../utils/storage';
 import { getUser } from '../../utils/auth';
 import './StudentDashboard.css';
@@ -64,10 +65,6 @@ const StudentDashboard = () => {
   return (
     <div className="student-page">
       <div className="dashboard-wrapper">
-        <div className="page-header">
-          <h1>Welcome back, {currentUser?.name || 'Student'}!</h1>
-          <p>Continue your learning journey with VidyaSetu</p>
-        </div>
         
         <div className="page-content">
           <div className="dashboard-stats">
@@ -150,20 +147,20 @@ const StudentDashboard = () => {
           )}
         </div>
         
-        <div className="content-section">
+        <div className="content-section quick-actions">
           <h2>Quick Actions</h2>
           <div className="action-buttons">
             <button className="action-btn" onClick={() => navigate('/student/resources')}>
-              Browse Resources
+              <FiBook/> Browse Resources
             </button>
             <button className="action-btn" onClick={() => navigate('/student/my-classes')}>
-              View Classes
+              <FiVideo/> View Classes
             </button>
             <button className="action-btn" onClick={() => navigate('/student/progress')}>
-              Check Progress
+              <FiTrendingUp/> Check Progress
             </button>
             <button className="action-btn" onClick={() => navigate('/student/quizzes')}>
-              Take Quiz
+              <FiClipboard/> Take Quiz
             </button>
         </div>
       </div>

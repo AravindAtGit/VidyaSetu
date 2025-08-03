@@ -1,11 +1,10 @@
 import React from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getUser, logoutUser } from '../utils/auth';
 import './Navbar.css';
 
 const VolunteerNavbar = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const user = getUser();
 
   const handleLogout = async () => {
@@ -36,18 +35,21 @@ const VolunteerNavbar = () => {
         <div className="navbar-auth">
           {user ? (
             <div className="user-section">
-              <span className="user-name">Welcome, {user.name}</span>
+              <span className="user-name"> {user.name}</span>
               
               {/* Profile Dropdown */}
               <div className="profile-dropdown">
-                <button className="profile-dropdown-btn">
+                <button 
+                  className="profile-dropdown-btn" 
+                  aria-haspopup="true"
+                >
                   Profile
                 </button>
-                <div className="profile-dropdown-menu">
-                  <Link to="/volunteer/settings" className="profile-dropdown-link">Settings</Link>
-                  <Link to="/volunteer/help" className="profile-dropdown-link">Help & FAQ</Link>
+                <div className="profile-dropdown-menu" role="menu">
+                  <Link to="/volunteer/settings" className="profile-dropdown-link" role="menuitem">Settings</Link>
+                  <Link to="/volunteer/help" className="profile-dropdown-link" role="menuitem">Help & FAQ</Link>
                   <div className="dropdown-divider"></div>
-                  <button onClick={handleLogout} className="profile-dropdown-link logout-link">Logout</button>
+                  <button onClick={handleLogout} className="profile-dropdown-link logout-link" role="menuitem">Logout</button>
                 </div>
               </div>
             </div>

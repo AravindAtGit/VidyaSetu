@@ -139,7 +139,7 @@
   text-align: center;
   padding: 1rem;
   background-color: #f8f9fa;
-  border-radius: 10.25rem;
+  border-radius: var(--radius-md);
 }
 
 .no-requests h3 {
@@ -176,16 +176,16 @@
 
 .request-card {
   background: var(--clr-bg);
-  border-radius: 10.25rem;
+  border-radius: var(--radius-md);
   padding: 1.1rem;
-  box-shadow: 0 var(--radius-sm) var(--radius-md) rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
   border: 1px solid var(--clr-bg-muted);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .request-card:hover {
   transform: translateY(-0.25rem);
-  box-shadow: 0 var(--radius-lg) var(--space-xs) rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-lg);
 }
 
 .request-header {
@@ -302,13 +302,13 @@
 
 .modal-content {
   background: var(--clr-bg);
-  border-radius: 10.25rem;
+  border-radius: var(--radius-md);
   padding: 1rem;
   max-width: 50rem;
   width: 90%;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 var(--space-sm) 2rem rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-xl);
 }
 
 .modal-header {
@@ -471,16 +471,16 @@
 
 .application-card {
   background: var(--clr-bg);
-  border-radius: 10.25rem;
+  border-radius: var(--radius-md);
   padding: 1.1rem;
-  box-shadow: 0 var(--radius-sm) var(--radius-md) rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
   border: 1px solid var(--clr-bg-muted);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .application-card:hover {
   transform: translateY(-0.25rem);
-  box-shadow: 0 var(--radius-lg) var(--space-xs) rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-lg);
 }
 
 .application-header {
@@ -550,7 +550,7 @@
   text-align: center;
   padding: 1rem;
   background-color: #f8f9fa;
-  border-radius: 10.25rem;
+  border-radius: var(--radius-md);
 }
 
 .no-applications h3 {
@@ -575,10 +575,10 @@
 /* Upload Content Styles */
 .upload-form {
   background: var(--clr-bg);
-  border-radius: 10.25rem;
+  border-radius: var(--radius-md);
   padding: 1rem;
   margin-bottom: 1rem;
-  box-shadow: 0 var(--radius-sm) var(--radius-md) rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
   border: 1px solid var(--clr-bg-muted);
 }
 
@@ -716,9 +716,9 @@
 
 .uploads-section {
   background: var(--clr-bg);
-  border-radius: 10.25rem;
+  border-radius: var(--radius-md);
   padding: 1rem;
-  box-shadow: 0 var(--radius-sm) var(--radius-md) rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
   border: 1px solid var(--clr-bg-muted);
 }
 

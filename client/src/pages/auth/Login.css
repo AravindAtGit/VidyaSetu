@@ -13,7 +13,7 @@
 .login-card {
   background: var(--clr-bg);
   padding: clamp(var(--space-lg), 4vw, var(--space-3xl));
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
   width: 100%;
   max-width: 28rem;
@@ -41,7 +41,7 @@
   background: var(--clr-primary);
   color: var(--clr-bg);
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   font-size: var(--fs-200);
   font-weight: var(--fw-semibold);
   cursor: pointer;

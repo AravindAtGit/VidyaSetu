@@ -421,6 +421,26 @@
   margin-top: 0.75rem;
   padding: 0.75rem 0;
   border: 1px solid var(--clr-border);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0.25rem);
+  pointer-events: none;
+  transition: all .2s;
+}
+
+.profile-dropdown-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* Show profile dropdown on hover */
+.profile-dropdown:hover .profile-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  pointer-events: auto;
 }
 
 .profile-dropdown-link {

@@ -148,6 +148,7 @@ const DropdownMenu = ({ label, icon, items, ariaLabel, className = '', hoverEnab
         onClick={noop}
         onMouseEnter={handleOpen}
         onFocus={handleOpen}
+        aria-haspopup="true"
         aria-expanded={isOpen}
         aria-controls={menuId}
         aria-label={ariaLabel || `${label} menu`}

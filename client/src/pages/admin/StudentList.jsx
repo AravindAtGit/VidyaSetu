@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import './StudentList.css';
 
 const StudentList = ({ onStudentAdded }) => {
@@ -101,8 +102,8 @@ const StudentList = ({ onStudentAdded }) => {
                   <td>{new Date(student.createdAt).toLocaleDateString()}</td>
                   <td>
                     <div className="action-buttons">
-                      <button className="action-btn edit">Edit</button>
-                      <button className="action-btn delete">Delete</button>
+                      <button className="action-btn edit"><FiEdit/> Edit</button>
+                      <button className="action-btn delete"><FiTrash2/> Delete</button>
                     </div>
                   </td>
                 </tr>

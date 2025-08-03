@@ -248,7 +248,7 @@
 .dashboard-content {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--grid-gap-sm);
+  gap: var(--space-lg);
 }
 
 .dashboard-header h1 {
@@ -292,7 +292,7 @@
   
   .dashboard-content {
     grid-template-columns: 2fr 1fr;
-    gap: var(--grid-gap-lg);
+    gap: var(--space-lg);
   }
   
   .dashboard-header h1 {

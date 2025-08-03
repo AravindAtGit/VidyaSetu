@@ -29,7 +29,7 @@
   border: 1px solid var(--clr-error);
   color: var(--clr-error);
   padding: 1rem;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   margin-bottom: 1rem;
   font-size: 1.121rem;
 }
@@ -42,7 +42,7 @@
   text-align: center;
   padding: 1rem;
   background-color: var(--clr-bg-light);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   font-size: 1.121rem;
 }
 
@@ -65,9 +65,9 @@
 
 .request-card {
   background: var(--clr-bg);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   padding: 1rem;
-  box-shadow: 0 0.25rem var(--radius-lg) rgba(0,0,0,0.10);
+  box-shadow: 0 0.25rem var(--radius-md) rgba(0,0,0,0.10);
   border: 1px solid var(--clr-border);
   transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -164,7 +164,7 @@
   color: var(--clr-bg);
   border: none;
   padding: 0.71rem 1.1rem;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -179,7 +179,7 @@
 .request-closed {
   background-color: #f8f9fa;
   padding: 1rem;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   text-align: center;
 }
 
@@ -211,7 +211,7 @@
 .info-card {
   background: var(--clr-bg);
   padding: 1.1rem;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   text-align: center;
   box-shadow: 0 0.25rem var(--radius-sm) rgba(0, 0, 0, 0.1);
 }

@@ -5,6 +5,7 @@ import './Navbar.css';
 
 const StudentNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const user = JSON.parse(localStorage.getItem('user'));
@@ -17,6 +18,8 @@ const StudentNavbar = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  const closeProfile = () => setIsProfileOpen(false);
 
   return (
     <nav className="navbar student-navbar">
@@ -37,20 +40,20 @@ const StudentNavbar = () => {
           
           {/* Learning Dropdown */}
           <div className="dropdown-container">
-            <button className="nav-link dropdown-btn">
+            <button className="nav-link dropdown-btn" aria-haspopup="true" aria-expanded="false">
               <span className="nav-icon">📚</span>
               <span className="nav-text">Learning</span>
             </button>
-            <div className="dropdown-menu">
-              <Link to="/student/my-classes" className="dropdown-link">
+            <div className="dropdown-menu" role="menu">
+              <Link to="/student/my-classes" className="dropdown-link" role="menuitem" onClick={closeProfile}>
                 <span className="nav-icon">📖</span>
                 My Classes
               </Link>
-              <Link to="/student/resources" className="dropdown-link">
+              <Link to="/student/resources" className="dropdown-link" role="menuitem" onClick={closeProfile}>
                 <span className="nav-icon">📚</span>
                 Resources
               </Link>
-              <Link to="/student/quizzes" className="dropdown-link">
+              <Link to="/student/quizzes" className="dropdown-link" role="menuitem" onClick={closeProfile}>
                 <span className="nav-icon">❓</span>
                 Quizzes
               </Link>
@@ -64,21 +67,21 @@ const StudentNavbar = () => {
           
           {/* Profile Dropdown */}
           <div className="dropdown-container">
-            <button className="nav-link dropdown-btn">
+            <button className="nav-link dropdown-btn" aria-haspopup="true" aria-expanded={isProfileOpen}>
               <span className="nav-icon">👤</span>
               <span className="nav-text">Profile</span>
             </button>
-            <div className="dropdown-menu">
-              <Link to="/student/settings" className="dropdown-link">
+            <div className="dropdown-menu" role="menu">
+              <Link to="/student/settings" className="dropdown-link" role="menuitem" onClick={closeProfile}>
                 <span className="nav-icon">⚙️</span>
                 Settings
               </Link>
-              <Link to="/student/support" className="dropdown-link">
+              <Link to="/student/support" className="dropdown-link" role="menuitem" onClick={closeProfile}>
                 <span className="nav-icon">❓</span>
                 Support
               </Link>
               <div className="dropdown-divider"></div>
-              <button onClick={handleLogout} className="dropdown-link logout-link">
+              <button onClick={() => { handleLogout(); closeProfile(); }} className="dropdown-link logout-link" role="menuitem">
                 <span className="nav-icon">🚪</span>
                 Logout
               </button>

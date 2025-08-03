@@ -197,6 +197,13 @@
   color: #2c3e50;
 }
 
+
+
+
+.debug-clear-btn {
+  border-radius: var(--radius-md);
+}
+
 .request-actions {
   display: flex;
   gap: 1rem;
