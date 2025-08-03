@@ -70,6 +70,9 @@ const UploadContent = () => {
 
     const formData = new FormData();
     formData.append('file', file);
+    formData.append('title', title);
+    formData.append('subject', subject);
+    formData.append('class', classLevel);
 
     try {
       const data = await createContent(formData);
@@ -354,6 +357,7 @@ const UploadContent = () => {
           )}
 
           {message && <div className={`form-message ${messageType}`}>{message}</div>}
+          {error && <div className="form-message error">{error}</div>}
         </form>
 
         {/* Filter and Search */}

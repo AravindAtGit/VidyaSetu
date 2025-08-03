@@ -19,7 +19,7 @@
 }
 
 .brand-logo {
-  height: 2rem;      /* ~32px, adjust as needed */
+  height: 2.5rem;      /* ~40px, increased for better visibility */
   width: auto;
   display: inline-block;
 }

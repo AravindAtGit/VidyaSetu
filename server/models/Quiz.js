@@ -35,6 +35,19 @@ const quizSchema = new mongoose.Schema({
       required: true
     }
   }],
+  timeLimit: {
+    type: Number, // in minutes, null means no time limit
+    default: null
+  },
+  maxAttempts: {
+    type: Number,
+    default: 1,
+    min: 1
+  },
+  isActive: {
+    type: Boolean,
+    default: true
+  },
   createdAt: {
     type: Date,
     default: Date.now
@@ -50,5 +63,8 @@ quizSchema.pre('save', function(next) {
   this.updatedAt = Date.now();
   next();
 });
+
+// Index for better query performance
+quizSchema.index({ school: 1, class: 1 });
 
 module.exports = mongoose.model('Quiz', quizSchema);

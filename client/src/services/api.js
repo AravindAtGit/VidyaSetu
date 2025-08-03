@@ -6,4 +6,15 @@ const api = axios.create({
   timeout: 15000
 });
 
+// Add postMultipart method for file uploads
+api.postMultipart = (url, formData, config = {}) => {
+  return api.post(url, formData, {
+    ...config,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      ...config.headers
+    }
+  });
+};
+
 export default api;

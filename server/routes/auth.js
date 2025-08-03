@@ -40,14 +40,25 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    // Create session
-    req.session.user = {
+    // Create session with enhanced payload
+    const sessionPayload = {
       id: user._id,
       email: user.email,
       udiseNumber: user.udiseNumber,
       role: userRole,
+      userType: userRole,
       name: user.name || user.schoolName
     };
+
+    // Add schoolId and class based on user type
+    if (userRole === 'school') {
+      sessionPayload.schoolId = user._id;
+    } else if (userRole === 'student') {
+      sessionPayload.schoolId = user.school;
+      sessionPayload.class = user.class;
+    }
+
+    req.session.user = sessionPayload;
 
     res.json({
       message: 'Login successful',
@@ -128,12 +139,14 @@ router.post('/register/school', async (req, res) => {
 
     await school.save();
 
-    // Create session
+    // Create session with enhanced payload
     req.session.user = {
       id: school._id,
       email: school.email,
       udiseNumber: school.udiseNumber,
       role: 'school',
+      userType: 'school',
+      schoolId: school._id,
       name: school.schoolName
     };
 
@@ -182,6 +195,7 @@ router.post('/register/volunteer', async (req, res) => {
       id: volunteer._id,
       email: volunteer.email,
       role: 'volunteer',
+      userType: 'volunteer',
       name: volunteer.name
     };
 
@@ -233,14 +247,16 @@ router.post('/login/student', async (req, res) => {
       return res.status(401).json({ message: 'Invalid student ID or password' });
     }
 
-    // Create session
+    // Create session with enhanced payload
     req.session.user = {
       id: student._id,
       studentId: student.studentId,
       name: student.name,
       class: student.class,
       role: 'student',
-      school: student.school
+      school: student.school,
+      userType: 'student',
+      schoolId: student.school
     };
 
     res.json({

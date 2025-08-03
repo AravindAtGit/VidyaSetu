@@ -2,10 +2,12 @@ const express = require('express');
 const session = require('express-session');
 const cors = require('cors');
 const path = require('path');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 require('dotenv').config();
 
 const connectDB = require('./config/db');
-const upload = require('./middleware/upload');
+const { upload, verifyUploadedFile } = require('./middleware/upload');
 
 // Import routes
 const authRoutes = require('./routes/auth');
@@ -15,11 +17,47 @@ const infraCategoriesRoutes = require('./routes/infraCategories');
 const infraRequestsRoutes = require('./routes/infraRequests');
 const infraAppsRoutes = require('./routes/infraApps');
 const statisticsRouter = require('./routes/statistics');
+const contentRoutes = require('./routes/content');
+const quizRoutes = require('./routes/quiz');
 
 const app = express();
 
 // Connect to MongoDB
 connectDB();
+
+// Security middleware
+// Helmet for basic security headers
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'"],
+      imgSrc: ["'self'", "data:", "blob:"],
+      connectSrc: ["'self'"],
+    },
+  },
+  crossOriginEmbedderPolicy: false // Allow file uploads
+}));
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+  message: 'Too many requests from this IP, please try again later.',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Apply rate limiting to all requests
+app.use(limiter);
+
+// Stricter rate limiting for upload endpoint
+const uploadLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 10, // Limit each IP to 10 upload requests per windowMs
+  message: 'Too many upload requests, please try again later.',
+});
 
 // Middleware
 app.use(cors({
@@ -30,8 +68,24 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Static file serving for uploads
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Secure file serving instead of static serving
+app.get('/api/files/:filename', (req, res) => {
+  const filename = req.params.filename;
+  const filePath = path.join(__dirname, '../uploads-secure', filename);
+  
+  // Check if file exists
+  if (!require('fs').existsSync(filePath)) {
+    return res.status(404).json({ error: 'File not found' });
+  }
+  
+  // Basic authorization check (you can enhance this based on your auth system)
+  if (!req.session || !req.session.user) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  
+  // Serve file with proper headers
+  res.sendFile(filePath);
+});
 
 // Session configuration
 app.use(session({
@@ -39,9 +93,10 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: false, // Set to false for development
+    secure: process.env.NODE_ENV === 'production', // HTTPS in production
     httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+    sameSite: 'strict' // Prevent CSRF attacks
   }
 }));
 
@@ -53,14 +108,16 @@ app.use('/api/infra', infraCategoriesRoutes);
 app.use('/api/infra', infraRequestsRoutes);
 app.use('/api/infra', infraAppsRoutes);
 app.use('/api/statistics', statisticsRouter);
+app.use('/api/content', contentRoutes);
+app.use('/api/quiz', quizRoutes);
 
 // File upload route
-app.post('/api/upload', upload.single('file'), (req, res) => {
+app.post('/api/upload', uploadLimiter, upload.single('file'), verifyUploadedFile, (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: 'No file uploaded' });
   }
   
-  const url = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+  const url = `${req.protocol}://${req.get('host')}/api/files/${req.file.filename}`;
   res.json({ url });
 });
 

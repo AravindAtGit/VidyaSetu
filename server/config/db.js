@@ -28,7 +28,7 @@ const connectDB = async () => {
     connectTimeoutMS: parseInt(process.env.MONGODB_CONNECT_TIMEOUT) || 10000,
     
     // Buffering settings
-    bufferMaxEntries: 0, // Disable mongoose buffering
+   // bufferMaxEntries: 0, // Disable mongoose buffering
     bufferCommands: false, // Disable mongoose buffering
     
     // Additional stability options

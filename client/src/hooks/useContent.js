@@ -34,22 +34,15 @@ const useContent = () => {
       setLoading(true);
       setError(null);
       
-      const response = await fetch('/api/content', {
-        method: 'POST',
-        credentials: 'include',
-        body: formData // FormData for file uploads
+      const response = await api.post('/content', formData, { 
+        headers: { 'Content-Type': 'multipart/form-data' } 
       });
-      
-      if (response.ok) {
-        const newContent = await response.json();
-        setContent(prev => [newContent, ...prev]);
-        return newContent;
-      } else {
-        throw new Error('Failed to create content');
-      }
+      const newContent = response.data;
+      setContent(prev => [newContent, ...prev]);
+      return newContent;
     } catch (err) {
       console.error('Error creating content:', err);
-      setError(err.message);
+      setError(err.response?.data?.message || err.message || 'Failed to create content');
       throw err;
     } finally {
       setLoading(false);
@@ -61,27 +54,15 @@ const useContent = () => {
       setLoading(true);
       setError(null);
       
-      const response = await fetch(`/api/content/${id}`, {
-        method: 'PUT',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(updateData)
-      });
-      
-      if (response.ok) {
-        const updatedContent = await response.json();
-        setContent(prev => prev.map(item => 
-          item._id === id ? updatedContent : item
-        ));
-        return updatedContent;
-      } else {
-        throw new Error('Failed to update content');
-      }
+      const response = await api.put(`/content/${id}`, updateData);
+      const updatedContent = response.data;
+      setContent(prev => prev.map(item => 
+        item._id === id ? updatedContent : item
+      ));
+      return updatedContent;
     } catch (err) {
       console.error('Error updating content:', err);
-      setError(err.message);
+      setError(err.response?.data?.message || err.message || 'Failed to update content');
       throw err;
     } finally {
       setLoading(false);
@@ -93,20 +74,12 @@ const useContent = () => {
       setLoading(true);
       setError(null);
       
-      const response = await fetch(`/api/content/${id}`, {
-        method: 'DELETE',
-        credentials: 'include'
-      });
-      
-      if (response.ok) {
-        setContent(prev => prev.filter(item => item._id !== id));
-        return true;
-      } else {
-        throw new Error('Failed to delete content');
-      }
+      await api.delete(`/content/${id}`);
+      setContent(prev => prev.filter(item => item._id !== id));
+      return true;
     } catch (err) {
       console.error('Error deleting content:', err);
-      setError(err.message);
+      setError(err.response?.data?.message || err.message || 'Failed to delete content');
       throw err;
     } finally {
       setLoading(false);

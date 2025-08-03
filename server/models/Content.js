@@ -76,6 +76,7 @@ contentSchema.pre('save', function(next) {
 });
 
 // Index for better query performance
+contentSchema.index({ school: 1, class: 1 });
 contentSchema.index({ school: 1, type: 1, class: 1 });
 contentSchema.index({ school: 1, subject: 1 });
 
