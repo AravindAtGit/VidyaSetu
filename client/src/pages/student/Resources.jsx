@@ -1,37 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { load } from '../../utils/storage';
+import React, { useState } from 'react';
+import { useContent } from '../../hooks';
 import './StudentPages.css';
 
-const Resources = () => {
-  const [videos, setVideos] = useState([]);
-  const [pdfs, setPdfs] = useState([]);
+const Resources = () =e {
+  const { content, loading, error } = useContent();
   const [filterType, setFilterType] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const loadData = () => {
-    setVideos(load('videos', []));
-    setPdfs(load('pdfs', []));
-  };
-
-  const filteredContent = () => {
-    let content = [...videos, ...pdfs];
+  const filteredContent = () =e {
+    let filteredData = [...content];
 
     if (filterType !== 'all') {
-      content = content.filter(item => item.type === filterType);
+      if (filterType === 'video') {
+        filteredData = filteredData.filter(item =e item.type === 'video');
+      } else if (filterType === 'pdf') {
+        filteredData = filteredData.filter(item =e item.type === 'pdf');
+      }
     }
 
     if (searchTerm) {
-      content = content.filter(item => 
+      filteredData = filteredData.filter(item =e 
         item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.class.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-    return content;
+    return filteredData;
   };
   return (
     <div className="student-page">
@@ -59,14 +53,14 @@ const Resources = () => {
               All
             </button>
             <button 
-              className={`filter-btn ${filterType === 'video/mp4' ? 'active' : ''}`}
-              onClick={() => setFilterType('video/mp4')}
+              className={`filter-btn ${filterType === 'video' ? 'active' : ''}`}
+              onClick={() =e setFilterType('video')}
             >
               Videos
             </button>
             <button 
-              className={`filter-btn ${filterType === 'application/pdf' ? 'active' : ''}`}
-              onClick={() => setFilterType('application/pdf')}
+              className={`filter-btn ${filterType === 'pdf' ? 'active' : ''}`}
+              onClick={() =e setFilterType('pdf')}
             >
               PDFs
             </button>
@@ -74,8 +68,17 @@ const Resources = () => {
         </div>
 
         {/* Content Grid */}
-        <div className="resources-grid">
-          {filteredContent().length === 0 ? (
+        {loading ? (
+          <div className="loading">
+            <p>Loading resources...</p>
+          </div>
+        ) : error ? (
+          <div className="error">
+            <p>Error loading resources: {error}</p>
+          </div>
+        ) : (
+          <div className="resources-grid">
+            {filteredContent().length === 0 ? (
             <div className="no-resources">
               <div className="no-resources-icon">📚</div>
               <h3>No resources found</h3>
@@ -115,8 +118,9 @@ const Resources = () => {
                 </div>
               </div>
             ))
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

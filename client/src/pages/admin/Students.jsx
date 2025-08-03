@@ -1,78 +1,45 @@
-import React, { useState, useEffect } from 'react';
+import { getUIState, UI_KEYS } from '../../utils/uiStorage';
+
+import React, { useState } from 'react';
 import ProtectedRoute from '../../components/ProtectedRoute';
 import AddStudentForm from './AddStudentForm';
+import { useStudents } from '../../hooks';
 import './AdminPages.css';
 
-const Students = () => {
-  const [students, setStudents] = useState([]);
+const Students = () =e {
+  const {
+    students,
+    loading,
+    error,
+    addStudent,
+    updateStudent,
+    deleteStudent
+  } = useStudents();
   const [showAddStudentForm, setShowAddStudentForm] = useState(false);
   const [editingStudent, setEditingStudent] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
 
-  useEffect(() => {
-    loadStudents();
-  }, []);
-
-  const loadStudents = async () => {
-    try {
-      setLoading(true);
-      setError('');
-      
-      // Session-based auth: credentials: 'include' sends session cookie
-      const response = await fetch('/api/school/students', {
-        credentials: 'include'
-      });
-      
-      if (response.ok) {
-        // Parse response: server returns { students: [...] }
-        const { students } = await response.json();
-        setStudents(students);
-      } else {
-        throw new Error('Failed to load students');
-      }
-    } catch (error) {
-      console.error('Error loading students:', error);
-      setError('Failed to load students. Please try again.');
-      setStudents([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleStudentAdded = (newStudent) => {
-    setStudents(prev => [...prev, newStudent]);
+  const handleStudentAdded = (newStudent) =e {
+    // The hook already manages the state, so we don't need to manually update
     setShowAddStudentForm(false);
     setEditingStudent(null);
   };
 
-  const handleStudentUpdated = (updatedStudent) => {
-    setStudents(prev => prev.map(student => 
-      student._id === updatedStudent._id ? updatedStudent : student
-    ));
+  const handleStudentUpdated = (updatedStudent) =e {
+    // The hook already manages the state, so we don't need to manually update
     setShowAddStudentForm(false);
     setEditingStudent(null);
   };
 
-  const handleEdit = (student) => {
+  const handleEdit = (student) =e {
     setEditingStudent(student);
     setShowAddStudentForm(true);
   };
 
-  const handleDelete = async (studentId) => {
+  const handleDelete = async (studentId) =e {
     if (window.confirm('Are you sure you want to delete this student?')) {
       try {
-        // Session-based auth: credentials: 'include' maintains authenticated session
-        const response = await fetch(`/api/school/students/${studentId}`, {
-          method: 'DELETE',
-          credentials: 'include'
-        });
-        
-        if (response.ok) {
-          setStudents(prev => prev.filter(student => student._id !== studentId));
-        } else {
-          throw new Error('Failed to delete student');
-        }
+        await deleteStudent(studentId);
+        alert('Student deleted successfully.');
       } catch (error) {
         console.error('Error deleting student:', error);
         alert('Error deleting student. Please try again.');

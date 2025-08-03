@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { getUser, logoutUser } from '../utils/auth';
+import logo from '../assets/logo.png';
 import './AdminNavbar.css';
 
 const AdminNavbar = () => {
@@ -109,8 +110,7 @@ const AdminNavbar = () => {
       <div className="admin-navbar-container">
         <div className="admin-navbar-brand">
           <Link to="/school/dashboard" className="admin-navbar-logo">
-            <span className="brand-icon">🎓</span>
-            <span className="brand-text">VidyaSetu Admin</span>
+            <img src={logo} alt="VidyaSetu Admin Portal logo" className="brand-logo" />
           </Link>
         </div>
         

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { logoutUser } from '../utils/auth';
+import logo from '../assets/logo.png';
 import './Navbar.css';
 
 const StudentNavbar = () => {
@@ -26,8 +27,7 @@ const StudentNavbar = () => {
       <div className="navbar-container">
         <div className="navbar-brand">
           <Link to="/student/dashboard" className="brand-link">
-            <span className="brand-icon">🎓</span>
-            <span className="brand-text">VidyaSetu</span>
+            <img src={logo} alt="VidyaSetu Student Dashboard logo" className="brand-logo" />
           </Link>
         </div>
 

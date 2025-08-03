@@ -1,31 +1,109 @@
 import React, { useState, useEffect } from 'react';
 import ProtectedRoute from '../../components/ProtectedRoute';
-import { load, save } from '../../utils/storage';
+import { useContent } from '../../hooks';
 import '../../styles/form.css';
 import './AdminPages.css';
 
-// Get API base URL from environment variable or fallback to current domain
-const API_BASE_URL = process.env.REACT_APP_CLIENT_URL || window.location.origin;
+const UploadContent = () => {
+  const {
+    content,
+    loading,
+    error,
+    createContent,
+    deleteContent
+  } = useContent();
 
-const UploadContent = () => {
   const [title, setTitle] = useState('');
   const [classLevel, setClassLevel] = useState('');
   const [subject, setSubject] = useState('');
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState('');
-  const [messageType, setMessageType] = useState(''); // 'error' or 'success'
+  const [messageType, setMessageType] = useState('');
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [uploads, setUploads] = useState([]);
-  const [filteredUploads, setFilteredUploads] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filterType, setFilterType] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
+  const itemsPerPage = 10;
 
-  useEffect(() => {
-    loadUploads();
-  }, []);
+  // Filter state
+  const [filterClass, setFilterClass] = useState('');
+  const [filterSubject, setFilterSubject] = useState('');
+  const [filterType, setFilterType] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredUploads = content.filter(upload => {
+    return (
+      (!filterClass || upload.class.toLowerCase().includes(filterClass.toLowerCase())) &&
+      (!filterSubject || upload.subject.toLowerCase().includes(filterSubject.toLowerCase())) &&
+      (!filterType || upload.type === filterType) &&
+      (!searchTerm || 
+        upload.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        upload.fileName.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    );
+  });
+
+  useEffect(()=> {
+    if (!loading && !error && content.length) {
+      setMessage('');
+    }
+  }, [content, loading, error]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!file) {
+      setMessage('Please select a file to upload.');
+      setMessageType('error');
+      return;
+    }
+
+    if (!title || !classLevel || !subject) {
+      setMessage('Please fill in all required fields.');
+      setMessageType('error');
+      return;
+    }
+
+    setUploading(true);
+    setUploadProgress(0);
+    setMessage('');
+    setMessageType('');
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const data = await createContent(formData);
+
+      setTitle('');
+      setClassLevel('');
+      setSubject('');
+      setFile(null);
+      setUploadProgress(0);
+      setMessage('File successfully uploaded.');
+      setMessageType('success');
+    } catch (error) {
+      console.error('Upload error:', error);
+      setMessage('Upload failed. Please try again.');
+      setMessageType('error');
+    } finally {
+      setUploading(false);
+      setUploadProgress(0);
+    }
+  };
+
+  const handleDelete = async (contentId) => {
+    if (window.confirm('Are you sure you want to delete this content?')) {
+      try {
+        await deleteContent(contentId);
+        setMessage('Content deleted successfully.');
+        setMessageType('success');
+      } catch (error) {
+        console.error('Delete error:', error);
+        setMessage('Failed to delete content. Please try again.');
+        setMessageType('error');
+      }
+    }
+  };
 
   // Filter and paginate uploads
   useEffect(() => {

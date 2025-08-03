@@ -49,7 +49,10 @@ export default function Statistics({
   ];
 
   return (
-    <section className="cards-grid-container" aria-labelledby="statistics-heading">
+    <section 
+      className="cards-grid-container" 
+      aria-labelledby="statistics-heading"
+    >
       <h2 id="statistics-heading" className="section-title">A School Volunteer Programme</h2>
       <div className="cards-grid" role="group" aria-label="Programme statistics">
         {cards.map(({ title, subtitle, icon, count, testId }) => (
@@ -62,11 +65,15 @@ export default function Statistics({
             aria-labelledby={`${testId}-title`}
             aria-describedby={`${testId}-subtitle ${testId}-count`}
           >
-            <div className="card-icon-wrapper" aria-hidden="true">{icon}</div>
-            <h3 id={`${testId}-title`} className="card-title">{title}</h3>
-            <p id={`${testId}-subtitle`} className="card-subtitle">{subtitle}</p>
-            <div id={`${testId}-count`} className="card-count" aria-label={`${count.toLocaleString()} ${title.toLowerCase()}`}>
-              {count.toLocaleString()}
+            <div className="card-header">
+              <div className="card-icon-wrapper" aria-hidden="true">{icon}</div>
+              <h3 id={`${testId}-title`} className="card-title">{title}</h3>
+            </div>
+            <div className="card-content">
+              <div id={`${testId}-count`} className="card-count" aria-label={`${count.toLocaleString()} ${title.toLowerCase()}`}>
+                {count.toLocaleString()}
+              </div>
+              <p id={`${testId}-subtitle`} className="card-subtitle">{subtitle}</p>
             </div>
           </div>
         ))}

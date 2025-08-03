@@ -18,6 +18,12 @@
   flex-shrink: 0;
 }
 
+.brand-logo {
+  height: 2rem;      /* ~32px, adjust as needed */
+  width: auto;
+  display: inline-block;
+}
+
 .admin-navbar-logo {
   color: #333333;
   font-size: var(--fs-500); /* 24px - consistent size */

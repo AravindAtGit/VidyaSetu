@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getUser, logoutUser, getRole } from '../utils/auth';
+import logo from '../assets/logo.png';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -18,7 +19,7 @@ const Navbar = () => {
       <div className="navbar-container">
         <div className="navbar-brand">
           <Link to="/" className="navbar-logo">
-            VidyaSetu
+            <img src={logo} alt="VidyaSetu logo" className="brand-logo" />
           </Link>
         </div>
         
