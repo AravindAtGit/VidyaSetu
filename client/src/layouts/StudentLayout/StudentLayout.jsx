@@ -1,6 +1,5 @@
 import React from 'react';
 import StudentNavbar from '../../components/StudentNavbar';
-import StudentFooter from './StudentFooter';
 import { Outlet } from 'react-router-dom';
 
 const StudentLayout = () => {
@@ -10,7 +9,6 @@ const StudentLayout = () => {
       <main className="app-main">
         <Outlet />
       </main>
-      <StudentFooter />
     </div>
   );
 };

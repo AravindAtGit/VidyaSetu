@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getUser, logoutUser, getRole } from '../utils/auth';
 import './Navbar.css';
@@ -7,15 +7,10 @@ const Navbar = () => {
   const navigate = useNavigate();
   const user = getUser();
   const userRole = getRole();
-  const [showAuthDropdown, setShowAuthDropdown] = useState(false);
 
   const handleLogout = async () => {
     await logoutUser();
     navigate('/');
-  };
-
-  const toggleAuthDropdown = () => {
-    setShowAuthDropdown(!showAuthDropdown);
   };
 
   return (
@@ -52,11 +47,9 @@ const Navbar = () => {
           {user && userRole === 'school' && (
             <>
               <Link to="/school/requests" className="navbar-link">
-                <span className="nav-icon">📋</span>
                 Requests
               </Link>
               <Link to="/school/history" className="navbar-link">
-                <span className="nav-icon">📚</span>
                 History
               </Link>
             </>
@@ -73,24 +66,22 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="auth-dropdown">
-              <button onClick={toggleAuthDropdown} className="auth-dropdown-btn">
-                Get Started ▼
-              </button>
-              {showAuthDropdown && (
-                <div className="auth-dropdown-menu">
-                  <div className="auth-section">
-                    <h4>Login</h4>
-                    <Link to="/login/school" className="auth-dropdown-link">Login as School</Link>
-                    <Link to="/login/student" className="auth-dropdown-link">Login as Student</Link>
-                    <Link to="/login/volunteer" className="auth-dropdown-link">Login as Volunteer</Link>
-                  </div>
-                  <div className="auth-section">
-                    <h4>Register</h4>
-                    <Link to="/register/school" className="auth-dropdown-link">Register as School</Link>
-                    <Link to="/register/volunteer" className="auth-dropdown-link">Register as Volunteer</Link>
-                  </div>
+              <div className="auth-dropdown-btn">
+                Get Started
+              </div>
+              <div className="auth-dropdown-menu">
+                <div className="auth-section">
+                  <h4>Login</h4>
+                  <Link to="/login/school" className="auth-dropdown-link">Login as School</Link>
+                  <Link to="/login/student" className="auth-dropdown-link">Login as Student</Link>
+                  <Link to="/login/volunteer" className="auth-dropdown-link">Login as Volunteer</Link>
                 </div>
-              )}
+                <div className="auth-section">
+                  <h4>Register</h4>
+                  <Link to="/register/school" className="auth-dropdown-link">Register as School</Link>
+                  <Link to="/register/volunteer" className="auth-dropdown-link">Register as Volunteer</Link>
+                </div>
+              </div>
             </div>
           )}
         </div>

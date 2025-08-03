@@ -15,9 +15,9 @@ body {
 }
 
 .container {
-  max-width: min(95%, 120rem);
+  max-width: var(--container-width-95);
   margin: 0 auto;
-  padding: 0 clamp(var(--space-lg), 3vw, var(--space-2xl));
+  padding: 0 var(--container-padding);
 }
 
 .btn {

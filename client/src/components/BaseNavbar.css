@@ -40,6 +40,7 @@
 
 .brand-icon {
   font-size: var(--fs-500); /* 24px - match brand text */
+  display: none; /* Hide icon for white background design */
 }
 
 .brand-text {
@@ -115,8 +116,7 @@
 }
 
 .nav-icon {
-  font-size: clamp(1rem, 2vw, 1.125rem);
-  transition: transform 0.3s ease;
+  display: none;
 }
 
 .base-navbar-link:hover .nav-icon {

@@ -47,7 +47,7 @@
   .tablet-grid-2 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    gap: var(--grid-gap-sm);
   }
   
   .tablet-flex-row {
@@ -67,13 +67,13 @@
   .desktop-grid-3 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: var(--grid-gap-md);
   }
   
   .desktop-grid-4 {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+    gap: var(--grid-gap-md);
   }
 }
 
@@ -87,13 +87,13 @@
   .large-grid-4 {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
+    gap: var(--grid-gap-lg);
   }
   
   .large-grid-5 {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 2rem;
+    gap: var(--grid-gap-lg);
   }
 }
 
@@ -155,8 +155,8 @@
 /* Desktop navbar */
 @media (min-width: 62em) { /* 992px */
   .navbar-container {
-    padding: 0 clamp(1rem, 3vw, 2rem);
-    max-width: min(95%, 90rem);
+    padding: 0 var(--container-padding);
+    max-width: var(--container-width-90);
     margin: 0 auto;
   }
   
@@ -173,7 +173,7 @@
 /* Large screen navbar */
 @media (min-width: 80em) { /* 1280px */
   .navbar-container {
-    max-width: min(95%, 90rem);
+    max-width: var(--container-width-90);
   }
   
   .navbar-menu {
@@ -189,7 +189,7 @@
 .footer-grid-1 {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
+  gap: var(--grid-gap-sm);
 }
 
 .footer-padding-mobile {
@@ -205,7 +205,7 @@
   .footer-grid-2 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+    gap: var(--grid-gap-md);
   }
   
   .footer-padding-tablet {
@@ -222,7 +222,7 @@
   .footer-grid-auto {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+    gap: var(--grid-gap-lg);
   }
   
   .footer-padding-desktop {
@@ -242,13 +242,13 @@
 .dashboard-stats {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
+  gap: var(--grid-gap-sm);
 }
 
 .dashboard-content {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
+  gap: var(--grid-gap-sm);
 }
 
 .dashboard-header h1 {
@@ -267,7 +267,7 @@
 @media (min-width: 48em) { /* 768px */
   .dashboard-stats {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+    gap: var(--grid-gap-md);
   }
   
   .dashboard-header h1 {
@@ -287,12 +287,12 @@
 @media (min-width: 62em) { /* 992px */
   .dashboard-stats {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
+    gap: var(--grid-gap-lg);
   }
   
   .dashboard-content {
     grid-template-columns: 2fr 1fr;
-    gap: 2rem;
+    gap: var(--grid-gap-lg);
   }
   
   .dashboard-header h1 {
@@ -317,6 +317,64 @@
   .dashboard-header h1 {
     font-size: 2.5rem;
   }
+}
+
+/* =============================================================================
+   CONTAINER UTILITIES
+   ============================================================================= */
+
+/* Base container utilities */
+.container-max {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+.container-wide {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+.container-medium {
+  max-width: var(--container-medium);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+.container-narrow {
+  max-width: var(--container-narrow);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+/* =============================================================================
+   GRID UTILITIES
+   ============================================================================= */
+
+/* Gap utilities */
+.gap-sm { gap: var(--grid-gap-sm); }
+.gap-md { gap: var(--grid-gap-md); }
+.gap-lg { gap: var(--grid-gap-lg); }
+.gap-xl { gap: var(--grid-gap-xl); }
+
+/* Auto-fit grid patterns */
+.grid-auto-250 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--grid-gap-md);
+}
+
+.grid-auto-300 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--grid-gap-md);
+}
+
+.grid-auto-350 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: var(--grid-gap-lg);
 }
 
 /* =============================================================================

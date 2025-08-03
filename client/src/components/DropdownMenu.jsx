@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './DropdownMenu.css';
 
-const DropdownMenu = ({ label, icon, items, ariaLabel, className = '' }) => {
+const DropdownMenu = ({ label, icon, items, ariaLabel, className = '', hoverEnabled = true }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const dropdownRef = useRef(null);
@@ -9,10 +9,29 @@ const DropdownMenu = ({ label, icon, items, ariaLabel, className = '' }) => {
   const buttonRef = useRef(null);
   const menuId = `dropdown-menu-${Math.random().toString(36).substr(2, 9)}`;
 
-  // Toggle dropdown
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-    setFocusedIndex(-1);
+  // No-op function for disabled click behavior
+  const noop = () => {};
+
+  // Handle hover and focus events
+  const handleOpen = () => {
+    if (hoverEnabled) {
+      setIsOpen(true);
+      setFocusedIndex(-1);
+    }
+  };
+
+  const handleClose = (event) => {
+    if (hoverEnabled && event && event.relatedTarget) {
+      // Check if the relatedTarget is within the dropdown
+      if (dropdownRef.current && !dropdownRef.current.contains(event.relatedTarget)) {
+        setIsOpen(false);
+        setFocusedIndex(-1);
+      }
+    } else if (hoverEnabled && !event?.relatedTarget) {
+      // For mouse leave events without relatedTarget
+      setIsOpen(false);
+      setFocusedIndex(-1);
+    }
   };
 
   // Close dropdown
@@ -126,14 +145,15 @@ const DropdownMenu = ({ label, icon, items, ariaLabel, className = '' }) => {
       <button
         ref={buttonRef}
         className="dropdown-toggle"
-        onClick={toggleDropdown}
+        onClick={noop}
+        onMouseEnter={handleOpen}
+        onFocus={handleOpen}
         aria-expanded={isOpen}
         aria-controls={menuId}
         aria-label={ariaLabel || `${label} menu`}
         type="button"
       >
         <span className="dropdown-label">{label}</span>
-        <span className={`dropdown-arrow ${isOpen ? 'open' : ''}`}>▼</span>
       </button>
 
       <ul
@@ -142,6 +162,8 @@ const DropdownMenu = ({ label, icon, items, ariaLabel, className = '' }) => {
         className={`dropdown-menu-list ${isOpen ? 'open' : ''}`}
         role="menu"
         aria-labelledby={buttonRef.current?.id}
+        onMouseLeave={handleClose}
+        onBlur={handleClose}
       >
         {items.map((item, index) => (
           <li key={index} role="none">

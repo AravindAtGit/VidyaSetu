@@ -6,7 +6,7 @@
 
 .dropdown-toggle {
   background: var(--clr-primary);
-  color: var(--clr-bg);
+  color: #fff;
   border: none;
   padding: 1rem 1rem;
   border-radius: var(--radius-md);
@@ -29,12 +29,17 @@ min-width: var(--space-4xl);
 }
 
 .dropdown-toggle:focus {
-  outline: 0.25rem solid var(--clr-primary);
-  outline-offset: 0.25rem;
+  outline: none;
 }
 
 .dropdown-toggle:active {
   transform: translateY(0);
+}
+
+/* remove arrow */
+.dropdown-toggle::after,
+.dropdown-arrow {
+  display: none;
 }
 
 
@@ -54,6 +59,7 @@ min-width: var(--space-4xl);
   transform: rotate(180deg);
 }
 
+/* default hidden */
 .dropdown-menu-list {
   position: absolute;
   top: calc(100% + 0.75rem);
@@ -66,13 +72,23 @@ min-width: var(--space-4xl);
   margin: 0;
   padding: 1rem 0;
   list-style: none;
-min-width: var(--space-2xl);
+  min-width: var(--space-2xl);
   border: 1px solid var(--clr-border);
   opacity: 0;
   visibility: hidden;
   transform: translateY(-var(--space-sm)) scale(0.95);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   transform-origin: top;
+  pointer-events: none;
+}
+
+/* reveal on hover/focus-within */
+.dropdown-container:hover .dropdown-menu-list,
+.dropdown-container:focus-within .dropdown-menu-list {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
 }
 
 .dropdown-menu-list.open {
@@ -106,8 +122,7 @@ min-width: var(--space-2xl);
 }
 
 .dropdown-menu-item:focus {
-  outline: 0.25rem solid var(--clr-primary);
-  outline-offset: -0.25rem;
+  outline: none;
 }
 
 .dropdown-menu-item:disabled {
@@ -135,7 +150,12 @@ min-width: var(--fs-400);
     font-size: 1rem;
   }
   .dropdown-menu-list {
-min-width: var(--space-5xl);
+    min-width: var(--space-5xl);
+    /* Keep mobile dropdowns functional - they open on tap (:hover on touch) */
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    pointer-events: auto;
   }
   .dropdown-menu-item {
     padding: 0.75rem 1rem;

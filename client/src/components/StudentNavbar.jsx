@@ -5,8 +5,6 @@ import './Navbar.css';
 
 const StudentNavbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [showLearningDropdown, setShowLearningDropdown] = useState(false);
-  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const user = JSON.parse(localStorage.getItem('user'));
@@ -18,14 +16,6 @@ const StudentNavbar = () => {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-  };
-
-  const toggleLearningDropdown = () => {
-    setShowLearningDropdown(!showLearningDropdown);
-  };
-
-  const toggleProfileDropdown = () => {
-    setShowProfileDropdown(!showProfileDropdown);
   };
 
   return (
@@ -47,26 +37,24 @@ const StudentNavbar = () => {
           
           {/* Learning Dropdown */}
           <div className="dropdown-container">
-            <button onClick={toggleLearningDropdown} className="nav-link dropdown-btn">
+            <button className="nav-link dropdown-btn">
               <span className="nav-icon">📚</span>
-              <span className="nav-text">Learning ▼</span>
+              <span className="nav-text">Learning</span>
             </button>
-            {showLearningDropdown && (
-              <div className="dropdown-menu">
-                <Link to="/student/my-classes" className="dropdown-link">
-                  <span className="nav-icon">📖</span>
-                  My Classes
-                </Link>
-                <Link to="/student/resources" className="dropdown-link">
-                  <span className="nav-icon">📚</span>
-                  Resources
-                </Link>
-                <Link to="/student/quizzes" className="dropdown-link">
-                  <span className="nav-icon">❓</span>
-                  Quizzes
-                </Link>
-              </div>
-            )}
+            <div className="dropdown-menu">
+              <Link to="/student/my-classes" className="dropdown-link">
+                <span className="nav-icon">📖</span>
+                My Classes
+              </Link>
+              <Link to="/student/resources" className="dropdown-link">
+                <span className="nav-icon">📚</span>
+                Resources
+              </Link>
+              <Link to="/student/quizzes" className="dropdown-link">
+                <span className="nav-icon">❓</span>
+                Quizzes
+              </Link>
+            </div>
           </div>
           
           <Link to="/student/progress" className="nav-link">
@@ -76,27 +64,25 @@ const StudentNavbar = () => {
           
           {/* Profile Dropdown */}
           <div className="dropdown-container">
-            <button onClick={toggleProfileDropdown} className="nav-link dropdown-btn">
+            <button className="nav-link dropdown-btn">
               <span className="nav-icon">👤</span>
-              <span className="nav-text">Profile ▼</span>
+              <span className="nav-text">Profile</span>
             </button>
-            {showProfileDropdown && (
-              <div className="dropdown-menu">
-                <Link to="/student/settings" className="dropdown-link">
-                  <span className="nav-icon">⚙️</span>
-                  Settings
-                </Link>
-                <Link to="/student/support" className="dropdown-link">
-                  <span className="nav-icon">❓</span>
-                  Support
-                </Link>
-                <div className="dropdown-divider"></div>
-                <button onClick={handleLogout} className="dropdown-link logout-link">
-                  <span className="nav-icon">🚪</span>
-                  Logout
-                </button>
-              </div>
-            )}
+            <div className="dropdown-menu">
+              <Link to="/student/settings" className="dropdown-link">
+                <span className="nav-icon">⚙️</span>
+                Settings
+              </Link>
+              <Link to="/student/support" className="dropdown-link">
+                <span className="nav-icon">❓</span>
+                Support
+              </Link>
+              <div className="dropdown-divider"></div>
+              <button onClick={handleLogout} className="dropdown-link logout-link">
+                <span className="nav-icon">🚪</span>
+                Logout
+              </button>
+            </div>
           </div>
         </div>
 

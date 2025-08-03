@@ -62,13 +62,15 @@ const StudentDashboard = () => {
   const upcomingClasses = getUpcomingClasses();
 
   return (
-    <div className="student-dashboard">
-      <div className="dashboard-header">
-        <h1>Welcome back, {currentUser?.name || 'Student'}!</h1>
-        <p>Continue your learning journey with VidyaSetu</p>
-      </div>
-      
-      <div className="dashboard-stats">
+    <div className="student-page">
+      <div className="dashboard-wrapper">
+        <div className="page-header">
+          <h1>Welcome back, {currentUser?.name || 'Student'}!</h1>
+          <p>Continue your learning journey with VidyaSetu</p>
+        </div>
+        
+        <div className="page-content">
+          <div className="dashboard-stats">
         <div className="stat-card">
           <h3>Available Content</h3>
           <p className="stat-number">{stats.totalContent}</p>
@@ -163,9 +165,11 @@ const StudentDashboard = () => {
             <button className="action-btn" onClick={() => navigate('/student/quizzes')}>
               Take Quiz
             </button>
-          </div>
         </div>
       </div>
+    </div>
+    </div>
+    </div>
     </div>
   );
 };
