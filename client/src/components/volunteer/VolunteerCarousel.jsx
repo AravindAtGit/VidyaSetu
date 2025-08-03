@@ -4,6 +4,8 @@ import './VolunteerCarousel.css';
 // Import carousel images
 import image1 from '../../assets/image1.jpg';
 import image2 from '../../assets/image2.png';
+import image3 from '../../assets/image3.png';
+
 
 const VolunteerCarousel = () => {
   // State for current slide
@@ -14,18 +16,23 @@ const VolunteerCarousel = () => {
   const carouselImages = [
     image1,
     image2,
+    image3
   ];
 
   // Auto-advance functionality
   useEffect(() => {
-    if (!isPaused) {
+    if (!isPaused && carouselImages.length > 1) {
       const interval = setInterval(() => {
-        setCurrentSlide((prev) => (prev + 1) % carouselImages.length);
+        setCurrentSlide((prev) => {
+          const nextSlide = (prev + 1) % carouselImages.length;
+          console.log('Auto-advancing to slide:', nextSlide); // Debug log
+          return nextSlide;
+        });
       }, 4000); // Change slide every 4 seconds
 
       return () => clearInterval(interval);
     }
-  }, [carouselImages.length, isPaused]);
+  }, [isPaused, carouselImages.length]);
 
   // Navigation functions
   const goToSlide = (index) => {
@@ -78,17 +85,6 @@ const VolunteerCarousel = () => {
           ›
         </button>
 
-        {/* Dot indicators */}
-        <div className="carousel-dots">
-          {carouselImages.map((_, index) => (
-            <button
-              key={index}
-              className={`carousel-dot ${index === currentSlide ? 'active' : ''}`}
-              onClick={() => goToSlide(index)}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
-        </div>
       </div>
     </div>
   );

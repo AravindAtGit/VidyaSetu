@@ -408,6 +408,69 @@
 }
 
 /* =============================================================================
+   MAX-WIDTH RESPONSIVE BREAKPOINTS FOR TABLES AND BUTTONS
+   ============================================================================= */
+
+/* Tablet and smaller (768px and below) */
+@media (max-width: 768px) {
+  /* Table horizontal scrolling */
+  .table-container,
+  .data-table-container,
+  .students-table-container,
+  .uploads-table-container {
+    overflow-x: auto;
+  }
+  
+  /* Header + button stacking */
+  .header-with-button,
+  .section-header,
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+  
+  .dashboard-stats {
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+}
+
+/* Mobile (480px and below) */
+@media (max-width: 480px) {
+  /* Header + button stacking */
+  .header-with-button,
+  .section-header,
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+  
+  /* Action buttons full width */
+  .action-btn,
+  .btn,
+  .button,
+  .edit-btn,
+  .delete-btn,
+  .approve-btn,
+  .reject-btn,
+  .submit-btn,
+  .create-btn,
+  .add-btn {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  
+  .action-buttons,
+  .button-group {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+/* =============================================================================
    RESPONSIVE TYPOGRAPHY UTILITIES
    ============================================================================= */
 

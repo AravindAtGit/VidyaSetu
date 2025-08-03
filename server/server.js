@@ -14,6 +14,7 @@ const volunteerRoutes = require('./routes/volunteer');
 const infraCategoriesRoutes = require('./routes/infraCategories');
 const infraRequestsRoutes = require('./routes/infraRequests');
 const infraAppsRoutes = require('./routes/infraApps');
+const statisticsRouter = require('./routes/statistics');
 
 const app = express();
 
@@ -51,6 +52,7 @@ app.use('/api/volunteer', volunteerRoutes);
 app.use('/api/infra', infraCategoriesRoutes);
 app.use('/api/infra', infraRequestsRoutes);
 app.use('/api/infra', infraAppsRoutes);
+app.use('/api/statistics', statisticsRouter);
 
 // File upload route
 app.post('/api/upload', upload.single('file'), (req, res) => {

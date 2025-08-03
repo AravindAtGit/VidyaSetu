@@ -30,6 +30,7 @@
   box-shadow: 0 0.25rem var(--radius-md) rgba(0, 0, 0, 0.10);
   overflow: hidden;
   border: 1px solid var(--clr-border);
+  padding-bottom: var(--space-2xl);
 }
 
 .section-header {
@@ -38,6 +39,7 @@
   align-items: center;
   padding: var(--space-lg) var(--space-xl);
   border-bottom: 1px solid var(--clr-border);
+  margin-bottom: var(--space-lg);
 }
 
 .section-header h2 {
@@ -89,9 +91,9 @@
   background: var(--clr-bg);
   padding: var(--space-2xl);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   text-align: center;
-  transition: var(--transition-fast);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   border: 1px solid var(--clr-border);
   min-height: 160px;
   display: flex;
@@ -100,7 +102,8 @@
 }
 
 .stat-card:hover {
-  transform: translateY(-var(--space-xxs));
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .stat-card h3 {
@@ -239,6 +242,19 @@
 }
 
 /* Responsive Design */
+/* Single column stacking for ≤640px screens as requested */
+@media (max-width: 640px) {
+  .admin-dashboard .dashboard-stats {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+  
+  .stat-card {
+    padding: var(--space-lg);
+    min-height: 120px;
+  }
+}
+
 @media (max-width: 768px) {
   .admin-dashboard .dashboard-stats,
   .quick-actions {
@@ -272,6 +288,36 @@
   
   .action-text {
     font-size: var(--fs-100);
+  }
+  
+  /* Table container scroll */
+  .dashboard-table-container {
+    overflow-x: auto;
+  }
+  
+  /* Full-width buttons */
+  .btn,
+  .action-btn,
+  .dashboard-btn {
+    display: block;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .action-buttons {
+    grid-template-columns: 1fr;
+  }
+  
+  .action-btn {
+    padding: 0.5rem;
+    width: 100%;
+  }
+  
+  /* Align items vertically in small view */
+  .activity-item {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 

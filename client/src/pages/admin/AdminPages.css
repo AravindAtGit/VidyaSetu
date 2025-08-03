@@ -108,7 +108,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-lg);
   padding-bottom: 1rem;
   border-bottom: 0.25rem solid var(--clr-bg-muted);
 }
@@ -206,7 +206,7 @@
 .status-badge {
   padding: 0.21rem 0.71rem;
   border-radius: var(--fs-400);
-  font-size: 1px;
+  font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
 }
@@ -433,11 +433,18 @@
 /* Students Section Styles */
 .students-section {
   margin-bottom: 1rem;
+  padding-bottom: var(--space-2xl);
+}
+
+.header-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
 }
 
 .header-info h2 {
   color: #2c3e50;
-  margin: 0 0 1px 0;
+  margin: 0;
   font-size: 1.1rem;
 }
 
@@ -450,16 +457,18 @@
   background-color: #28a745;
   color: var(--clr-bg);
   border: none;
-  padding: 0.71rem 1.1rem;
+  padding: 0.65rem 1.2rem;
   border-radius: var(--radius-lg);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
+  margin-left: auto;
+  transition: background-color 0.2s, box-shadow 0.2s;
 }
 
 .add-student-btn:hover {
   background-color: #218838;
+  box-shadow: var(--shadow-md);
 }
 
 /* Applications Grid */
@@ -752,7 +761,7 @@
 .file-type {
   padding: 0.21rem 0.71rem;
   border-radius: var(--fs-400);
-  font-size: 1px;
+  font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
 }
@@ -870,6 +879,21 @@
     width: 95%;
     padding: var(--space-lg);
   }
+  
+  /* Table responsive rules */
+  .table-container,
+  .content-table-container,
+  .files-table-container {
+    overflow-x: auto;
+  }
+  
+  /* Header + button stacking */
+  .section-header,
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
 }
 
 @media (max-width: 480px) {
@@ -892,5 +916,22 @@
   .search-input,
   .filter-select {
     width: 100%;
+  }
+  
+  /* Action buttons full width */
+  .action-btn,
+  .preview-btn,
+  .delete-btn,
+  .edit-btn,
+  .approve-btn,
+  .reject-btn {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
   }
 }

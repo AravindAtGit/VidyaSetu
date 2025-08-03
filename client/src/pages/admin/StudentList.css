@@ -75,11 +75,13 @@
 }
 
 .students-table-container {
-  background: var(--clr-bg);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 0.25rem var(--radius-lg) rgba(0, 0, 0, 0.10);
-  overflow: hidden;
+  max-width: 100%;
+  overflow-x: auto;
+  margin: var(--space-lg) 0;
+  background: var(--clr-bg-light);
   border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
 }
 
 .students-table {
@@ -89,27 +91,29 @@
 
 .students-table th,
 .students-table td {
-  padding: 1rem;
+  padding: 0.75rem 1rem;
+  font-size: var(--fs-200);
   text-align: left;
-  border-bottom: 1px solid var(--clr-border);
+  border-bottom: 1px solid var(--clr-bg-muted);
 }
 
 .students-table th {
   background-color: var(--clr-bg-light);
-  font-weight: 700;
+  font-weight: var(--fw-bold);
   color: var(--clr-primary);
-  font-size: 1rem;
+  font-size: var(--fs-200);
   text-transform: uppercase;
   letter-spacing: 0.var(--space-xs);
 }
 
 .students-table td {
   color: var(--clr-primary);
-  font-size: 1rem;
+  font-size: var(--fs-200);
 }
 
 .students-table tr:hover {
   background-color: var(--clr-bg-light);
+  transition: background-color 0.3s ease;
 }
 
 .action-buttons {
@@ -117,11 +121,12 @@
   gap: 1rem;
 }
 
+/* Legacy action buttons - kept for backward compatibility */
 .action-btn {
-  padding: var(--radius-md) 10.25rem;
+  padding: 0.5rem 0.75rem;
   border: none;
   border-radius: var(--radius-sm);
-  font-size: 1px;
+  font-size: var(--fs-100);
   font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s;
@@ -177,27 +182,74 @@
   background-color: #2980b9;
 }
 
+.edit-btn, .delete-btn {
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+}
+
+.edit-btn {
+  background-color: #ffc107;
+  color: #fff;
+}
+
+.edit-btn:hover {
+  background-color: #e0a800;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.delete-btn:hover {
+  background-color: #c82333;
+}
+
 /* Responsive design */
-@media (max-width: 56.25rem) {
+@media (max-width: 768px) {
   .student-list-container {
     padding: 1rem 0;
   }
+  
   .student-list-header {
     margin-bottom: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
   }
+  
   .student-list-header h2 {
     font-size: 1.1rem;
   }
+  
   .student-stats {
     gap: 1rem;
     margin-bottom: 1rem;
+    flex-direction: column;
   }
+  
   .stat-card {
     padding: 1rem;
   }
+  
+  /* Table horizontal scroll */
+  .students-table-container {
+    overflow-x: auto;
+  }
+  
   .students-table th,
   .students-table td {
     padding: 0.75rem;
+    font-size: var(--fs-100);
   }
   
   .action-buttons {
@@ -209,4 +261,32 @@
     padding: var(--radius-sm) var(--radius-lg);
     font-size: 0.75rem;
   }
-} 
+}
+
+@media (max-width: 480px) {
+  .student-list-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+  
+  .student-stats {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  /* Action buttons full width */
+  .action-btn,
+  .edit-btn,
+  .delete-btn,
+  .retry-btn {
+    display: block;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

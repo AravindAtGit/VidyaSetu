@@ -1,12 +1,15 @@
 .volunteer-carousel {
-  max-width: min(95%, 120rem); /* Match navbar width */
-  width: 100%;
-  height: 400px; /* Fixed banner height */
+  width: 100vw; /* Full viewport width */
+  height: 500px; /* Increased banner height */
   position: relative;
   overflow: hidden;
-  margin: 0 auto; /* Center the carousel */
+  margin: 0;
+  padding: 0;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
   background: #f5f5f5;
-  border-radius: 0; /* Remove border radius for full-width banner look */
 }
 
 .carousel-container {
@@ -27,7 +30,7 @@
 .carousel-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* Cover the entire container */
   position: absolute;
   top: 0;
   left: 0;
@@ -108,7 +111,7 @@
 /* Responsive design */
 @media (max-width: 768px) {
   .volunteer-carousel {
-    height: 250px; /* Smaller height on mobile */
+    height: 350px; /* Proportionally larger height on mobile */
   }
   
   .carousel-btn {
@@ -137,7 +140,7 @@
 
 @media (max-width: 480px) {
   .volunteer-carousel {
-    height: 200px; /* Even smaller on very small screens */
+    height: 280px; /* Proportionally larger on very small screens */
   }
   
   .carousel-btn {

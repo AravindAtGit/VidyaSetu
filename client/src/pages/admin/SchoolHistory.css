@@ -25,7 +25,7 @@
   text-align: center;
   padding: 1rem;
   background-color: #f8f9fa;
-  border-radius: 10.25rem;
+  border-radius: 1rem;
   color: #6c757d;
 }
 
@@ -37,7 +37,7 @@
 
 .history-card {
   background: var(--clr-bg);
-  border-radius: 10.25rem;
+  border-radius: 1rem;
   padding: 1.1rem;
   box-shadow: 0 var(--radius-sm) var(--radius-md) rgba(0, 0, 0, 0.08);
   border: 1px solid var(--clr-bg-muted);

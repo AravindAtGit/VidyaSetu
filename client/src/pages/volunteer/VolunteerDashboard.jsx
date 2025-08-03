@@ -1,6 +1,5 @@
 import React from 'react';
 import { Carousel } from '../../components/common';
-import StatisticsGrid from '../../components/common/StatisticsGrid';
 
 // Import carousel images explicitly
 import image1 from '../../assets/volunteer/carousel/image1.png';
@@ -26,7 +25,6 @@ const VolunteerDashboard = () => {
   return (
     <div className="volunteer-dashboard">
       <Carousel images={carouselImages} />
-      <StatisticsGrid />
       <div className="dashboard-links">
         <a href="/volunteer/applications">My Applications</a>
         <a href="/volunteer/history">History</a>

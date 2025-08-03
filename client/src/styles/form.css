@@ -374,12 +374,46 @@ input[type="radio"] {
     flex-direction: column;
   }
   
-  .btn {
+  .form-card {
+    padding: var(--space-lg);
+  }
+  
+  /* Table responsiveness */
+  .table-container {
+    overflow-x: auto;
+  }
+  
+  /* Header + button stacking */
+  .form-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .form-actions {
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+  
+  /* All buttons full width on mobile */
+  .btn,
+  .form-btn,
+  .submit-btn,
+  .cancel-btn,
+  .action-btn {
+    display: block;
     width: 100%;
+    margin-bottom: 0.5rem;
   }
   
   .form-card {
-    padding: var(--space-lg);
+    padding: var(--space-md);
+  }
+  
+  .form-card-title {
+    font-size: var(--fs-400);
   }
 }
 
