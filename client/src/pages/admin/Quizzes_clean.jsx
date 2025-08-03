@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ProtectedRoute from '../../components/ProtectedRoute';
 import { useQuizzes } from '../../hooks';
 import './AdminPages.css';
+
 const Quizzes = () => {
   const {
     quizzes,
@@ -19,12 +20,12 @@ const Quizzes = () => {
   const [maxAttempts, setMaxAttempts] = useState(3);
   const [message, setMessage] = useState('');
 
-  const addQuestion = () =>{
+  const addQuestion = () => {
     setQuestions([...questions, { ...newQuestion }]);
     setNewQuestion({ text: '', answers: ['', ''], correct: 0 });
   };
 
-  const addQuiz = async () =>{
+  const addQuiz = async () => {
     if (!title || !subject || !className || questions.length === 0) {
       setMessage('Please fill in all required fields and add at least one question.');
       return;
@@ -52,7 +53,7 @@ const Quizzes = () => {
     }
   };
 
-  const handleDeleteQuiz = async (quizId) =>{
+  const handleDeleteQuiz = async (quizId) => {
     if (window.confirm('Are you sure you want to delete this quiz?')) {
       try {
         await deleteQuiz(quizId);
@@ -215,4 +216,3 @@ const Quizzes = () => {
 };
 
 export default Quizzes;
-

@@ -6,7 +6,7 @@ import AddStudentForm from './AddStudentForm';
 import { useStudents } from '../../hooks';
 import './AdminPages.css';
 
-const Students = () =e {
+const Students = () =>{
   const {
     students,
     loading,
@@ -18,24 +18,24 @@ const Students = () =e {
   const [showAddStudentForm, setShowAddStudentForm] = useState(false);
   const [editingStudent, setEditingStudent] = useState(null);
 
-  const handleStudentAdded = (newStudent) =e {
+  const handleStudentAdded = (newStudent) =>{
     // The hook already manages the state, so we don't need to manually update
     setShowAddStudentForm(false);
     setEditingStudent(null);
   };
 
-  const handleStudentUpdated = (updatedStudent) =e {
+  const handleStudentUpdated = (updatedStudent) =>{
     // The hook already manages the state, so we don't need to manually update
     setShowAddStudentForm(false);
     setEditingStudent(null);
   };
 
-  const handleEdit = (student) =e {
+  const handleEdit = (student) =>{
     setEditingStudent(student);
     setShowAddStudentForm(true);
   };
 
-  const handleDelete = async (studentId) =e {
+  const handleDelete = async (studentId) => {
     if (window.confirm('Are you sure you want to delete this student?')) {
       try {
         await deleteStudent(studentId);

@@ -2,24 +2,24 @@ import React, { useState } from 'react';
 import { useContent } from '../../hooks';
 import './StudentPages.css';
 
-const Resources = () =e {
+const Resources = () => {
   const { content, loading, error } = useContent();
   const [filterType, setFilterType] = useState('all');
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredContent = () =e {
+  const filteredContent = () =>{
     let filteredData = [...content];
 
     if (filterType !== 'all') {
       if (filterType === 'video') {
-        filteredData = filteredData.filter(item =e item.type === 'video');
+        filteredData = filteredData.filter(item =>item.type === 'video');
       } else if (filterType === 'pdf') {
-        filteredData = filteredData.filter(item =e item.type === 'pdf');
+        filteredData = filteredData.filter(item => item.type === 'pdf');
       }
     }
 
     if (searchTerm) {
-      filteredData = filteredData.filter(item =e 
+      filteredData = filteredData.filter(item =>
         item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.class.toLowerCase().includes(searchTerm.toLowerCase())
@@ -54,13 +54,13 @@ const Resources = () =e {
             </button>
             <button 
               className={`filter-btn ${filterType === 'video' ? 'active' : ''}`}
-              onClick={() =e setFilterType('video')}
+              onClick={() => setFilterType('video')}
             >
               Videos
             </button>
             <button 
               className={`filter-btn ${filterType === 'pdf' ? 'active' : ''}`}
-              onClick={() =e setFilterType('pdf')}
+              onClick={() =>setFilterType('pdf')}
             >
               PDFs
             </button>

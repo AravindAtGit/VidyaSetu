@@ -4,7 +4,7 @@ import { useContent } from '../../hooks';
 import '../../styles/form.css';
 import './AdminPages.css';
 
-const UploadContent = () => {
+const UploadContent = () => {
   const {
     content,
     loading,
@@ -30,11 +30,11 @@ const UploadContent = () => {
   const [filterType, setFilterType] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
-  const filteredUploads = content.filter(upload => {
+  const filteredUploads = content.filter(upload => {
     return (
-      (!filterClass || upload.class.toLowerCase().includes(filterClass.toLowerCase())) &&
-      (!filterSubject || upload.subject.toLowerCase().includes(filterSubject.toLowerCase())) &&
-      (!filterType || upload.type === filterType) &&
+      (!filterClass || upload.class.toLowerCase().includes(filterClass.toLowerCase())) &&
+      (!filterSubject || upload.subject.toLowerCase().includes(filterSubject.toLowerCase()))&&
+      (!filterType || upload.type === filterType) &&
       (!searchTerm || 
         upload.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         upload.fileName.toLowerCase().includes(searchTerm.toLowerCase())
@@ -48,7 +48,7 @@ const UploadContent = () => {
     }
   }, [content, loading, error]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!file) {
@@ -91,7 +91,7 @@ const UploadContent = () => {
     }
   };
 
-  const handleDelete = async (contentId) => {
+  const handleDelete = async (contentId) => {
     if (window.confirm('Are you sure you want to delete this content?')) {
       try {
         await deleteContent(contentId);
@@ -105,172 +105,143 @@ const UploadContent = () => {
     }
   };
 
-  // Filter and paginate uploads
-  useEffect(() => {
-    let filtered = uploads;
-    
-    // Apply search filter
-    if (searchTerm) {
-      filtered = filtered.filter(upload => 
-        upload.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        upload.class.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        upload.subject.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-    
-    // Apply type filter
-    if (filterType !== 'all') {
-      filtered = filtered.filter(upload => {
-        if (filterType === 'video') return upload.type === 'video/mp4';
-        if (filterType === 'pdf') return upload.type === 'application/pdf';
-        return true;
-      });
-    }
-    
-    setFilteredUploads(filtered);
-    setCurrentPage(1); // Reset to first page when filtering
-  }, [uploads, searchTerm, filterType]);
-
-  const loadUploads = () => {
-    const videos = load('videos', []);
-    const pdfs = load('pdfs', []);
-    setUploads([...videos, ...pdfs]);
-  };
+  // This useEffect was using undefined variables and has been removed
+  // The filteredUploads variable at the top of the component handles filtering
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
     
-    if (!file) {
-      setMessage('Please select a file to upload.');
-      setMessageType('error');
-      return;
-    }
+  //   if (!file) {
+  //     setMessage('Please select a file to upload.');
+  //     setMessageType('error');
+  //     return;
+  //   }
 
-    if (!title || !classLevel || !subject) {
-      setMessage('Please fill in all required fields.');
-      setMessageType('error');
-      return;
-    }
+  //   if (!title || !classLevel || !subject) {
+  //     setMessage('Please fill in all required fields.');
+  //     setMessageType('error');
+  //     return;
+  //   }
 
-    setUploading(true);
-    setUploadProgress(0);
-    setMessage('');
-    setMessageType('');
+  //   setUploading(true);
+  //   setUploadProgress(0);
+  //   setMessage('');
+  //   setMessageType('');
 
-    try {
-      const formData = new FormData();
-      formData.append('file', file);
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append('file', file);
 
-      // Use XHR for progress tracking
-      const uploadPromise = new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
+  //     // Use XHR for progress tracking
+  //     const uploadPromise = new Promise((resolve, reject) => {
+  //       const xhr = new XMLHttpRequest();
         
-        xhr.upload.onprogress = (event) => {
-          if (event.lengthComputable) {
-            const percentComplete = Math.round((event.loaded / event.total) * 100);
-            setUploadProgress(percentComplete);
-          }
-        };
+  //       xhr.upload.onprogress = (event) => {
+  //         if (event.lengthComputable) {
+  //           const percentComplete = Math.round((event.loaded / event.total) * 100);
+  //           setUploadProgress(percentComplete);
+  //         }
+  //       };
         
-        xhr.onload = () => {
-          if (xhr.status === 200) {
-            try {
-              const data = JSON.parse(xhr.responseText);
-              resolve(data);
-            } catch (error) {
-              reject(new Error('Invalid response from server'));
-            }
-          } else {
-            reject(new Error('Upload failed'));
-          }
-        };
+  //       xhr.onload = () => {
+  //         if (xhr.status === 200) {
+  //           try {
+  //             const data = JSON.parse(xhr.responseText);
+  //             resolve(data);
+  //           } catch (error) {
+  //             reject(new Error('Invalid response from server'));
+  //           }
+  //         } else {
+  //           reject(new Error('Upload failed'));
+  //         }
+  //       };
         
-        xhr.onerror = () => reject(new Error('Upload failed'));
+  //       xhr.onerror = () => reject(new Error('Upload failed'));
         
-        xhr.open('POST', `${API_BASE_URL}/api/upload`);
-        xhr.send(formData);
-      });
+  //       xhr.open('POST', `${API_BASE_URL}/api/upload`);
+  //       xhr.send(formData);
+  //     });
 
-      const data = await uploadPromise;
+  //     const data = await uploadPromise;
       
-      const contentData = {
-        id: Date.now().toString(),
-        title,
-        class: classLevel,
-        subject,
-        url: data.url,
-        type: file.type,
-        fileName: file.name,
-        size: file.size,
-        uploadDate: new Date().toISOString(),
-      };
+  //     const contentData = {
+  //       id: Date.now().toString(),
+  //       title,
+  //       class: classLevel,
+  //       subject,
+  //       url: data.url,
+  //       type: file.type,
+  //       fileName: file.name,
+  //       size: file.size,
+  //       uploadDate: new Date().toISOString(),
+  //     };
 
-      // Save to appropriate localStorage array based on file type
-      if (file.type === 'video/mp4') {
-        const videos = load('videos', []);
-        videos.push(contentData);
-        save('videos', videos);
-      } else if (file.type === 'application/pdf') {
-        const pdfs = load('pdfs', []);
-        pdfs.push(contentData);
-        save('pdfs', pdfs);
-      }
+  //     // Save to appropriate localStorage array based on file type
+  //     if (file.type === 'video/mp4') {
+  //       const videos = load('videos', []);
+  //       videos.push(contentData);
+  //       save('videos', videos);
+  //     } else if (file.type === 'application/pdf') {
+  //       const pdfs = load('pdfs', []);
+  //       pdfs.push(contentData);
+  //       save('pdfs', pdfs);
+  //     }
 
-      // Reset form
-      setTitle('');
-      setClassLevel('');
-      setSubject('');
-      setFile(null);
-      setUploadProgress(0);
-      setMessage('File successfully uploaded.');
-      setMessageType('success');
+  //     // Reset form
+  //     setTitle('');
+  //     setClassLevel('');
+  //     setSubject('');
+  //     setFile(null);
+  //     setUploadProgress(0);
+  //     setMessage('File successfully uploaded.');
+  //     setMessageType('success');
       
-      // Refresh uploads list
-      loadUploads();
+  //     // Refresh uploads list
+  //     loadUploads();
       
-    } catch (error) {
-      console.error('Upload error:', error);
-      setMessage('Upload failed. Please try again.');
-      setMessageType('error');
-    } finally {
-      setUploading(false);
-      setUploadProgress(0);
-    }
-  };
+  //   } catch (error) {
+  //     console.error('Upload error:', error);
+  //     setMessage('Upload failed. Please try again.');
+  //     setMessageType('error');
+  //   } finally {
+  //     setUploading(false);
+  //     setUploadProgress(0);
+  //   }
+  // };
 
-  const handleDelete = async (contentId, type) => {
-    if (window.confirm('Are you sure you want to delete this content?')) {
-      try {
-        // Future: Make DELETE request to backend
-        // await fetch(`${API_BASE_URL}/api/upload/${contentId}`, {
-        //   method: 'DELETE',
-        // });
+  // const handleDelete = async (contentId, type) => {
+  //   if (window.confirm('Are you sure you want to delete this content?')) {
+  //     try {
+  //       // Future: Make DELETE request to backend
+  //       // await fetch(`${API_BASE_URL}/api/upload/${contentId}`, {
+  //       //   method: 'DELETE',
+  //       // });
         
-        // For now, remove from localStorage
-        if (type === 'video/mp4') {
-          const videos = load('videos', []);
-          const updatedVideos = videos.filter(video => video.id !== contentId);
-          save('videos', updatedVideos);
-        } else if (type === 'application/pdf') {
-          const pdfs = load('pdfs', []);
-          const updatedPdfs = pdfs.filter(pdf => pdf.id !== contentId);
-          save('pdfs', updatedPdfs);
-        }
+  //       // For now, remove from localStorage
+  //       if (type === 'video/mp4') {
+  //         const videos = load('videos', []);
+  //         const updatedVideos = videos.filter(video => video.id !== contentId);
+  //         save('videos', updatedVideos);
+  //       } else if (type === 'application/pdf') {
+  //         const pdfs = load('pdfs', []);
+  //         const updatedPdfs = pdfs.filter(pdf => pdf.id !== contentId);
+  //         save('pdfs', updatedPdfs);
+  //       }
         
-        loadUploads();
-        setMessage('Content deleted successfully.');
-        setMessageType('success');
-      } catch (error) {
-        console.error('Delete error:', error);
-        setMessage('Failed to delete content. Please try again.');
-        setMessageType('error');
-      }
-    }
-  };
+  //       loadUploads();
+  //       setMessage('Content deleted successfully.');
+  //       setMessageType('success');
+  //     } catch (error) {
+  //       console.error('Delete error:', error);
+  //       setMessage('Failed to delete content. Please try again.');
+  //       setMessageType('error');
+  //     }
+  //   }
+  // };
 
   // Helper functions
   const formatFileSize = (bytes) => {
@@ -480,4 +451,5 @@ const UploadContent = () => {
 };
 
 export default UploadContent;
+
 
