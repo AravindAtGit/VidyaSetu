@@ -18,16 +18,19 @@
   margin: 0 auto;
   padding: 0 1rem;
   display: flex;
-  justify-content: flex-start;
   align-items: center;
+  height: 64px; /* preserve original height */
+  justify-content: flex-start;
 }
 
-.student-navbar-brand {
+.student-navbar-brand,
+.navbar-logo-container {
   flex-shrink: 0;
   margin-right: var(--space-lg);
 }
 
-.student-navbar-logo {
+.student-navbar-logo,
+.navbar-logo {
   color: var(--clr-primary);
   font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 800;
@@ -35,6 +38,7 @@
   transition: opacity 0.2s ease;
   font-family: 'Inter', sans-serif;
   letter-spacing: -1px;
+  height: 48px;
 }
 
 .student-navbar-logo:hover {
@@ -77,12 +81,14 @@
   transform: scale(1.08);
 }
 
-.student-navbar-auth {
+.student-navbar-auth,
+.navbar-user-section {
   flex: 1;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 1rem;
+  margin-left: auto;
 }
 
 .student-user-section {
@@ -188,6 +194,13 @@
   
   .student-navbar-toggle {
     display: flex;
+  }
+  
+  /* Ensure navbar-user-section doesn't overlap with hamburger */
+  .navbar-user-section,
+  .student-navbar-auth {
+    margin-left: auto;
+    flex-shrink: 0;
   }
 }
 

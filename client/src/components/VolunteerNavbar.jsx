@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getUser, logoutUser } from '../utils/auth';
 import logo from '../assets/logo.png';
 import './Navbar.css';
 
 const VolunteerNavbar = () => {
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
   const navigate = useNavigate();
   const user = getUser();
 
@@ -13,12 +14,15 @@ const VolunteerNavbar = () => {
     navigate('/');
   };
 
+  const toggleProfile = () => setIsProfileOpen(!isProfileOpen);
+  const closeProfile = () => setIsProfileOpen(false);
+
   return (
     <nav className="navbar volunteer-navbar">
       <div className="navbar-container">
-        <div className="navbar-brand">
+        <div className="navbar-logo-container">
           <Link to="/" className="navbar-logo">
-            <img src={logo} alt="VidyaSetu logo" className="brand-logo" />
+            <img src={logo} alt="VidyaSetu logo" className="brand-logo navbar-logo" />
           </Link>
         </div>
         
@@ -33,27 +37,12 @@ const VolunteerNavbar = () => {
           <Link to="/volunteer/history" className="navbar-link">History</Link>
         </div>
 
-        <div className="navbar-auth">
+        <div className="navbar-user-section" style={{ marginLeft: 'auto' }}>
           {user ? (
-            <div className="user-section">
-              <span className="user-name"> {user.name}</span>
-              
-              {/* Profile Dropdown */}
-              <div className="profile-dropdown">
-                <button 
-                  className="profile-dropdown-btn" 
-                  aria-haspopup="true"
-                >
-                  Profile
-                </button>
-                <div className="profile-dropdown-menu" role="menu">
-                  <Link to="/volunteer/settings" className="profile-dropdown-link" role="menuitem">Settings</Link>
-                  <Link to="/volunteer/help" className="profile-dropdown-link" role="menuitem">Help & FAQ</Link>
-                  <div className="dropdown-divider"></div>
-                  <button onClick={handleLogout} className="profile-dropdown-link logout-link" role="menuitem">Logout</button>
-                </div>
-              </div>
-            </div>
+            <Link to="/volunteer/profile" className="navbar-link">
+              <span className="nav-icon">👤</span>
+              <span className="nav-text">Profile</span>
+            </Link>
           ) : (
             <div className="auth-dropdown">
               <button className="auth-dropdown-btn">

@@ -20,14 +20,15 @@ const StudentNavbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const toggleProfile = () => setIsProfileOpen(!isProfileOpen);
   const closeProfile = () => setIsProfileOpen(false);
 
   return (
     <nav className="navbar student-navbar">
       <div className="navbar-container">
-        <div className="navbar-brand">
+        <div className="navbar-logo-container">
           <Link to="/student/dashboard" className="brand-link">
-            <img src={logo} alt="VidyaSetu Student Dashboard logo" className="brand-logo" />
+            <img src={logo} alt="VidyaSetu Student Dashboard logo" className="brand-logo navbar-logo" />
           </Link>
         </div>
 
@@ -64,29 +65,15 @@ const StudentNavbar = () => {
             <span className="nav-icon">📊</span>
             <span className="nav-text">Progress</span>
           </Link>
-          
-          {/* Profile Dropdown */}
-          <div className="dropdown-container">
-            <button className="nav-link dropdown-btn" aria-haspopup="true" aria-expanded={isProfileOpen}>
-              <span className="nav-icon">👤</span>
-              <span className="nav-text">Profile</span>
-            </button>
-            <div className="dropdown-menu" role="menu">
-              <Link to="/student/settings" className="dropdown-link" role="menuitem" onClick={closeProfile}>
-                <span className="nav-icon">⚙️</span>
-                Settings
-              </Link>
-              <Link to="/student/support" className="dropdown-link" role="menuitem" onClick={closeProfile}>
-                <span className="nav-icon">❓</span>
-                Support
-              </Link>
-              <div className="dropdown-divider"></div>
-              <button onClick={() => { handleLogout(); closeProfile(); }} className="dropdown-link logout-link" role="menuitem">
-                <span className="nav-icon">🚪</span>
-                Logout
-              </button>
-            </div>
-          </div>
+        </div>
+        
+        {/* User Section */}
+        <div className="navbar-user-section" style={{ marginLeft: 'auto' }}>
+          {/* Profile Link */}
+          <Link to="/student/profile" className="nav-link">
+            <span className="nav-icon">👤</span>
+            <span className="nav-text">Profile</span>
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}

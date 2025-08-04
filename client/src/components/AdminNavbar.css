@@ -17,11 +17,20 @@
 
 .admin-navbar-brand {
   flex-shrink: 0;
-  margin-right: var(--space-lg);
+  margin-right: var(--space-xl);
+  order: -1; /* Ensure it's positioned first */
+}
+
+.logo-container {
+  height: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-right: var(--space-lg);
 }
 
 .brand-logo {
-  height: clamp(2.5rem, 6vw, 3.5rem);      /* Responsive scaling for desktop */
+  height: clamp(4rem, 10vw, 6.5rem);  /* Significantly increased size */
   width: auto;
   display: inline-block;
 }
@@ -237,7 +246,8 @@
 
 /* reveal on hover/focus-within with delay */
 .dropdown-container:hover .dropdown-menu,
-.dropdown-container:focus-within .dropdown-menu {
+.dropdown-container:focus-within .dropdown-menu,
+.dropdown-menu.open {
   opacity: 1;
   visibility: visible;
   transform: none;
@@ -290,6 +300,26 @@
 .logout-link:hover {
   background-color: #f8d7da !important;
   color: #721c24 !important;
+}
+
+.profile-info {
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: none;
+}
+
+.profile-name {
+  font-weight: var(--fw-semibold);
+  font-size: var(--fs-200);
+  color: #333;
+  margin-bottom: 0.25rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.profile-email {
+  font-size: var(--fs-100);
+  color: #666;
+  font-family: 'Inter', sans-serif;
+  opacity: 0.8;
 }
 
 @media (max-width: 768px) {

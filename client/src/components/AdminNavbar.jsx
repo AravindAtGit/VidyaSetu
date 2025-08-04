@@ -10,8 +10,7 @@ const AdminNavbar = () => {
     student: false,
     request: false,
     content: false,
-    reports: false,
-    profile: false
+    reports: false
   });
   const [dropdownTimeouts, setDropdownTimeouts] = useState({});
   const navigate = useNavigate();
@@ -39,14 +38,10 @@ const AdminNavbar = () => {
       student: false,
       request: false,
       content: false,
-      reports: false,
-      profile: false
+      reports: false
     });
   };
 
-  const closeProfile = () => {
-    setDropdownStates(prev => ({ ...prev, profile: false }));
-  };
 
   const handleDropdownKeyDown = (event, dropdown) => {
     switch (event.key) {
@@ -108,12 +103,11 @@ const AdminNavbar = () => {
   return (
     <nav className="admin-navbar">
       <div className="admin-navbar-container">
-        <div className="admin-navbar-brand">
+        <div className="navbar-logo-container">
           <Link to="/school/dashboard" className="admin-navbar-logo">
-            <img src={logo} alt="VidyaSetu Admin Portal logo" className="brand-logo" />
+            <img src={logo} alt="VidyaSetu Admin Portal logo" className="brand-logo navbar-logo" />
           </Link>
         </div>
-        
         {/* Desktop Navigation */}
         <div className={`admin-navbar-menu ${isMenuOpen ? 'active' : ''}`}>
 <Link to="/school/dashboard" className="admin-navbar-link">Home</Link>
@@ -199,30 +193,13 @@ const AdminNavbar = () => {
               <Link to="/school/reports" className="dropdown-link" role="menuitem" tabIndex={dropdownStates.reports ? 0 : -1} onClick={() => handleLinkClick('reports')}>Request Fulfillment Report</Link>
             </div>
           </div>
-          
-          {/* Profile Dropdown */}
-          <div className="dropdown-container">
-            <button 
-              className="admin-navbar-link dropdown-btn"
-              aria-haspopup="true"
-              aria-expanded={dropdownStates.profile}
-              aria-label="Profile menu"
-              type="button"
-              onFocus={() => handleDropdownFocus('profile')}
-              onBlur={(e) => handleDropdownBlur(e, 'profile')}
-              onKeyDown={(e) => handleDropdownKeyDown(e, 'profile')}
-            >
-              Profile
-            </button>
-            <div className={`dropdown-menu ${dropdownStates.profile ? 'open' : ''}`} role="menu" aria-label="Profile options">
-              <Link to="/school/settings" className="dropdown-link" role="menuitem" tabIndex={dropdownStates.profile ? 0 : -1} onClick={() => { handleLinkClick('profile'); closeProfile(); }}>Settings</Link>
-              <Link to="/school/help" className="dropdown-link" role="menuitem" tabIndex={dropdownStates.profile ? 0 : -1} onClick={() => { handleLinkClick('profile'); closeProfile(); }}>Help & Support</Link>
-              <div className="dropdown-divider"></div>
-              <button onClick={() => { handleLogout(); closeProfile(); }} className="dropdown-link logout-link" role="menuitem" tabIndex={dropdownStates.profile ? 0 : -1}>
-                Logout
-              </button>
-            </div>
-          </div>
+        </div>
+        
+        {/* User Section */}
+        <div className="navbar-user-section" style={{ marginLeft: 'auto' }}>
+          <Link to="/school/profile" className="admin-navbar-link">
+            Profile
+          </Link>
         </div>
 
         {/* Mobile Menu Button */}

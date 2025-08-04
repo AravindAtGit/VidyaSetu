@@ -42,6 +42,11 @@ import AdminQuizzes from './pages/admin/Quizzes';
 import QuizResults from './pages/admin/QuizResults';
 import VirtualClasses from './pages/admin/VirtualClasses';
 
+// Profile Pages
+import StudentProfile from './pages/profile/StudentProfile';
+import VolunteerProfile from './pages/profile/VolunteerProfile';
+import SchoolProfile from './pages/profile/SchoolProfile';
+
 function App() {
   return (
     <Routes>
@@ -103,6 +108,7 @@ function App() {
             </ProtectedRoute>
           } 
         />
+        <Route path="/volunteer/profile" element={<ProtectedRoute role="volunteer"><VolunteerProfile /></ProtectedRoute>} />
       </Route>
 
       {/* Auth routes (no layout wrapper) */}
@@ -126,6 +132,7 @@ function App() {
         <Route path="resources" element={<Resources />} />
         <Route path="progress" element={<Progress />} />
         <Route path="quizzes" element={<StudentQuizzes />} />
+        <Route path="profile" element={<StudentProfile />} />
       </Route>
 
       {/* School Admin routes with AdminLayout */}
@@ -153,6 +160,7 @@ function App() {
         <Route path="virtual-classes" element={<VirtualClasses />} />
         {/* Reports and Analytics */}
         <Route path="reports" element={<Reports />} />
+        <Route path="profile" element={<SchoolProfile />} />
       </Route>
     </Routes>
   );

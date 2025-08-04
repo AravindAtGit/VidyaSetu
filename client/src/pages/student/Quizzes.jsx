@@ -140,7 +140,11 @@ const Quizzes = () => {
           </div>
           
           <div className="results-actions">
-            <button onClick={() => setCurrentQuiz(null)} className="back-btn">
+            <button onClick={() => {
+              setCurrentQuiz(null);
+              setShowResults(false);
+              setQuizStarted(false);
+            }} className="back-btn">
               Back to Quizzes
             </button>
           </div>

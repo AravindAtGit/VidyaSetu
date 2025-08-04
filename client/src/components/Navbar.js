@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getUser, logoutUser, getRole } from '../utils/auth';
 import logo from '../assets/logo.png';
@@ -8,36 +8,53 @@ const Navbar = () => {
   const navigate = useNavigate();
   const user = getUser();
   const userRole = getRole();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     await logoutUser();
     navigate('/');
+    setIsMenuOpen(false); // Close menu after logout
+  };
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
   };
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <div className="navbar-brand">
+        <div className="navbar-logo-container">
           <Link to="/" className="navbar-logo">
-            <img src={logo} alt="VidyaSetu logo" className="brand-logo" />
+            <img src={logo} alt="VidyaSetu logo" className="brand-logo navbar-logo" />
           </Link>
         </div>
         
-        <div className="navbar-menu">
-          <Link to="/" className="navbar-link">
+        {/* Hamburger Menu Toggle */}
+        <button className="navbar-toggle" onClick={toggleMenu} aria-label="Toggle navigation menu">
+          <span className={`hamburger ${isMenuOpen ? 'active' : ''}`}></span>
+          <span className={`hamburger ${isMenuOpen ? 'active' : ''}`}></span>
+          <span className={`hamburger ${isMenuOpen ? 'active' : ''}`}></span>
+        </button>
+        
+        <div className={`navbar-menu ${isMenuOpen ? 'active' : ''}`}>
+          <Link to="/" className="navbar-link" onClick={closeMenu}>
             Home
           </Link>
-          <Link to="/about" className="navbar-link">About</Link>
-          <Link to="/how-to-participate" className="navbar-link">How to Participate</Link>
-          <Link to="/contribute" className="navbar-link">Contributions</Link>
+          <Link to="/about" className="navbar-link" onClick={closeMenu}>About</Link>
+          <Link to="/how-to-participate" className="navbar-link" onClick={closeMenu}>How to Participate</Link>
+          <Link to="/contribute" className="navbar-link" onClick={closeMenu}>Contributions</Link>
           
           {/* Show volunteer-specific links only for logged-in volunteers */}
           {user && userRole === 'volunteer' && (
             <>
-              <Link to="/volunteer/applications" className="navbar-link">
+              <Link to="/volunteer/applications" className="navbar-link" onClick={closeMenu}>
                 My Applications
               </Link>
-              <Link to="/volunteer/history" className="navbar-link">
+              <Link to="/volunteer/history" className="navbar-link" onClick={closeMenu}>
                 History
               </Link>
             </>
@@ -46,17 +63,17 @@ const Navbar = () => {
           {/* Add school-specific links */}
           {user && userRole === 'school' && (
             <>
-              <Link to="/school/requests" className="navbar-link">
+              <Link to="/school/requests" className="navbar-link" onClick={closeMenu}>
                 Requests
               </Link>
-              <Link to="/school/history" className="navbar-link">
+              <Link to="/school/history" className="navbar-link" onClick={closeMenu}>
                 History
               </Link>
             </>
           )}
         </div>
 
-        <div className="navbar-auth">
+        <div className="navbar-user-section" style={{ marginLeft: 'auto' }}>
           {user ? (
             <div className="user-section">
               <span className="user-name">Welcome, {user.name}</span>

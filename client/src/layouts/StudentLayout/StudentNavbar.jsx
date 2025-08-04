@@ -17,8 +17,8 @@ const StudentNavbar = () => {
   return (
     <nav className="student-navbar">
       <div className="student-navbar-container">
-        <div className="student-navbar-brand">
-          <Link to="/student/dashboard" className="student-navbar-logo">
+        <div className="navbar-logo-container">
+          <Link to="/student/dashboard" className="student-navbar-logo navbar-logo">
             VidyaSetu Student
           </Link>
         </div>
@@ -38,10 +38,14 @@ const StudentNavbar = () => {
           </Link>
         </div>
 
-        <div className="student-navbar-user">
-          <span className="student-user-name">Welcome, {user?.name || 'Student'}</span>
-          <button onClick={handleLogout} className="student-logout-btn">
-            Logout
+        <div className="navbar-user-section" style={{ marginLeft: 'auto' }}>
+          <Link to="/student/profile" className="student-navbar-link">
+            <span className="student-navbar-icon">👤</span>
+            <span className="nav-text">Profile</span>
+          </Link>
+          <button onClick={handleLogout} className="student-navbar-link logout-btn">
+            <span className="student-navbar-icon">🚪</span>
+            <span className="nav-text">Logout</span>
           </button>
         </div>
       </div>

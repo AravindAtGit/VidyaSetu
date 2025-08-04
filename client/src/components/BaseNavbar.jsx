@@ -73,9 +73,9 @@ const BaseNavbar = ({ menuConfig = [], showAuth = true, onLogout }) => {
     <nav className="base-navbar">
       <div className="base-navbar-container">
         {/* Brand Logo */}
-        <div className="base-navbar-brand">
+        <div className="navbar-logo-container">
           <Link to="/" className="brand-link">
-            <span className="brand-icon">🎓</span>
+            <span className="brand-icon navbar-logo">🎓</span>
             <span className="brand-text">VidyaSetu</span>
           </Link>
         </div>
@@ -101,7 +101,7 @@ const BaseNavbar = ({ menuConfig = [], showAuth = true, onLogout }) => {
 
           {/* Right-aligned Auth/Profile Area */}
           {showAuth && (
-            <div className="base-navbar-auth">
+            <div className="navbar-user-section" style={{ marginLeft: 'auto' }}>
               {user ? (
                 <div className="user-section">
                   <span className="user-name">Welcome, {user.name}</span>
