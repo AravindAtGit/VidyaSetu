@@ -19,8 +19,8 @@
 
 .admin-navbar-logo {
   color: var(--clr-bg);
-  font-size: var(--fs-500); /* 24px - consistent size */
-  font-weight: var(--fw-bold);
+  font-size: clamp(2.5rem, 5vw, 3rem);
+  font-weight: 800;
   text-decoration: none;
   transition: opacity 0.3s ease;
   display: flex;
@@ -38,8 +38,8 @@
 }
 
 .brand-text {
-  font-weight: var(--fw-bold);
-  font-size: var(--fs-500);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 5vw, 3rem);
 }
 
 .admin-navbar-menu {

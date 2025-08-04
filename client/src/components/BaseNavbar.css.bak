@@ -1,11 +1,8 @@
 
-/* Reusable Brand Logo Rule */
-.brand-logo { height: clamp(2.5rem, 6vw, 3.5rem); width: auto; display: inline-block; }
-
 /* Base Navbar Styles */
 .base-navbar {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: var(--space-md) 0;
+  padding: var(--space-xl) 0;
   box-shadow: 0 0.25rem var(--space-sm) rgba(0, 0, 0, 0.1);
   position: relative;
   z-index: 1000;
@@ -16,21 +13,20 @@
   margin: 0 auto;
   padding: 0 clamp(var(--space-sm), 3vw, var(--space-lg));
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: flex-start;
   position: relative;
 }
 
 /* Brand Logo */
 .base-navbar-brand {
   flex-shrink: 0;
-  margin-right: var(--space-lg);
 }
 
 .brand-link {
   color: var(--clr-bg);
   text-decoration: none;
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(2.5rem, 5vw, 3rem);
   font-weight: 800;
   display: flex;
   align-items: center;
@@ -48,7 +44,7 @@
 }
 
 .brand-text {
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(2.5rem, 5vw, 3rem);
   font-weight: 800;
 }
 
@@ -310,18 +306,8 @@
 
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
-  .brand-logo {
-    height: 5rem;
-  }
-  
   .brand-link,
   .brand-text {
     font-size: 1.8rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .brand-logo {
-    height: clamp(5rem, 12vw, 6rem);
   }
 }

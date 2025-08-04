@@ -30,21 +30,12 @@ const navConfig = {
       path: '/volunteer/dashboard'
     },
     {
-      label: 'Teaching',
+      label: 'Contributions',
       type: 'dropdown',
       icon: '🔍',
       items: [
         { path: '/volunteer/applications', label: 'My Applications' },
         { path: '/volunteer/history', label: 'History' }
-      ]
-    },
-    {
-      label: 'Infrastructure',
-      type: 'dropdown',
-      icon: '🏗️',
-      items: [
-        { path: '/volunteer/infra/requests', label: 'Infrastructure' },
-        { path: '/volunteer/infra/my-applications', label: 'My Infra Apps' }
       ]
     }
   ],

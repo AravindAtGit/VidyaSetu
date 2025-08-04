@@ -29,8 +29,7 @@ const Navbar = () => {
           </Link>
           <Link to="/about" className="navbar-link">About</Link>
           <Link to="/how-to-participate" className="navbar-link">How to Participate</Link>
-          <Link to="/contribute" className="navbar-link">Contribute</Link>
-          <Link to="/infra-requests" className="navbar-link">Infrastructure</Link>
+          <Link to="/contribute" className="navbar-link">Contributions</Link>
           
           {/* Show volunteer-specific links only for logged-in volunteers */}
           {user && userRole === 'volunteer' && (

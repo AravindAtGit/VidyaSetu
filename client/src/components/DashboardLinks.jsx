@@ -8,14 +8,6 @@ export const volunteerLinks = [
   {
     path: '/volunteer/history',
     label: 'History'
-  },
-  {
-    path: '/volunteer/infra/requests',
-    label: 'Infrastructure'
-  },
-  {
-    path: '/volunteer/infra/my-applications',
-    label: 'My Infra Apps'
   }
 ];
 

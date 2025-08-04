@@ -28,8 +28,6 @@ const VolunteerDashboard = () => {
       <div className="dashboard-links">
         <a href="/volunteer/applications">My Applications</a>
         <a href="/volunteer/history">History</a>
-        <a href="/volunteer/infra/requests">Infrastructure</a>
-        <a href="/volunteer/infra/my-applications">My Infra Apps</a>
       </div>
     </div>
   );

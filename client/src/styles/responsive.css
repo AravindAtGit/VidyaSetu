@@ -135,12 +135,12 @@
     padding: 0 clamp(1rem, 3vw, 2rem);
   }
   
-  .navbar-menu {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-    width: auto;
-  }
+.navbar-menu {
+  display: flex;
+  flex-direction: row;
+  gap: clamp(0.5rem, 1.5vw, 1rem);
+  width: auto;
+}
   
   .navbar-toggle {
     display: none;
@@ -160,9 +160,9 @@
     margin: 0 auto;
   }
   
-  .navbar-menu {
-    gap: clamp(1rem, 3vw, 2rem);
-  }
+.navbar-menu {
+  gap: clamp(0.75rem, 2.5vw, 1.5rem);
+}
   
   .navbar-link {
     font-size: 1.125rem;
@@ -176,9 +176,9 @@
     max-width: var(--container-width-90);
   }
   
-  .navbar-menu {
-    gap: clamp(1.5rem, 3vw, 2.5rem);
-  }
+.navbar-menu {
+  gap: clamp(1rem, 2.5vw, 2rem);
+}
 }
 
 /* =============================================================================

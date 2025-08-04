@@ -1,6 +1,6 @@
 .admin-navbar {
   background: #ffffff;
-  padding: var(--space-md) 0;
+  padding: var(--space-xl) 0;
   box-shadow: 0 0.25rem var(--space-sm) rgba(0, 0, 0, 0.1);
   border-bottom: 1px solid #e1e5e9;
 }
@@ -12,23 +12,21 @@
   display: flex;
   align-items: center;
   gap: var(--space-lg);
-  justify-content: flex-start;
 }
 
 .admin-navbar-brand {
   flex-shrink: 0;
-  margin-right: var(--space-lg);
 }
 
 .brand-logo {
-  height: clamp(2.5rem, 6vw, 3.5rem);      /* Responsive scaling for desktop */
+  height: clamp(3.5rem, 7vw, 4rem);      /* Responsive scaling from 56-64px */
   width: auto;
   display: inline-block;
 }
 
 .admin-navbar-logo {
   color: #333333;
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(2.5rem, 5vw, 3rem);
   font-weight: 800;
   text-decoration: none;
   transition: opacity 0.3s ease;
@@ -48,7 +46,7 @@
 
 .brand-text {
   font-weight: 800;
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(2.5rem, 5vw, 3rem);
 }
 
 .admin-navbar-menu {
@@ -294,7 +292,7 @@
 
 @media (max-width: 768px) {
   .brand-logo {
-    height: 5rem;
+    height: 2.5rem;
   }
   
   .admin-navbar-logo,
